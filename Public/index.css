@@ -1,0 +1,316 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+   Added box-sizing, end-of-reset comment.
+*/
+
+html {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+  
+  html, body, div, span, applet, object, iframe,
+  h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+  a, abbr, acronym, address, big, cite, code,
+  del, dfn, em, img, ins, kbd, q, s, samp,
+  small, strike, strong, sub, sup, tt, var,
+  b, u, i, center, dl, dt, dd, ol, ul, li,
+  fieldset, form, label, legend, table, caption, 
+  tbody, tfoot, thead, tr, th, td, article, 
+  aside, canvas, details, embed, figure, 
+  figcaption, footer, header, hgroup, menu, nav, 
+  output, ruby, section, summary, time, mark, 
+  audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+  }
+  
+  /* HTML5 display-role reset for older browsers */
+  article, aside, details, figcaption, figure, 
+  footer, header, hgroup, menu, nav, section {
+      display: block;
+  }
+  
+  body {
+    line-height: 1;
+  }
+  
+  ol, ul {
+    list-style: none;
+  }
+  
+  blockquote, q {
+    quotes: none;
+  }
+  
+  blockquote:before, blockquote:after,
+  q:before, q:after {
+    content: '';
+    content: none;
+  }
+  
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  
+  /**********************************************/
+  /* END OF CSS RESET. ACTUAL CSS STARTS BELOW. */
+  /**********************************************/
+  
+  *{
+    font-family: Sans-Serif;
+}
+
+body, html{
+    height: 100%;
+}
+
+.js-backGround{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+}
+
+.js-pageViewSplashHtml{
+    /* position: fixed; */
+    background-image: url("../Images/Splash_Page.jpg");
+    background-size: cover;
+}
+
+.js-pageViewGameBoardHtml{
+    /* position: fixed; */
+    background-image: url("../Images/Wood.jpg");
+    background-size: cover;
+}
+
+.js-pageViewInstructionsHtml{
+    position: fixed;
+    background-image: url(overlay.png), url("logo.png"), url("paper.jpg");
+    background-size: cover, 75vw, cover;
+}
+
+p{
+    font-weight: 600;
+    padding-top: 0.75em;
+}
+
+main{
+    height: 100%;
+}
+
+.techNote{
+    font-weight: 300;
+    font-size: 0.8em;
+}
+
+.js-pageViewMainHtml{
+    height: 100%;
+    padding: 10px;
+    background-image: url("Main_Back.jpg");
+    background-size: initial;
+    background-repeat: repeat;
+    background-color: linen;
+}
+
+.mainBox{
+    width: 350px;
+    border: solid 1px grey;
+    margin: 0 auto;
+    padding-bottom: 20px;
+    background-color: rgba(234, 234, 234, 0.85);
+}
+
+.js-pageViewRansomNoteHtml{
+    position: relative;
+    height: 100vh;
+}
+
+h1{
+    font-size: 1.2em;
+    font-weight: 800;
+    padding-top: 15px;
+    text-align: center;
+}
+
+.js-textForm{
+    font-weight: 700;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    background: #302f2f;
+    text-align: center;
+}
+
+.finalHint{
+    width: 310px;
+    height: 18px;
+    margin: 0 auto;
+    padding: 0;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 1.5em;
+    color: limegreen;
+}
+
+.buttonForm{
+    /* font-family: 'Archivo Black', roboto, sans-serif; */
+    position: absolute;
+    bottom: 3px;
+    width: 100%;
+}
+
+.buttonBox{
+    margin: 0 auto;
+    padding-bottom: 1vh;
+    min-height: 30px;
+    height: 5vh;
+    width: 200px;
+}
+
+.js-button{
+    font-family: 'Archivo Black', roboto, sans-serif;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    color: rgb(6, 32, 146);
+    border-color: rgb(59, 147, 173);
+    background-color: rgb(174, 236, 255);
+    font-size: .9em;
+    font-weight: 700;
+}
+
+.Info_Button{
+    background-color: Transparent;
+    border: solid 5px red;
+}
+
+.Info_Button img{
+    height: 5vh;
+}
+
+.Back_Button{
+    background-color: Transparent;
+    border: solid 5px red;
+}
+
+.Back_Button img{
+    height: 5vh;
+}
+
+.Queen_Button{
+    background-color: Transparent;
+    border: solid 5px red;
+}
+
+.Queen_Button img{
+    height: 20vh;
+}
+
+.ransomButtonBox{
+    width: 320px;
+}
+
+.js-shuffleButton, .js-distortButton, .js-undistortButton{
+    display: inline-block;
+    width: 30%;
+}
+
+.js-userButton{
+    width: 65%;
+}
+
+.instructionsBox{
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    text-align: left;
+    padding-right: 0.6em;
+    padding-left: 0.6em;
+    padding-bottom: 0.6em;
+    width: 85vw;
+    max-height: 70vh;
+    overflow: auto;
+    background-color: rgb(234, 234, 234);
+    border: 3px solid gray;
+}
+
+.inputBox{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3px;
+}
+
+.js-inputLine{
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bolder;
+    width: 190px;
+}
+
+.js-lineLabel{
+    padding-right: 4px;
+}
+
+.countDown{
+    display: inline-block;
+    width: 40px;
+    margin-left: 4px;
+    padding-top: 2px;
+    border: 1px solid gray;
+    background-color: white;
+}
+
+.display{
+    position: absolute;
+    width: 100%;
+    top: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-bottom: 0.7vh;
+    background-color: black;
+}
+
+.picTray{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    height: 13vh;
+    background-color: black;
+    color: white;
+}
+
+.js-charPic{
+    width: 5.2vw;
+    height: 5.2vw;
+    padding-left: 1px;
+    padding-right: 1px;
+}
+
+.space{
+    display: inline-block;
+    width: 2.6vw;
+    background-color: black;
+}
