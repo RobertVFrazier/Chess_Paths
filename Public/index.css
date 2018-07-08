@@ -15,7 +15,7 @@ html {
   }
   
   html, body, div, span, applet, object, iframe,
-  h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+  h1, h4, h5, h6, p, blockquote, pre,
   a, abbr, acronym, address, big, cite, code,
   del, dfn, em, img, ins, kbd, q, s, samp,
   small, strike, strong, sub, sup, tt, var,
@@ -67,8 +67,20 @@ html {
   /* END OF CSS RESET. ACTUAL CSS STARTS BELOW. */
   /**********************************************/
   
-  *{
+*{
     font-family: Sans-Serif;
+}
+
+h2{
+    font-size: 1.6rem;
+    font-display: bold;
+    text-align: center;
+}
+
+h3{
+    font-size: 1.1rem;
+    font-display: bold;
+    text-align: center;
 }
 
 body, html{
@@ -89,31 +101,393 @@ body, html{
     height: 100%;
 }
 
+/*   PAGES   */
+
+main{
+    height: 100%;
+}
+
 .js-pageViewSplashHtml{
     /* position: fixed; */
-    background-image: url("../Images/Splash_Page.jpg");
+    background-image: url('../Images/Splash_Page.jpg');
     background-size: cover;
 }
 
 .js-pageViewGameBoardHtml{
     /* position: fixed; */
-    background-image: url("../Images/Wood.jpg");
+    background-image: url('../Images/Wood.jpg');
     background-size: cover;
 }
 
 .js-pageViewInstructionsHtml{
-    position: fixed;
-    background-image: url(overlay.png), url("logo.png"), url("paper.jpg");
-    background-size: cover, 75vw, cover;
+    /* position: fixed; */
+    background-color: snow;
 }
+
+.text{
+    position: absolute;
+    top: 14px;
+    width: 95vw;
+    margin-left: 8px;
+}
+
+.scoreBoard{
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    height: 150px;
+    border-radius: 20px;
+    padding: 8px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: rgb(65, 159, 247);
+    background-color: yellow;
+    display: block;
+}
+
+th{
+    text-align-: center; 
+}
+
+.pieceDisplay{
+    position: absolute;
+}
+
+.buttonFrame{
+    display: block;
+    /* position: absolute; */
+    margin: 0 auto;
+    top: 220px;
+    height: 25vh;
+    width: 90vw;
+    background-image: url('../Images/Button_Frame_Background.jpg');
+    background-size: cover;
+    border-radius: 50px;
+    border: solid black 16px;
+}
+
+/*   BUTTONS   */
+
+.infoButton{
+    background: Transparent;
+    position: absolute;
+    top: 10px;
+    right: 1px;
+    border: 0;
+}
+
+.infoButton img{
+    height: 5vh;
+}
+
+.backButton{
+    position: absolute;
+    top: 10px;
+    right: 1px;
+    background: Transparent;
+    border: 0;
+    /* outline: none; */
+}
+
+.backButton img{
+    height: 5vh;
+}
+
+.queenButton{
+    position: absolute;
+    bottom: 10px;
+    left: 7px;
+    background: Transparent;
+    border: 0;
+    /* outline: none; */
+}
+
+.queenButton img{
+    height: 20vh;
+}
+
+/*   GAME BOARD   */
+
+.board{
+    position: absolute;
+    bottom: 20px;
+    border: 0;
+    width: 100%;
+}
+
+.square{
+    height: 12.5vw;
+    width: 12.5vw;
+    background-size: cover;
+    float: left;
+}
+
+.A8{
+    background-image: url('../Images/Squares/A8.jpg');
+}
+
+.B8{
+    background-image: url('../Images/Squares/B8.jpg');
+}
+
+.C8{
+    background-image: url('../Images/Squares/C8.jpg');
+}
+
+.D8{
+    background-image: url('../Images/Squares/D8.jpg');
+}
+
+.E8{
+    background-image: url('../Images/Squares/E8.jpg');
+}
+
+.F8{
+    background-image: url('../Images/Squares/F8.jpg');
+}
+
+.G8{
+    background-image: url('../Images/Squares/G8.jpg');
+}
+
+.H8{
+    background-image: url('../Images/Squares/H8.jpg');
+}
+
+.A7{
+    background-image: url('../Images/Squares/A7.jpg');
+}
+
+.B7{
+    background-image: url('../Images/Squares/B7.jpg');
+}
+
+.C7{
+    background-image: url('../Images/Squares/C7.jpg');
+}
+
+.D7{
+    background-image: url('../Images/Squares/D7.jpg');
+}
+
+.E7{
+    background-image: url('../Images/Squares/E7.jpg');
+}
+
+.F7{
+    background-image: url('../Images/Squares/F7.jpg');
+}
+
+.G7{
+    background-image: url('../Images/Squares/G7.jpg');
+}
+
+.H7{
+    background-image: url('../Images/Squares/H7.jpg');
+}
+
+.A6{
+    background-image: url('../Images/Squares/A6.jpg');
+}
+
+.B6{
+    background-image: url('../Images/Squares/B6.jpg');
+}
+
+.C6{
+    background-image: url('../Images/Squares/C6.jpg');
+}
+
+.D6{
+    background-image: url('../Images/Squares/D6.jpg');
+}
+
+.E6{
+    background-image: url('../Images/Squares/E6.jpg');
+}
+
+.F6{
+    background-image: url('../Images/Squares/F6.jpg');
+}
+
+.G6{
+    background-image: url('../Images/Squares/G6.jpg');
+}
+
+.H6{
+    background-image: url('../Images/Squares/H6.jpg');
+}
+
+.A5{
+    background-image: url('../Images/Squares/A5.jpg');
+}
+
+.B5{
+    background-image: url('../Images/Squares/B5.jpg');
+}
+
+.C5{
+    background-image: url('../Images/Squares/C5.jpg');
+}
+
+.D5{
+    background-image: url('../Images/Squares/D5.jpg');
+}
+
+.E5{
+    background-image: url('../Images/Squares/E5.jpg');
+}
+
+.F5{
+    background-image: url('../Images/Squares/F5.jpg');
+}
+
+.G5{
+    background-image: url('../Images/Squares/G5.jpg');
+}
+
+.H5{
+    background-image: url('../Images/Squares/H5.jpg');
+}
+
+.A4{
+    background-image: url('../Images/Squares/A4.jpg');
+}
+
+.B4{
+    background-image: url('../Images/Squares/B4.jpg');
+}
+
+.C4{
+    background-image: url('../Images/Squares/C4.jpg');
+}
+
+.D4{
+    background-image: url('../Images/Squares/D4.jpg');
+}
+
+.E4{
+    background-image: url('../Images/Squares/E4.jpg');
+}
+
+.F4{
+    background-image: url('../Images/Squares/F4.jpg');
+}
+
+.G4{
+    background-image: url('../Images/Squares/G4.jpg');
+}
+
+.H4{
+    background-image: url('../Images/Squares/H4.jpg');
+}
+
+.A3{
+    background-image: url('../Images/Squares/A3.jpg');
+}
+
+.B3{
+    background-image: url('../Images/Squares/B3.jpg');
+}
+
+.C3{
+    background-image: url('../Images/Squares/C3.jpg');
+}
+
+.D3{
+    background-image: url('../Images/Squares/D3.jpg');
+}
+
+.E3{
+    background-image: url('../Images/Squares/E3.jpg');
+}
+
+.F3{
+    background-image: url('../Images/Squares/F3.jpg');
+}
+
+.G3{
+    background-image: url('../Images/Squares/G3.jpg');
+}
+
+.H3{
+    background-image: url('../Images/Squares/H3.jpg');
+}
+
+.A2{
+    background-image: url('../Images/Squares/A2.jpg');
+}
+
+.B2{
+    background-image: url('../Images/Squares/B2.jpg');
+}
+
+.C2{
+    background-image: url('../Images/Squares/C2.jpg');
+}
+
+.D2{
+    background-image: url('../Images/Squares/D2.jpg');
+}
+
+.E2{
+    background-image: url('../Images/Squares/E2.jpg');
+}
+
+.F2{
+    background-image: url('../Images/Squares/F2.jpg');
+}
+
+.G2{
+    background-image: url('../Images/Squares/G2.jpg');
+}
+
+.H2{
+    background-image: url('../Images/Squares/H2.jpg');
+}
+
+.A1{
+    background-image: url('../Images/Squares/A1.jpg');
+}
+
+.B1{
+    background-image: url('../Images/Squares/B1.jpg');
+}
+
+.C1{
+    background-image: url('../Images/Squares/C1.jpg');
+}
+
+.D1{
+    background-image: url('../Images/Squares/D1.jpg');
+}
+
+.E1{
+    background-image: url('../Images/Squares/E1.jpg');
+}
+
+.F1{
+    background-image: url('../Images/Squares/F1.jpg');
+}
+
+.G1{
+    background-image: url('../Images/Squares/G1.jpg');
+}
+
+.H1{
+    background-image: url('../Images/Squares/H1.jpg');
+}
+
+  /**************************************************/
+  /* EVERYTHING BELOW HERE IS FROM RANSOM NOTE APP. */
+  /**************************************************/
+
+/*
+
 
 p{
     font-weight: 600;
     padding-top: 0.75em;
-}
-
-main{
-    height: 100%;
 }
 
 .techNote{
@@ -124,7 +498,7 @@ main{
 .js-pageViewMainHtml{
     height: 100%;
     padding: 10px;
-    background-image: url("Main_Back.jpg");
+    background-image: url('Main_Back.jpg');
     background-size: initial;
     background-repeat: repeat;
     background-color: linen;
@@ -172,7 +546,6 @@ body{
 }
 
 .buttonForm{
-    /* font-family: 'Archivo Black', roboto, sans-serif; */
     position: absolute;
     bottom: 3px;
     width: 100%;
@@ -197,33 +570,6 @@ body{
     background-color: rgb(174, 236, 255);
     font-size: .9em;
     font-weight: 700;
-}
-
-.Info_Button{
-    background-color: Transparent;
-    border: solid 5px red;
-}
-
-.Info_Button img{
-    height: 5vh;
-}
-
-.Back_Button{
-    background-color: Transparent;
-    border: solid 5px red;
-}
-
-.Back_Button img{
-    height: 5vh;
-}
-
-.Queen_Button{
-    background-color: Transparent;
-    border: solid 5px red;
-}
-
-.Queen_Button img{
-    height: 20vh;
 }
 
 .ransomButtonBox{
@@ -314,3 +660,5 @@ body{
     width: 2.6vw;
     background-color: black;
 }
+
+*/
