@@ -50,29 +50,37 @@ Step 1b: Render each HTML page, based on the current state.
 
 const renderPage={
    doShowPages: function(){
-        console.log('In the doShowPages method.');
+        // console.log('In the doShowPages method.');
         if(STORE.currentView==='splash'){
             this.splashPage();
         }else if(STORE.currentView==='info'){
             this.infoPage();
-        }
+        }else if(STORE.currentView==='game'){
+        this.gamePage();
+    }
    },
 
     showCurrentPage: function(pageToShow){
-        console.log('In the showCurrentPage method.');
+        // console.log('In the showCurrentPage method.');
         $('div.js-pageViewSplashHtml').hide();
         $('div.js-pageViewInfoHtml').hide();
+        $('div.js-pageViewGameBoardHtml').hide();
         $(pageToShow).show();
     },
 
     splashPage: function(){
-        console.log('In the splashPage method.');
+        // console.log('In the splashPage method.');
         this.showCurrentPage('div.js-pageViewSplashHtml');
     },
 
     infoPage: function(){
-        console.log('In the infoPage method.');
+        // console.log('In the infoPage method.');
         this.showCurrentPage('div.js-pageViewInfoHtml');
+    },
+
+    gamePage: function(){
+        // console.log('In the gamePage method.');
+        this.showCurrentPage('div.js-pageViewGameBoardHtml');
     },
 };
 
@@ -82,25 +90,41 @@ const renderPage={
 
 const Listeners={
     listen: function(){
-        console.log('In the listen method.');
+        // console.log('In the listen method.');
         this.handleInfoButton();
+        this.handleQueenButton();
         this.handleBackButtonInfoPage();
+        this.handleBackButtonGamePage();
     },
 
     handleInfoButton: function(){
-        console.log('In the handleInfoButton method.');
+        // console.log('In the handleInfoButton method.');
         $('.js-infoButton').on('click', function() {
             STORE.currentView='info';
             renderPage.doShowPages();
         });
     },
 
+    handleQueenButton: function(){
+        // console.log('In the handleQueenButton method.');
+        $('.js-queenButton').on('click', function() {
+            STORE.currentView='game';
+            renderPage.doShowPages();
+        });
+    },
+
     handleBackButtonInfoPage: function(){
-        console.log('In the handleBackButtonInfoPage method.');
+        // console.log('In the handleBackButtonInfoPage method.');
         $('.js-backButtonInfoPage').on('click', function() {
-            console.log('clicked the back button');
             STORE.currentView='splash';
-            console.log(STORE.currentView);
+            renderPage.doShowPages();
+        });
+    },
+
+    handleBackButtonGamePage: function(){
+        // console.log('In the handleBackButtonGamePage method.');
+        $('.js-backButtonGamePage').on('click', function() {
+            STORE.currentView='splash';
             renderPage.doShowPages();
         });
     },
