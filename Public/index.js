@@ -5,7 +5,8 @@
 ********************************************************/
 
 const STORE = {  // All the variables connected with the state of the DOM go here.
-    currentView: 'splash'
+    currentView: 'splash',
+    previousView: 'none'
   };
 
 /******************************************************** 
@@ -71,16 +72,23 @@ const renderPage={
     splashPage: function(){
         // console.log('In the splashPage method.');
         this.showCurrentPage('div.js-pageViewSplashHtml');
+        if(STORE.previousView==='info'){
+            $('.js-infoButton').focus();
+        }else if(STORE.previousView==='game'){
+            $('.js-queenButton').focus();
+        }
     },
 
     infoPage: function(){
         // console.log('In the infoPage method.');
         this.showCurrentPage('div.js-pageViewInfoHtml');
+        $('.js-backButtonInfoPage').focus();
     },
 
     gamePage: function(){
         // console.log('In the gamePage method.');
         this.showCurrentPage('div.js-pageViewGameBoardHtml');
+        $('.js-backButtonGamePage').focus();
     },
 };
 
@@ -101,6 +109,7 @@ const Listeners={
         // console.log('In the handleInfoButton method.');
         $('.js-infoButton').on('click', function() {
             STORE.currentView='info';
+            STORE.previousView='splash';
             renderPage.doShowPages();
         });
     },
@@ -109,6 +118,7 @@ const Listeners={
         // console.log('In the handleQueenButton method.');
         $('.js-queenButton').on('click', function() {
             STORE.currentView='game';
+            STORE.previousView='splash';
             renderPage.doShowPages();
         });
     },
@@ -117,6 +127,7 @@ const Listeners={
         // console.log('In the handleBackButtonInfoPage method.');
         $('.js-backButtonInfoPage').on('click', function() {
             STORE.currentView='splash';
+            STORE.previousView='info';
             renderPage.doShowPages();
         });
     },
@@ -125,6 +136,7 @@ const Listeners={
         // console.log('In the handleBackButtonGamePage method.');
         $('.js-backButtonGamePage').on('click', function() {
             STORE.currentView='splash';
+            STORE.previousView='game';
             renderPage.doShowPages();
         });
     },

@@ -177,7 +177,12 @@ th{
     top: 10px;
     right: 1px;
     background: Transparent;
-    border: 0;
+    border: none;
+}
+
+.navButton:focus{
+    background: no-repeat url('../Images/Buttons/Button_Glow.png');
+    background-size: contain;
 }
 
 .js-infoButton img{
@@ -188,21 +193,23 @@ th{
     height: 8vh;
 }
 
-/* .js-backButtonInfoPage{
-    outline: solid red 3px;
-} */
-
 .queenButton{
     position: absolute;
     bottom: 10px;
     left: 7px;
+    background-image: url('../Images/Buttons/Queen_Button.png');
+    background-size: cover;
     background: Transparent;
-    border: 0;
-    /* outline: none; */
+    border: none;
 }
 
 .queenButton img{
     height: 20vh;
+}
+
+.queenButton:focus{
+    background: no-repeat url('../Images/Buttons/Queen_Button_Glow.png');
+    background-size: contain;
 }
 
 /*   GAME BOARD   */
