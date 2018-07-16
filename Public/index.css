@@ -118,7 +118,13 @@ main{
     position: fixed;
     background-image: url('../Images/Wood.jpg');
     background-size: cover;
-    display: none;
+}
+
+.upperContainer{
+    display: grid;
+    grid-template-columns: 35%, 1fr, 1fr;
+    grid-gap: 15px;
+    justify-items: center;
 }
 
 .js-pageViewInfoHtml{
@@ -153,10 +159,6 @@ th{
     text-align-: center; 
 }
 
-.pieceDisplay{
-    position: absolute;
-}
-
 .buttonFrame{
     display: block;
     /* position: absolute; */
@@ -168,6 +170,7 @@ th{
     background-size: cover;
     border-radius: 50px;
     border: solid black 16px;
+    display: none;
 }
 
 /*   BUTTONS   */

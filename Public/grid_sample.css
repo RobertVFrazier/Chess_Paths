@@ -1,0 +1,40 @@
+* {
+  box-sizing: border-box;
+}
+.board {
+  width: 90vw;
+  height: 90vw;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+}
+.square {
+  border: solid 1px rgba(0,0,0,0.1);
+  position: relative;
+}
+.square:hover {
+  box-shadow: 0 0 1px 2px rgba(0,0,0,0.2);
+}
+.handles-tl {
+  border-top: solid 2px green;
+  border-left: solid 2px green;
+  width: 5px;
+  height: 5px;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+}
+.handles-tr {
+  border-top: solid 2px green;
+  border-right: solid 2px green;
+  width: 5px;
+  height: 5px;
+  position: absolute;
+  top: 2px;
+  right: 2px
+}
+.handles {
+  display: none;
+}
+.square:hover > .handles {
+  display: block;
+}

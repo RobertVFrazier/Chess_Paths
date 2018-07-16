@@ -8,6 +8,7 @@
     </head>
     <body>
         <main role='main'>
+            <!-- Splash page -->
             <div class='js-backGround js-pageViewSplashHtml'>
                 <button autofocus class='queenButton js-queenButton'>
                     <img src='Images/Buttons/Queen_Button.png' alt='Queen button'>
@@ -16,11 +17,11 @@
                     <img src='Images/Buttons/Info_Button.png' alt='Information button'>
                 </button>
             </div>
+
+            <!-- Game page -->
             <div class='js-backGround js-pageViewGameBoardHtml'>
-                <button class='navButton js-backButton js-backButtonGamePage'>
-                    <img src='Images/Buttons/Back_Button.png' alt='Back button'>
-                </button>
-                <div class='scoreBoard'>
+                <div class='upperContainer'>
+                    <div class='scoreBoard'>
                         <table>
                             <tr id="row1">
                                 <th>   <th>Done&nbsp;&nbsp;  <th>To Do
@@ -29,8 +30,16 @@
                             <tr id="row3">
                                 <th>Squares  <th>35  <th>29
                         </table>
+                    </div>
+                    <div class='pieceDisplay'>
+                        <img src='Images/Buttons/Queen_Button.png' alt='Chess queen'>
+                    </div>
+                    <div class='navButtonBox'>
+                        <button class='navButton js-backButton js-backButtonGamePage'>
+                            <img src='Images/Buttons/Back_Button.png' alt='Back button'>
+                        </button>
+                    </div>
                 </div>
-                <div class='pieceDisplay'></div>
                 <div class='buttonFrame'></div>
                 <div class='board'>
                     <div class='square A8'></div>
@@ -99,6 +108,8 @@
                     <div class='square H1'></div>
                 </div>
             </div>
+
+            <!-- Info page -->
             <div class='js-backGround js-pageViewInfoHtml'>
                 <div class='text'>
                     <button class='navButton js-backButton js-backButtonInfoPage'>

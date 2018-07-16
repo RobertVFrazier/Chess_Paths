@@ -6,7 +6,8 @@
 
 const STORE = {  // All the variables connected with the state of the DOM go here.
     currentView: 'splash',
-    previousView: 'none'
+    previousView: 'none',
+    showLegalMoves: false
   };
 
 /******************************************************** 
