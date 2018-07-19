@@ -134,10 +134,10 @@ main{
 
 .upperContainer{
     display: grid;
-    grid-template-columns: 5% 3fr 1fr 1fr;
+    grid-template-columns: 5% 3fr 1fr 1fr 5%;
     grid-template-rows: 23% auto;
     grid-gap: 1.5vw;
-    height: 15vh;
+    height: 14vh;
 }
 
 .gameTitle{
@@ -146,33 +146,32 @@ main{
 }
 
 .gameTitle img{
-    width: 68vw;
+    width: 100%;
 }
 
 .navButtonBox{
-    grid-column: 4/ span 1;
-    /* background-color: blue; */
+    grid-column: 4/ span 2;
 }
 
 .navButtonBox img{
-    width: 20vw;
-    height: 0.5;
+    width: 100%;
 }
 
 .scoreBoard{
     width: 100%;
-    border-radius: 20px;
+    border-radius: 10px;
     padding: 8px;
     font-size: 0.9rem;
     font-weight: bold;
     color: rgb(65, 159, 247);
     background-color: yellow;
-    grid-column: 1/ span 2;
+    grid-column: 2/3;
 }
 
 .scoreTable{
     width: 100%;
     font-size: 1em; 
+    align-self: start;
 }
 
 th{
@@ -180,16 +179,19 @@ th{
 }
 
 .queenDisplay{
-    height: 5vh;
-    grid-column: 3 / span 1;
+    grid-column: 3/4;
+}
+
+.queenDisplay img{
+    width: 100%;
 }
 
 .middleContainer{
     display: grid;
     background-image: url('../Images/Button_Frame_Background.jpg');
     background-size: cover;
-    border-radius: 50px;
-    border: solid black 16px;
+    border-radius: 10px;
+    border: solid black 6px;
 }
 
 /*   BUTTONS   */
@@ -210,9 +212,9 @@ th{
     height: 8vh;
 }
 
-.js-backButton img{
+/* .js-backButton img{
     height: 8vh;
-}
+} */
 
 .queenButton{
     position: absolute;
