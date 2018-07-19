@@ -2,7 +2,7 @@
 <html lang='en'>
     <head>
         <meta charset='utf-8'/>
-        <meta name='viewport" content="width=device-width'/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <title>Chess Paths</title>
         <link href='index.css' rel='stylesheet' type='text/css'/>
     </head>
@@ -21,7 +21,18 @@
             <!-- Game page -->
             <div class='js-backGround js-pageViewGameBoardHtml'>
                 <div class='upperContainer'>
+                    <div class='gameTitle'>
+                        <!-- <p>A</p> -->
+                        <img src='Images/Title.png' alt='Chess Paths: Queen Puzzle'>
+                    </div>
+                    <div class='navButtonBox'>
+                        <!-- <p>B</p> -->
+                        <button class='navButton js-backButton js-backButtonGamePage'>
+                            <img src='Images/Buttons/Back_Button.png' alt='Back button'>
+                        </button>
+                    </div>
                     <div class='scoreBoard'>
+                        <!-- <p>C</p> -->
                         <table class='scoreTable'>
                             <tr id="row1">
                                 <th>   <th>Done&nbsp;&nbsp;  <th>To Do
@@ -31,16 +42,12 @@
                                 <th>Squares  <th>35  <th>29
                         </table>
                     </div>
-                    <div class='pieceDisplay'>
-                        <img src='Images/Buttons/Queen_Button.png' alt='Chess queen'>
-                    </div>
-                    <div class='navButtonBox'>
-                        <button class='navButton js-backButton js-backButtonGamePage'>
-                            <img src='Images/Buttons/Back_Button.png' alt='Back button'>
-                        </button>
+                    <div class='queenDisplay'>
+                            <p>D</p>
+                        <!-- <img src='Images/Queen_Display.png' alt='Queen'> -->
                     </div>
                 </div>
-                <div class='buttonFrame'></div>
+                <div class='middleContainer'></div>
                 <div class='board'>
                     <div class='square A8'></div>
                     <div class='square B8'></div>

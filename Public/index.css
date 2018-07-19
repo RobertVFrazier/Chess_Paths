@@ -120,13 +120,6 @@ main{
     background-size: cover;
 }
 
-.upperContainer{
-    display: grid;
-    grid-template-columns: 45% 1fr 1fr;
-    grid-gap: 15px;
-    justify-items: center;
-}
-
 .js-pageViewInfoHtml{
     position: fixed;
     background-color: snow;
@@ -139,13 +132,42 @@ main{
     padding: 3vw;
 }
 
+.upperContainer{
+    display: grid;
+    grid-template-columns: 5% 3fr 1fr 1fr;
+    grid-template-rows: 23% auto;
+    grid-gap: 1.5vw;
+    height: 15vh;
+}
+
+.gameTitle{
+    height: 5vh;
+    grid-column: 2 / span 2;
+}
+
+.gameTitle img{
+    width: 68vw;
+}
+
+.navButtonBox{
+    grid-column: 4/ span 1;
+    /* background-color: blue; */
+}
+
+.navButtonBox img{
+    width: 20vw;
+    height: 0.5;
+}
+
 .scoreBoard{
     width: 100%;
     border-radius: 20px;
     padding: 8px;
+    font-size: 0.9rem;
     font-weight: bold;
     color: rgb(65, 159, 247);
     background-color: yellow;
+    grid-column: 1/ span 2;
 }
 
 .scoreTable{
@@ -153,44 +175,36 @@ main{
     font-size: 1em; 
 }
 
-.pieceDisplay{
-    height: 13vh;
-}
-
-.pieceDisplay img{
-    height: 13vh;
-}
-
 th{
     text-align-: center; 
 }
 
-.buttonFrame{
-    display: block;
-    margin: 0 auto;
-    top: 220px;
-    height: 25vh;
-    width: 90vw;
+.queenDisplay{
+    height: 5vh;
+    grid-column: 3 / span 1;
+}
+
+.middleContainer{
+    display: grid;
     background-image: url('../Images/Button_Frame_Background.jpg');
     background-size: cover;
     border-radius: 50px;
     border: solid black 16px;
-    display: none;
 }
 
 /*   BUTTONS   */
 
 .navButton{
-    top: 10px;
-    right: 1px;
+    height: 10vh;
     background: Transparent;
     border: none;
 }
 
-.navButton:focus{
+/* .navButton:focus{
+    height: 10vh;
     background: no-repeat url('../Images/Buttons/Button_Glow.png');
-    background-size: contain;
-}
+    background-size: cover;
+} */
 
 .js-infoButton img{
     height: 8vh;
