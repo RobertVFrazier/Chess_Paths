@@ -72,15 +72,19 @@ html {
 }
 
 h2{
-    font-size: 3.5rem;
+    font-size: 1.5rem;
     font-display: bold;
     text-align: center;
+    margin-top: 0;
+    margin-bottom: 4px;
 }
 
 h3{
-    font-size: 2.8rem;
+    font-size: 1.2rem;
     font-display: bold;
     text-align: center;
+    margin-top: 0;
+    margin-bottom: 3px;
 }
 
 body, html{
@@ -124,12 +128,6 @@ main{
     position: fixed;
     background-color: snow;
     display: none;
-}
-
-.text{
-    position: absolute;
-    font-size: 2.5rem;
-    padding: 3vw;
 }
 
 .upperContainer{
@@ -212,9 +210,9 @@ th{
     height: 8vh;
 }
 
-/* .js-backButton img{
+.js-backButton img{
     height: 8vh;
-} */
+}
 
 .queenButton{
     position: absolute;
@@ -571,6 +569,20 @@ th{
 .H1{
     /* background-color: greenyellow; */
     /* background-image: url('../Images/Squares/H1.jpg'); */
+}
+
+.textPageContainer{
+    display: grid;
+}
+
+.scrollableContent{
+    height: 90vh;
+    overflow: auto;
+    padding: 3vw;
+}
+
+.icons{
+    width: 90vw;
 }
 
   /**************************************************/
