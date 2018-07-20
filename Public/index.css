@@ -136,6 +136,7 @@ main{
     grid-template-rows: 23% auto;
     grid-gap: 1.5vw;
     height: 14vh;
+    margin: 0 0 1vh;
 }
 
 .gameTitle{
@@ -190,6 +191,31 @@ th{
     background-size: cover;
     border-radius: 10px;
     border: solid black 6px;
+    width: 90vw;
+    margin: 0 auto;
+    grid-template-columns: 1r 1fr 1fr;
+    grid-template-rows: 33% auto;
+    justify-items: center;
+}
+
+.rulesButton{
+    grid-column: 2 / span 1;
+}
+
+.undoButton{
+    grid-column: 1 / span 1;
+}
+
+.resetButton{
+    grid-column: 2 / span 1;
+}
+
+.redoButton{
+    grid-column: 3 / span 1;
+}
+
+.loadSaveButton{
+    grid-column: 2 / span 1;
 }
 
 /*   BUTTONS   */
@@ -231,6 +257,10 @@ th{
 .queenButton:focus{
     background: no-repeat url('../Images/Buttons/Queen_Button_Glow.png');
     background-size: contain;
+}
+
+.gameButton{
+    width: 22vw;
 }
 
 /*   GAME BOARD   */
