@@ -260,7 +260,7 @@ th{
 }
 
 .gameButton{
-    width: 22vw;
+    width: 20vw;
 }
 
 /*   GAME BOARD   */
@@ -269,7 +269,7 @@ th{
     position: absolute;
     background-image: url('../Images/Chess_Board.jpg');
     background-size: cover;
-    bottom: 20px;
+    bottom: 1vh;
     border: 0;
     width: 100%;
 }
