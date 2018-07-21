@@ -20,15 +20,15 @@
 
             <!-- Game page -->
             <div class='js-backGround js-pageViewGameBoardHtml'>
-                <div class='controlsContainer'>
+                <div class='gamePageContainer'>
                     <div class='upperContainer'>
-                        <div class='gameTitle'>
-                            <img src='Images/Title.png' alt='Chess Paths: Queen Puzzle'>
+                        <div class='gameTitlePort'>
+                            <img src='Images/Title_Port.png' alt='Chess Paths: Queen Puzzle'>
                         </div>
                         <div class='navButtonBox'>
                             <button class='navButton js-backButton js-backButtonGamePage'>
                                 <img src='Images/Buttons/Back_Button.png' alt='Back button'>
-                            </button>
+                            </button>  
                         </div>
                         <div class='scoreBoard'>
                             <table class='scoreTable'>
@@ -41,10 +41,10 @@
                             </table>
                         </div>
                         <div class='queenDisplay'>
-                            <img src='Images/Queen_Display.png' alt='Queen'>
+                            <img src='Images/Queen_Display_Port.png' alt='Queen'>
                         </div>
                     </div>
-                    <div class='middleContainer'>
+                    <div class='lowerContainer'>
                             <div class='rulesButton'>
                                 <img src='Images/Buttons/Rules_Button.png' alt='Rules Button' class='gameButton'>
                             </div>
@@ -61,72 +61,112 @@
                                 <img src='Images/Buttons/Load_Save_Button.png' alt='Load / Save Button' class='gameButton'>
                             </div>
                     </div>
-                </div>
-                <div class='board'>
-                    <div class='square A8'></div>
-                    <div class='square B8'></div>
-                    <div class='square C8'></div>
-                    <div class='square D8'></div>
-                    <div class='square E8'></div>
-                    <div class='square F8'></div>
-                    <div class='square G8'></div>
-                    <div class='square H8'></div>
-                    <div class='square A7'></div>
-                    <div class='square B7'></div>
-                    <div class='square C7'></div>
-                    <div class='square D7'></div>
-                    <div class='square E7'></div>
-                    <div class='square F7'></div>
-                    <div class='square G7'></div>
-                    <div class='square H7'></div>
-                    <div class='square A6'></div>
-                    <div class='square B6'></div>
-                    <div class='square C6'></div>
-                    <div class='square D6'></div>
-                    <div class='square E6'></div>
-                    <div class='square F6'></div>
-                    <div class='square G6'></div>
-                    <div class='square H6'></div>
-                    <div class='square A5'></div>
-                    <div class='square B5'></div>
-                    <div class='square C5'></div>
-                    <div class='square D5'></div>
-                    <div class='square E5'></div>
-                    <div class='square F5'></div>
-                    <div class='square G5'></div>
-                    <div class='square H5'></div>
-                    <div class='square A4'></div>
-                    <div class='square B4'></div>
-                    <div class='square C4'></div>
-                    <div class='square D4'></div>
-                    <div class='square E4'></div>
-                    <div class='square F4'></div>
-                    <div class='square G4'></div>
-                    <div class='square H4'></div>
-                    <div class='square A3'></div>
-                    <div class='square B3'></div>
-                    <div class='square C3'></div>
-                    <div class='square D3'></div>
-                    <div class='square E3'></div>
-                    <div class='square F3'></div>
-                    <div class='square G3'></div>
-                    <div class='square H3'></div>
-                    <div class='square A2'></div>
-                    <div class='square B2'></div>
-                    <div class='square C2'></div>
-                    <div class='square D2'></div>
-                    <div class='square E2'></div>
-                    <div class='square F2'></div>
-                    <div class='square G2'></div>
-                    <div class='square H2'></div>
-                    <div class='square A1'></div>
-                    <div class='square B1'></div>
-                    <div class='square C1'></div>
-                    <div class='square D1'></div>
-                    <div class='square E1'></div>
-                    <div class='square F1'></div>
-                    <div class='square G1'></div>
-                    <div class='square H1'></div>
+                    <div class='boardContainer'>
+                            <div class='square A8'></div>
+                            <div class='square B8'></div>
+                            <div class='square C8'></div>
+                            <div class='square D8'></div>
+                            <div class='square E8'></div>
+                            <div class='square F8'></div>
+                            <div class='square G8'></div>
+                            <div class='square H8'></div>
+                            <div class='square A7'></div>
+                            <div class='square B7'></div>
+                            <div class='square C7'></div>
+                            <div class='square D7'></div>
+                            <div class='square E7'></div>
+                            <div class='square F7'></div>
+                            <div class='square G7'></div>
+                            <div class='square H7'></div>
+                            <div class='square A6'></div>
+                            <div class='square B6'></div>
+                            <div class='square C6'></div>
+                            <div class='square D6'></div>
+                            <div class='square E6'></div>
+                            <div class='square F6'></div>
+                            <div class='square G6'></div>
+                            <div class='square H6'></div>
+                            <div class='square A5'></div>
+                            <div class='square B5'></div>
+                            <div class='square C5'></div>
+                            <div class='square D5'></div>
+                            <div class='square E5'></div>
+                            <div class='square F5'></div>
+                            <div class='square G5'></div>
+                            <div class='square H5'></div>
+                            <div class='square A4'></div>
+                            <div class='square B4'></div>
+                            <div class='square C4'></div>
+                            <div class='square D4'></div>
+                            <div class='square E4'></div>
+                            <div class='square F4'></div>
+                            <div class='square G4'></div>
+                            <div class='square H4'></div>
+                            <div class='square A3'></div>
+                            <div class='square B3'></div>
+                            <div class='square C3'></div>
+                            <div class='square D3'></div>
+                            <div class='square E3'></div>
+                            <div class='square F3'></div>
+                            <div class='square G3'></div>
+                            <div class='square H3'></div>
+                            <div class='square A2'></div>
+                            <div class='square B2'></div>
+                            <div class='square C2'></div>
+                            <div class='square D2'></div>
+                            <div class='square E2'></div>
+                            <div class='square F2'></div>
+                            <div class='square G2'></div>
+                            <div class='square H2'></div>
+                            <div class='square A1'></div>
+                            <div class='square B1'></div>
+                            <div class='square C1'></div>
+                            <div class='square D1'></div>
+                            <div class='square E1'></div>
+                            <div class='square F1'></div>
+                            <div class='square G1'></div>
+                            <div class='square H1'></div>
+                    </div>
+                    <div class='upperRightContainer'>
+                        <div class='gameTitleLand'>
+                            <img src='Images/Title_Land.png' alt='Chess Paths: Queen Puzzle'>
+                        </div>
+                        <div class='navButtonBox'>
+                            <button class='navButton js-backButton js-backButtonGamePage'>
+                                <img src='Images/Buttons/Back_Button.png' alt='Back button'>
+                            </button>  
+                        </div>
+                        <div class='scoreBoard'>
+                            <table class='scoreTable'>
+                                <tr id="row1">
+                                    <th>   <th>Done&nbsp;&nbsp;  <th>To Do
+                                <tr id="row2">
+                                    <th>Moves  <th>10  <th>4
+                                <tr id="row3">
+                                    <th>Squares  <th>35  <th>29
+                            </table>
+                        </div>
+                        <div class='queenDisplay'>
+                            <img src='Images/Queen_Display_Land.png' alt='Queen'>
+                        </div>
+                    </div>
+                    <div class='lowerRightContainer'>
+                            <div class='rulesButton'>
+                                <img src='Images/Buttons/Rules_Button.png' alt='Rules Button' class='gameButton'>
+                            </div>
+                            <div class='undoButton'>
+                                <img src='Images/Buttons/Undo_Button.png' alt='Undo Button' class='gameButton'>
+                            </div>
+                            <div class='redoButton'>
+                                <img src='Images/Buttons/Redo_Button.png' alt='Redo Button' class='gameButton'>
+                            </div>
+                            <div class='resetButton'>
+                                <img src='Images/Buttons/Reset_Button.png' alt='Reset Button' class='gameButton'>
+                            </div>
+                            <div class='loadSaveButton'>
+                                <img src='Images/Buttons/Load_Save_Button.png' alt='Load / Save Button' class='gameButton'>
+                            </div>
+                    </div>
                 </div>
             </div>
 
@@ -143,7 +183,7 @@
                             In the title screen, just click on the queen to start the puzzle.
                             This will take you to the main game board. The buttons there will
                             give you everything you need to play the game.
-                        </p>
+                        </p><br>
                         <h3>Credits:</h3>
                         <p>
                             This puzzle was created over a century ago by Henry Ernest Dudeney. 

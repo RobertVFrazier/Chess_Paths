@@ -90,7 +90,7 @@ h3{
 body, html{
     height: 100%;
 }
-
+    
 .js-backGround{
     position: relative;
     display: flex;
@@ -105,181 +105,461 @@ body, html{
     height: 100%;
 }
 
-/*   PAGES   */
 
-main{
-    height: 100%;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (orientation:portrait) {
+    
+    /*   PAGES   */
+    
+    .js-pageViewSplashHtml{
+        position: fixed;
+        background-image: url('../Images/Splash_Page.jpg');
+    }
+    
+    .js-pageViewGameBoardHtml{
+        position: fixed;
+        background-image: url('../Images/Wood.jpg');
+        background-size: cover;
+        display: none;
+    }
+    
+    .js-pageViewInfoHtml{
+        position: fixed;
+        background-color: snow;
+        display: none;
+    }
+    
+    .upperRightContainer{
+        display: none;
+    }
+    
+    .lowerRightContainer{
+        display: none;
+    }
+
+    .gamePageContainer{
+        display: grid;
+        grid-template-columns: 100vw;
+        grid-template-rows: 14vh 1fr 100vw 1vh;
+        grid-template-areas:
+            'header'
+            'controls'
+            'chessboard'
+            '.';
+    }
+    
+    .upperContainer{
+        grid-area: header;
+        display: grid;
+        grid-template-columns: 5% 3fr 1fr 1fr 5%;
+        grid-template-rows: 23% auto;
+        grid-gap: 1.5vw;
+        margin: 0 0 1vh;
+    }
+    
+    .gameTitlePort{
+        height: 5vh;
+        grid-column: 2 / span 2;
+    }
+    
+    .gameTitlePort img{
+        width: 100%;
+    }
+    
+    .navButtonBox{
+        grid-column: 4/ span 2;
+    }
+    
+    .navButtonBox img{
+        width: 100%;
+    }
+    
+    .scoreBoard{
+        width: 100%;
+        height: 90%;
+        border-radius: 7px;
+        padding: 2px, 8px, 2px;
+        font-size: 0.9rem;
+        font-weight: bold;
+        color: rgb(65, 159, 247);
+        background-color: yellow;
+        grid-column: 2/3;
+    }
+    
+    .scoreTable{
+        width: 100%;
+        font-size: 1em; 
+        align-self: start;
+    }
+    
+    th{
+        text-align-: center; 
+    }
+    
+    .queenDisplay{
+        grid-column: 3/4;
+    }
+    
+    .queenDisplay img{
+        width: 100%;
+    }
+    
+    .lowerContainer{
+        grid-area: controls;
+        display: grid;
+        background-image: url('../Images/Button_Frame_Background.jpg');
+        background-size: cover;
+        border-radius: 10px;
+        border: solid black 6px;
+        width: 90vw;
+        margin: 0 auto;
+        grid-template-columns: 1r 1fr 1fr;
+        grid-template-rows: 33% auto;
+        grid-template-areas: 
+            '. rules .'
+            'undo reset redo'
+            '. loadsave .';
+        justify-items: center;
+    }
+    
+    .rulesButton{
+        grid-area: rules;
+        grid-column: 2 / span 1;
+    }
+    
+    .undoButton{
+        grid-area: undo;
+        grid-column: 1 / span 1;
+    }
+    
+    .resetButton{
+        grid-area: reset;
+        grid-column: 2 / span 1;
+    }
+    
+    .redoButton{
+        grid-area: redo;
+        grid-column: 3 / span 1;
+    }
+    
+    .loadSaveButton{
+        grid-area: loadsave;
+        grid-column: 2 / span 1;
+    }
+    
+    /*   BUTTONS   */
+    
+    .navButton{
+        height: 10vh;
+        background: Transparent;
+        border: none;
+    }
+    
+    /* .navButton:focus{
+        height: 10vh;
+        background: no-repeat url('../Images/Buttons/Button_Glow.png');
+        background-size: cover;
+    } */
+    
+    .js-infoButton img{
+        height: 8vh;
+    }
+    
+    .js-backButton img{
+        height: 8vh;
+    }
+    
+    .queenButton{
+        position: absolute;
+        bottom: 10px;
+        left: 7px;
+        background-image: url('../Images/Buttons/Queen_Button.png');
+        background-size: cover;
+        background: Transparent;
+        border: none;
+    }
+    
+    .queenButton img{
+        height: 20vh;
+    }
+    
+    .queenButton:focus{
+        background: no-repeat url('../Images/Buttons/Queen_Button_Glow.png');
+        background-size: contain;
+    }
+    
+    .gameButton{
+        width: 20vw;
+    }
+
+    .boardContainer{
+        grid-area: chessboard;
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        background-image: url('../Images/Chess_Board.jpg');
+        background-size: cover;
+        border: 0;
+        width: 100%;
+    }
+    
+    .square{
+        height: 12.5vw;
+        width: 12.5vw;
+        background-size: cover;
+        float: left;
+    }
 }
 
-.js-pageViewSplashHtml{
-    position: fixed;
-    background-image: url('../Images/Splash_Page.jpg');
-    background-size: cover;
-    display: none;
-}
 
-.js-pageViewGameBoardHtml{
-    position: fixed;
-    background-image: url('../Images/Wood.jpg');
-    background-size: cover;
-}
 
-.js-pageViewInfoHtml{
-    position: fixed;
-    background-color: snow;
-    display: none;
-}
 
-.upperContainer{
-    display: grid;
-    grid-template-columns: 5% 3fr 1fr 1fr 5%;
-    grid-template-rows: 23% auto;
-    grid-gap: 1.5vw;
-    height: 14vh;
-    margin: 0 0 1vh;
-}
 
-.gameTitle{
-    height: 5vh;
-    grid-column: 2 / span 2;
-}
 
-.gameTitle img{
-    width: 100%;
-}
 
-.navButtonBox{
-    grid-column: 4/ span 2;
-}
 
-.navButtonBox img{
-    width: 100%;
-}
+@media (orientation:landscape) {
+    
+    /*   PAGES   */
+    
+    .js-pageViewSplashHtml{
+        position: fixed;
+        background-image: url('../Images/Splash_Page.jpg');
+    }
+    
+    .js-pageViewGameBoardHtml{
+        position: fixed;
+        background-image: url('../Images/Wood.jpg');
+        background-size: cover;
+        display: none;
+    }
+    
+    .js-pageViewInfoHtml{
+        position: fixed;
+        background-color: snow;
+        display: none;
+    }
+    
+    .upperContainer{
+        display: none;
+    }
+    
+    .lowerContainer{
+        display: none;
+    }
+    
+    .gamePageContainer{
+        display: grid;
+        grid-template-columns: 1vw 100vh 1fr;
+        grid-template-rows: 3.5fr 6.5fr;
+        grid-template-areas: 
+            '. chessboard header'
+            '. chessboard controls';
+    }
+    
+    .upperRightContainer{
+        grid-area: header;
+        grid-column: 3/4;
+        display: grid;
+        grid-template-columns: 0.5% 3fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        grid-gap: 0.5vh;
+        height: 33vh;
+        margin: 0 0 1vh;
+    }
+    
+    .gameTitleLand{
+        width: 20vw;
+        grid-column: 2/4;
+    }
+    
+    .gameTitleLand img{
+        height: 15vh;
+    }
+    
+    .navButtonBox{
+        grid-column: 4/ span 2;
+    }
+    
+    .navButtonBox img{
+        width: 100%;
+    }
+    
+    .scoreBoard{
+        width: 100%;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        font-weight: bold;
+        padding-top: 4px;
+        color: rgb(65, 159, 247);
+        background-color: yellow;
+        grid-column: 2/4;
+    }
+    
+    .scoreTable{
+        width: 100%;
+        font-size: 1em; 
+        align-self: start;
+    }
+    
+    th{
+        text-align-: center; 
+    }
+    
+    .queenDisplay{
+        grid-column: 4/5;
+    }
+    
+    .queenDisplay img{
+        height: 15vh;
+    }
+    
+    .lowerRightContainer{
+        grid-area: controls;
+        display: grid;
+        background-image: url('../Images/Button_Frame_Background.jpg');
+        background-size: cover;
+        border-radius: 10px;
+        border: solid black 6px;
+        width: 90%;
+        height: 56vh;
+        margin: 0 auto;
+        grid-template-columns: 2px 1fr 1fr 1fr 2px;
+        grid-template-rows: 2vh repeat(4, 12vh);
+        grid-template-areas: 
+            '. . . . .'
+            '. . rules . .'
+            '. undo . redo .'
+            '. . reset . .'
+            '. . loadsave . .';
+        justify-items: center;
+    }
+    
+    .rulesButton{
+        grid-area: rules;
+    }
+    
+    .rulesButton img{
+        height: 10vh;
+        width: auto;
+    }
+    
+    .undoButton{
+        grid-area: undo;
+    }
+    
+    .undoButton img{
+        height: 10vh;
+        width: auto;
+    }
+    
+    .redoButton{
+        grid-area: redo;
+    }
+    
+    .redoButton img{
+        height: 10vh;
+        width: auto;
+    }
+    
+    .resetButton{
+        grid-area: reset;
+    }
+    
+    .resetButton img{
+        height: 10vh;
+        width: auto;
+    }
+    
+    .loadSaveButton{
+        grid-area: loadsave;
+    }
+    
+    .loadSaveButton img{
+        height: 10vh;
+        width: auto;
+    }
+    
+    /*   BUTTONS   */
+    
+    .navButton{
+        height: 10vh;
+        background: Transparent;
+        border: none;
+    }
+    
+    /* .navButton:focus{
+        height: 10vh;
+        background: no-repeat url('../Images/Buttons/Button_Glow.png');
+        background-size: cover;
+    } */
+    
+    .js-infoButton img{
+        height: 8vh;
+    }
+    
+    .js-backButton img{
+        height: 8vh;
+    }
+    
+    .queenButton{
+        position: absolute;
+        bottom: 10px;
+        left: 7px;
+        background-image: url('../Images/Buttons/Queen_Button.png');
+        background-size: cover;
+        background: Transparent;
+        border: none;
+    }
+    
+    .queenButton img{
+        height: 20vh;
+    }
+    
+    .queenButton:focus{
+        background: no-repeat url('../Images/Buttons/Queen_Button_Glow.png');
+        background-size: contain;
+    }
+    
+    .gameButton{
+        width: 20vh;
+    }
 
-.scoreBoard{
-    width: 100%;
-    border-radius: 10px;
-    padding: 8px;
-    font-size: 0.9rem;
-    font-weight: bold;
-    color: rgb(65, 159, 247);
-    background-color: yellow;
-    grid-column: 2/3;
-}
-
-.scoreTable{
-    width: 100%;
-    font-size: 1em; 
-    align-self: start;
-}
-
-th{
-    text-align-: center; 
-}
-
-.queenDisplay{
-    grid-column: 3/4;
-}
-
-.queenDisplay img{
-    width: 100%;
-}
-
-.middleContainer{
-    display: grid;
-    background-image: url('../Images/Button_Frame_Background.jpg');
-    background-size: cover;
-    border-radius: 10px;
-    border: solid black 6px;
-    width: 90vw;
-    margin: 0 auto;
-    grid-template-columns: 1r 1fr 1fr;
-    grid-template-rows: 33% auto;
-    justify-items: center;
-}
-
-.rulesButton{
-    grid-column: 2 / span 1;
-}
-
-.undoButton{
-    grid-column: 1 / span 1;
-}
-
-.resetButton{
-    grid-column: 2 / span 1;
-}
-
-.redoButton{
-    grid-column: 3 / span 1;
-}
-
-.loadSaveButton{
-    grid-column: 2 / span 1;
-}
-
-/*   BUTTONS   */
-
-.navButton{
-    height: 10vh;
-    background: Transparent;
-    border: none;
-}
-
-/* .navButton:focus{
-    height: 10vh;
-    background: no-repeat url('../Images/Buttons/Button_Glow.png');
-    background-size: cover;
-} */
-
-.js-infoButton img{
-    height: 8vh;
-}
-
-.js-backButton img{
-    height: 8vh;
-}
-
-.queenButton{
-    position: absolute;
-    bottom: 10px;
-    left: 7px;
-    background-image: url('../Images/Buttons/Queen_Button.png');
-    background-size: cover;
-    background: Transparent;
-    border: none;
-}
-
-.queenButton img{
-    height: 20vh;
-}
-
-.queenButton:focus{
-    background: no-repeat url('../Images/Buttons/Queen_Button_Glow.png');
-    background-size: contain;
-}
-
-.gameButton{
-    width: 20vw;
+    .boardContainer{
+        grid-area: chessboard;
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        background-image: url('../Images/Chess_Board.jpg');
+        background-size: cover;
+        border: 0;
+        grid-column: 2/3;
+    }
+    
+    .square{
+        height: 12.5vh;
+        width: 12.5vh;
+        background-size: cover;
+        float: left;
+    }
 }
 
 /*   GAME BOARD   */
 
-.board{
-    position: absolute;
-    background-image: url('../Images/Chess_Board.jpg');
-    background-size: cover;
-    bottom: 1vh;
-    border: 0;
-    width: 100%;
-}
 
-.square{
-    height: 12.5vw;
-    width: 12.5vw;
-    background-size: cover;
-    float: left;
-}
 
 .A8{
     /* background-color: greenyellow; */
