@@ -104,45 +104,32 @@ body, html{
     width: 100%;
     height: 100%;
 }
+    
+/*   PAGES   */
 
+.js-pageViewSplashHtml{
+    position: fixed;
+    background-image: url('../Images/Splash_Page.jpg');
+}
 
+.js-pageViewGameBoardHtml{
+    position: fixed;
+    background-image: url('../Images/Wood.jpg');
+    background-size: cover;
+    display: none;
+}
 
+.js-pageViewInfoHtml{
+    position: fixed;
+    background-color: snow;
+    display: none;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+/****************/
+/*   PORTRAIT   */
+/****************/
 
 @media (orientation:portrait) {
-    
-    /*   PAGES   */
-    
-    .js-pageViewSplashHtml{
-        position: fixed;
-        background-image: url('../Images/Splash_Page.jpg');
-    }
-    
-    .js-pageViewGameBoardHtml{
-        position: fixed;
-        background-image: url('../Images/Wood.jpg');
-        background-size: cover;
-        display: none;
-    }
-    
-    .js-pageViewInfoHtml{
-        position: fixed;
-        background-color: snow;
-        display: none;
-    }
     
     .upperRightContainer{
         display: none;
@@ -325,34 +312,11 @@ body, html{
     }
 }
 
-
-
-
-
-
-
+/*****************/
+/*   LANDSCAPE   */
+/*****************/
 
 @media (orientation:landscape) {
-    
-    /*   PAGES   */
-    
-    .js-pageViewSplashHtml{
-        position: fixed;
-        background-image: url('../Images/Splash_Page.jpg');
-    }
-    
-    .js-pageViewGameBoardHtml{
-        position: fixed;
-        background-image: url('../Images/Wood.jpg');
-        background-size: cover;
-        display: none;
-    }
-    
-    .js-pageViewInfoHtml{
-        position: fixed;
-        background-color: snow;
-        display: none;
-    }
     
     .upperContainer{
         display: none;
