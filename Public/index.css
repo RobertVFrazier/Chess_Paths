@@ -337,13 +337,6 @@ body, html{
         width: 100%;
     }
     
-    .square{
-        height: 12.5vw;
-        width: 12.5vw;
-        background-size: cover;
-        float: left;
-    }
-    
     .js-movesButton{
         background: Transparent;
         border: none;
@@ -351,6 +344,45 @@ body, html{
     
     .js-movesButton img{    
         height: 14vw;
+    }
+    
+    /* .square{
+        height: 12.5vw;
+        width: 12.5vw;
+        background-size: cover;
+        float: left;
+    } */
+
+    .square {
+      border: solid 1px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    .square:hover {
+      box-shadow: 0 0 1px 2px rgba(0,255,0,0.6);
+    }
+    .handles-tl {
+      border-top: solid 2px green;
+      border-left: solid 2px green;
+      width: 5px;
+      height: 5px;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+    }
+    .handles-tr {
+      border-top: solid 2px green;
+      border-right: solid 2px green;
+      width: 5px;
+      height: 5px;
+      position: absolute;
+      top: 2px;
+      right: 2px
+    }
+    .handles {
+      display: none;
+    }
+    .square:hover > .handles {
+      display: block;
     }
 }
 
@@ -618,8 +650,11 @@ body, html{
 
 /*   GAME BOARD   */
 
-
-
+.visited{
+    background-color: rgba(243, 203, 44, 0.6);
+    border: 2px solid rgb(243, 203, 44);
+}
+ 
 .A8{
     /* background-color: greenyellow; */
     /* background-image: url('../Images/Squares/A8.jpg'); */

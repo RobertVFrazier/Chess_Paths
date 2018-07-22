@@ -122,6 +122,70 @@ const Listeners={
         this.handleBackButtonInfoPage();
         this.handleBackButtonGamePage();
         this.handlebackButtonRulesPage();
+        this.handleA1();
+        this.handleA2();
+        this.handleA3();
+        this.handleA4();
+        this.handleA5();
+        this.handleA6();
+        this.handleA7();
+        this.handleA8();
+        this.handleB1();
+        this.handleB2();
+        this.handleB3();
+        this.handleB4();
+        this.handleB5();
+        this.handleB6();
+        this.handleB7();
+        this.handleB8();
+        this.handleC1();
+        this.handleC2();
+        this.handleC3();
+        this.handleC4();
+        this.handleC5();
+        this.handleC6();
+        this.handleC7();
+        this.handleC8();
+        this.handleD1();
+        this.handleD2();
+        this.handleD3();
+        this.handleD4();
+        this.handleD5();
+        this.handleD6();
+        this.handleD7();
+        this.handleD8();
+        this.handleE1();
+        this.handleE2();
+        this.handleE3();
+        this.handleE4();
+        this.handleE5();
+        this.handleE6();
+        this.handleE7();
+        this.handleE8();
+        this.handleF1();
+        this.handleF2();
+        this.handleF3();
+        this.handleF4();
+        this.handleF5();
+        this.handleF6();
+        this.handleF7();
+        this.handleF8();
+        this.handleG1();
+        this.handleG2();
+        this.handleG3();
+        this.handleG4();
+        this.handleG5();
+        this.handleG6();
+        this.handleG7();
+        this.handleG8();
+        this.handleH1();
+        this.handleH2();
+        this.handleH3();
+        this.handleH4();
+        this.handleH5();
+        this.handleH6();
+        this.handleH7();
+        this.handleH8();
     },
 
     handleInfoButton: function(){
@@ -175,6 +239,550 @@ const Listeners={
             STORE.currentView='game';
             STORE.previousView='rules';
             renderPage.doShowPages();
+        });
+    },
+
+    //////////////
+    // COLUMN A //
+    //////////////
+
+    handleA1: function(){
+        // console.log('In the handleA1 method.');
+        $('.js-A1').on('click', function() {
+            console.log('Square A1 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleA2: function(){
+        // console.log('In the handleA2 method.');
+        $('.js-A2').on('click', function() {
+            console.log('Square A2 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleA3: function(){
+        // console.log('In the handleA3 method.');
+        $('.js-A3').on('click', function() {
+            console.log('Square A3 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleA4: function(){
+        // console.log('In the handleA4 method.');
+        $('.js-A4').on('click', function() {
+            console.log('Square A4 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleA5: function(){
+        // console.log('In the handleA5 method.');
+        $('.js-A5').on('click', function() {
+            console.log('Square A5 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleA6: function(){
+        // console.log('In the handleA6 method.');
+        $('.js-A6').on('click', function() {
+            console.log('Square A6 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleA7: function(){
+        // console.log('In the handleA7 method.');
+        $('.js-A7').on('click', function() {
+            console.log('Square A7 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleA8: function(){
+        // console.log('In the handleA8 method.');
+        $('.js-A8').on('click', function() {
+            console.log('Square A8 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    //////////////
+    // COLUMN B //
+    //////////////
+
+    handleB1: function(){
+        // console.log('In the handleB1 method.');
+        $('.js-B1').on('click', function() {
+            console.log('Square B1 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleB2: function(){
+        // console.log('In the handleB2 method.');
+        $('.js-B2').on('click', function() {
+            console.log('Square B2 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleB3: function(){
+        // console.log('In the handleB3 method.');
+        $('.js-B3').on('click', function() {
+            console.log('Square B3 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleB4: function(){
+        // console.log('In the handleB4 method.');
+        $('.js-B4').on('click', function() {
+            console.log('Square B4 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleB5: function(){
+        // console.log('In the handleB5 method.');
+        $('.js-B5').on('click', function() {
+            console.log('Square B5 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleB6: function(){
+        // console.log('In the handleB6 method.');
+        $('.js-B6').on('click', function() {
+            console.log('Square B6 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleB7: function(){
+        // console.log('In the handleB7 method.');
+        $('.js-B7').on('click', function() {
+            console.log('Square B7 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleB8: function(){
+        // console.log('In the handleB8 method.');
+        $('.js-B8').on('click', function() {
+            console.log('Square B8 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    //////////////
+    // COLUMN C //
+    //////////////
+
+    handleC1: function(){
+        // console.log('In the handleC1 method.');
+        $('.js-C1').on('click', function() {
+            console.log('Square C1 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleC2: function(){
+        // console.log('In the handleC2 method.');
+        $('.js-C2').on('click', function() {
+            console.log('Square C2 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleC3: function(){
+        // console.log('In the handleC3 method.');
+        $('.js-C3').on('click', function() {
+            console.log('Square C3 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleC4: function(){
+        // console.log('In the handleC4 method.');
+        $('.js-C4').on('click', function() {
+            console.log('Square C4 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleC5: function(){
+        // console.log('In the handleC5 method.');
+        $('.js-C5').on('click', function() {
+            console.log('Square C5 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleC6: function(){
+        // console.log('In the handleC6 method.');
+        $('.js-C6').on('click', function() {
+            console.log('Square C6 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleC7: function(){
+        // console.log('In the handleC7 method.');
+        $('.js-C7').on('click', function() {
+            console.log('Square C7 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleC8: function(){
+        // console.log('In the handleC8 method.');
+        $('.js-C8').on('click', function() {
+            console.log('Square C8 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    //////////////
+    // COLUMN D //
+    //////////////
+
+    handleD1: function(){
+        // console.log('In the handleD1 method.');
+        $('.js-D1').on('click', function() {
+            console.log('Square D1 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleD2: function(){
+        // console.log('In the handleD2 method.');
+        $('.js-D2').on('click', function() {
+            console.log('Square D2 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleD3: function(){
+        // console.log('In the handleD3 method.');
+        $('.js-D3').on('click', function() {
+            console.log('Square D3 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleD4: function(){
+        // console.log('In the handleD4 method.');
+        $('.js-D4').on('click', function() {
+            console.log('Square D4 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleD5: function(){
+        // console.log('In the handleD5 method.');
+        $('.js-D5').on('click', function() {
+            console.log('Square D5 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleD6: function(){
+        // console.log('In the handleD6 method.');
+        $('.js-D6').on('click', function() {
+            console.log('Square D6 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleD7: function(){
+        // console.log('In the handleD7 method.');
+        $('.js-D7').on('click', function() {
+            console.log('Square D7 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleD8: function(){
+        // console.log('In the handleD8 method.');
+        $('.js-D8').on('click', function() {
+            console.log('Square D8 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    //////////////
+    // COLUMN E //
+    //////////////
+
+    handleE1: function(){
+        // console.log('In the handleE1 method.');
+        $('.js-E1').on('click', function() {
+            console.log('Square E1 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleE2: function(){
+        // console.log('In the handleE2 method.');
+        $('.js-E2').on('click', function() {
+            console.log('Square E2 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleE3: function(){
+        // console.log('In the handleE3 method.');
+        $('.js-E3').on('click', function() {
+            console.log('Square E3 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleE4: function(){
+        // console.log('In the handleE4 method.');
+        $('.js-E4').on('click', function() {
+            console.log('Square E4 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleE5: function(){
+        // console.log('In the handleE5 method.');
+        $('.js-E5').on('click', function() {
+            console.log('Square E5 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleE6: function(){
+        // console.log('In the handleE6 method.');
+        $('.js-E6').on('click', function() {
+            console.log('Square E6 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleE7: function(){
+        // console.log('In the handleE7 method.');
+        $('.js-E7').on('click', function() {
+            console.log('Square E7 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleE8: function(){
+        // console.log('In the handleE8 method.');
+        $('.js-E8').on('click', function() {
+            console.log('Square E8 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    //////////////
+    // COLUMN F //
+    //////////////
+
+    handleF1: function(){
+        // console.log('In the handleF1 method.');
+        $('.js-F1').on('click', function() {
+            console.log('Square F1 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleF2: function(){
+        // console.log('In the handleF2 method.');
+        $('.js-F2').on('click', function() {
+            console.log('Square F2 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleF3: function(){
+        // console.log('In the handleF3 method.');
+        $('.js-F3').on('click', function() {
+            console.log('Square F3 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleF4: function(){
+        // console.log('In the handleF4 method.');
+        $('.js-F4').on('click', function() {
+            console.log('Square F4 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleF5: function(){
+        // console.log('In the handleF5 method.');
+        $('.js-F5').on('click', function() {
+            console.log('Square F5 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleF6: function(){
+        // console.log('In the handleF6 method.');
+        $('.js-F6').on('click', function() {
+            console.log('Square F6 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleF7: function(){
+        // console.log('In the handleF7 method.');
+        $('.js-F7').on('click', function() {
+            console.log('Square F7 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleF8: function(){
+        // console.log('In the handleF8 method.');
+        $('.js-F8').on('click', function() {
+            console.log('Square F8 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    //////////////
+    // COLUMN G //
+    //////////////
+
+    handleG1: function(){
+        // console.log('In the handleG1 method.');
+        $('.js-G1').on('click', function() {
+            console.log('Square G1 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleG2: function(){
+        // console.log('In the handleG2 method.');
+        $('.js-G2').on('click', function() {
+            console.log('Square G2 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleG3: function(){
+        // console.log('In the handleG3 method.');
+        $('.js-G3').on('click', function() {
+            console.log('Square G3 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleG4: function(){
+        // console.log('In the handleG4 method.');
+        $('.js-G4').on('click', function() {
+            console.log('Square G4 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleG5: function(){
+        // console.log('In the handleG5 method.');
+        $('.js-G5').on('click', function() {
+            console.log('Square G5 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleG6: function(){
+        // console.log('In the handleG6 method.');
+        $('.js-G6').on('click', function() {
+            console.log('Square G6 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleG7: function(){
+        // console.log('In the handleG7 method.');
+        $('.js-G7').on('click', function() {
+            console.log('Square G7 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleG8: function(){
+        // console.log('In the handleG8 method.');
+        $('.js-G8').on('click', function() {
+            console.log('Square G8 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    //////////////
+    // COLUMN H //
+    //////////////
+
+    handleH1: function(){
+        // console.log('In the handleH1 method.');
+        $('.js-H1').on('click', function() {
+            console.log('Square H1 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleH2: function(){
+        // console.log('In the handleH2 method.');
+        $('.js-H2').on('click', function() {
+            console.log('Square H2 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleH3: function(){
+        // console.log('In the handleH3 method.');
+        $('.js-H3').on('click', function() {
+            console.log('Square H3 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleH4: function(){
+        // console.log('In the handleH4 method.');
+        $('.js-H4').on('click', function() {
+            console.log('Square H4 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleH5: function(){
+        // console.log('In the handleH5 method.');
+        $('.js-H5').on('click', function() {
+            console.log('Square H5 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleH6: function(){
+        // console.log('In the handleH6 method.');
+        $('.js-H6').on('click', function() {
+            console.log('Square H6 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleH7: function(){
+        // console.log('In the handleH7 method.');
+        $('.js-H7').on('click', function() {
+            console.log('Square H7 clicked.');
+            $(this).toggleClass("visited");
+        });
+    },
+
+    handleH8: function(){
+        // console.log('In the handleH8 method.');
+        $('.js-H8').on('click', function() {
+            console.log('Square H8 clicked.');
+            $(this).toggleClass("visited");
         });
     }
 };
