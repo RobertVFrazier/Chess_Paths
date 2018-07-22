@@ -75,8 +75,6 @@ h2{
     font-size: 1.5rem;
     font-display: bold;
     text-align: center;
-    margin-top: 0;
-    margin-bottom: 4px;
 }
 
 h3{
@@ -123,6 +121,10 @@ body, html{
     position: fixed;
     background-color: snow;
     display: none;
+}
+
+.icons{
+    width: 90vw;
 }
 
 /****************/
@@ -232,9 +234,16 @@ body, html{
         border: none;
     }
     
+    .js-backButtonRulesPage{
+        grid-area: header;
+        justify-self: end;
+        background: Transparent;
+        border: none;
+    }
+    
     .scrollableContent{
         grid-area: text;
-        height: 75vh;
+        height: 90vh;
         overflow: auto;
         padding: 3vw;
     }
@@ -333,6 +342,15 @@ body, html{
         width: 12.5vw;
         background-size: cover;
         float: left;
+    }
+    
+    .js-movesButton{
+        background: Transparent;
+        border: none;
+    }
+    
+    .js-movesButton img{    
+        height: 14vw;
     }
 }
 
@@ -552,6 +570,49 @@ body, html{
         width: 12.5vh;
         background-size: cover;
         float: left;
+    }
+
+    .textPageContainer{
+        display: grid;
+        grid-template-columns: 4fr 1fr;
+        grid-template-areas: 
+            'title header'
+            'text text';
+    }
+    
+    .js-backButtonInfoPage{
+        grid-area: header;
+        justify-self: end;
+        background: Transparent;
+        border: none;
+    }
+
+    .title{
+        grid-area: title;
+        align-self: center;
+    }
+        
+    .js-backButtonRulesPage{
+        grid-area: header;
+        justify-self: end;
+        background: Transparent;
+        border: none;
+    }
+    
+    .scrollableContent{
+        grid-area: text;
+        height: 75vh;
+        overflow: auto;
+        padding: 3vw;
+    }
+    
+    .js-movesButton{
+        background: Transparent;
+        border: none;
+    }
+    
+    .js-movesButton img{
+        height: 14vh;
     }
 }
 
@@ -877,30 +938,4 @@ body, html{
 .H1{
     /* background-color: greenyellow; */
     /* background-image: url('../Images/Squares/H1.jpg'); */
-}
-
-.textPageContainer{
-    display: grid;
-    grid-template-columns: 4fr 1fr;
-    grid-template-areas: 
-        '. header'
-        'text text';
-}
-
-.js-backButtonInfoPage{
-    grid-area: header;
-    justify-self: end;
-    background: Transparent;
-    border: none;
-}
-
-.scrollableContent{
-    grid-area: text;
-    height: 90vh;
-    overflow: auto;
-    padding: 3vw;
-}
-
-.icons{
-    width: 90vw;
 }

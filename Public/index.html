@@ -45,7 +45,7 @@
                         </div>
                     </div>
                     <div class='lowerContainer'>
-                            <div class='rulesButton'>
+                            <div class='rulesButton js-rulesButton'>
                                 <img src='Images/Buttons/Rules_Button.png' alt='Rules Button' class='gameButton'>
                             </div>
                             <div class='undoButton'>
@@ -151,7 +151,7 @@
                         </div>
                     </div>
                     <div class='lowerRightContainer'>
-                            <div class='rulesButton'>
+                            <div class='rulesButton js-rulesButton'>
                                 <img src='Images/Buttons/Rules_Button.png' alt='Rules Button' class='gameButton'>
                             </div>
                             <div class='undoButton'>
@@ -173,12 +173,14 @@
             <!-- Info page -->
             <div class='js-backGround js-pageViewInfoHtml'>
                 <div class='textPageContainer'>
+                        <div class='title'>
+                                <h2>Information</h2>
+                        </div>
                     <button class='js-backButton js-backButtonInfoPage'>
                         <img src='Images/Buttons/Back_Button.png' alt='Back button'>
                     </button>
                     <div class='scrollableContent'>
-                        <h2>Information</h2>
-                        <h3>Welcome to Chess Paths, a simple puzzle game.</center></h3>                
+                        <h3>Welcome to Chess Paths, a simple puzzle game.</center></h3><br>
                         <p>
                             In the title screen, just click on the queen to start the puzzle.
                             This will take you to the main game board. The buttons there will
@@ -205,10 +207,57 @@
                         </p><br>
                         <p>No game development platforms or kits or plugins. No web frameworks. 
                             It's all my own code in Javascript, jQuery, HTML, and CSS.
-                        </p>
+                        </p><br><br>
                     </div>
                 </div>
             </div>
+
+            <!-- Rules page -->
+            <div class='js-backGround js-pageViewRulesHtml'>
+                <div class='textPageContainer'>
+                    <div class='title'>
+                            <h2>Rules</h2>
+                    </div>
+                    <button class='js-backButton js-backButtonRulesPage'>
+                        <img src='Images/Buttons/Back_Button.png' alt='Back button'>
+                    </button>
+                    <div class='scrollableContent'>
+                        <h3>Instructions for playing the Chess Paths queen puzzle.</center></h3><br>
+                        <p>Click or tap on the chessboard to place the queen. (Keyboard users: tab to the chessboard, 
+                            use the arrow keys to move, then hit Space or Enter to place the queen.) Placing the 
+                            queen does not count as a move, but it does mark the square as visited.
+                        </p><br>
+                        <p>You have fourteen moves to visit each square on the chessboard and end on a square next to 
+                            the square you started from. A square is visited if the queen has either moved through it, 
+                            or landed on it.
+                        </p><br>
+                        <p>So, if you start on square A1, lower left corner, and move to square H1, lower right corner, 
+                            that is one move, with eight squares visited.
+                        </p><br>
+                        <p>Only moves which are legal for a chess queen to make will be allowed. If you are not familiar 
+                            with the legal moves for a queen, click the Moves button below. Short version: a queen can move 
+                            in straight lines only: horizontally, vertically, or in 45 degree diagonals, any number of 
+                            squares, until she reaches the edge of the board.
+                        </p><br>
+                        <p>
+                            <button class='js-movesButton'>
+                                <img src='Images/Buttons/Moves_Button.png' alt='Moves button'>
+                            </button>
+                        </p><br>
+                        <p>Use the Undo and Redo buttons (the curving left and right arrow buttons) as often as you like. There
+                            is no penalty in the game for undoing moves. The Reset button will reset the game to before you placed 
+                            the queen on the board.
+                        </p><br>
+                        <p>Click the Load/Save button to open a new screen. You will need to sign up (or log in, if you have 
+                            already signed up) to save or load games. You will only need to give a user name and password. It's 
+                            only to keep different people's games separate. I won't collect any other information from you.
+                        </p><br>
+                        <p>That's it. Have fun, and good luck!
+                        </p><br><br>
+                    </div>
+                </div>
+            </div>
+
         </main>
         <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
         <script src='index.js'></script>

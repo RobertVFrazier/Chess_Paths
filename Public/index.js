@@ -43,6 +43,13 @@ const generateHtml={
         let pageInfoHtml=
         $('div.js-pageViewInstructionsHtml').html(pageInfoHtml);
         $('div.js-pageViewInstructionsHtml').hide();
+    },
+
+    rulesHtml: function(){
+        // console.log('In the rulesHtml method.');
+        let pageRulesHtml=
+        $('div.js-pageViewInstructionsHtml').html(pageRulesHtml);
+        $('div.js-pageViewInstructionsHtml').hide();
     }
 };
 
@@ -52,14 +59,16 @@ Step 1b: Render each HTML page, based on the current state.
 
 const renderPage={
    doShowPages: function(){
-        // console.log('In the doShowPages method.');
+        console.log('In the doShowPages method.');
         if(STORE.currentView==='splash'){
             this.splashPage();
         }else if(STORE.currentView==='info'){
             this.infoPage();
         }else if(STORE.currentView==='game'){
-        this.gamePage();
-    }
+            this.gamePage();
+        }else if(STORE.currentView==='rules'){
+            this.rulesPage();
+        }
    },
 
     showCurrentPage: function(pageToShow){
@@ -67,6 +76,7 @@ const renderPage={
         $('div.js-pageViewSplashHtml').hide();
         $('div.js-pageViewInfoHtml').hide();
         $('div.js-pageViewGameBoardHtml').hide();
+        $('div.js-pageViewRulesHtml').hide();
         $(pageToShow).show();
     },
 
@@ -91,6 +101,12 @@ const renderPage={
         this.showCurrentPage('div.js-pageViewGameBoardHtml');
         $('.js-backButtonGamePage').focus();
     },
+
+    rulesPage: function(){
+        console.log('In the rulesPage method.');
+        this.showCurrentPage('div.js-pageViewRulesHtml');
+        $('.js-backButtonRulesPage').focus();
+    }
 };
 
 /******************************************************** 
@@ -102,12 +118,14 @@ const Listeners={
         // console.log('In the listen method.');
         this.handleInfoButton();
         this.handleQueenButton();
+        this.handleRulesButton();
         this.handleBackButtonInfoPage();
         this.handleBackButtonGamePage();
+        this.handlebackButtonRulesPage();
     },
 
     handleInfoButton: function(){
-        // console.log('In the handleInfoButton method.');
+        console.log('In the handleInfoButton method.');
         $('.js-infoButton').on('click', function() {
             STORE.currentView='info';
             STORE.previousView='splash';
@@ -116,10 +134,20 @@ const Listeners={
     },
 
     handleQueenButton: function(){
-        // console.log('In the handleQueenButton method.');
+        console.log('In the handleQueenButton method.');
         $('.js-queenButton').on('click', function() {
             STORE.currentView='game';
             STORE.previousView='splash';
+            renderPage.doShowPages();
+        });
+    },
+
+    handleRulesButton: function(){
+        console.log('In the handleRulesButton method.');
+        $('.js-rulesButton').on('click', function() {
+            alert('Hey');
+            STORE.currentView='rules';
+            STORE.previousView='game';
             renderPage.doShowPages();
         });
     },
@@ -141,6 +169,15 @@ const Listeners={
             renderPage.doShowPages();
         });
     },
+
+    handlebackButtonRulesPage: function(){
+        // console.log('In the handlebackButtonRulesPage method.');
+        $('.js-backButtonRulesPage').on('click', function() {
+            STORE.currentView='game';
+            STORE.previousView='rules';
+            renderPage.doShowPages();
+        });
+    }
 };
 
 /******************************************************** 
@@ -156,7 +193,6 @@ const Listeners={
 
 function main(){
     // console.log('Begin the program');
-    // generateHtml.doHtmlPages();
     renderPage.doShowPages();
     Listeners.listen();
 };
