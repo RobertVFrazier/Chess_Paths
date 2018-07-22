@@ -153,10 +153,11 @@ body, html{
     .upperContainer{
         grid-area: header;
         display: grid;
-        grid-template-columns: 5% 3fr 1fr 1fr 5%;
+        grid-template-columns: 5% 3fr 1fr 1fr 3%;
         grid-template-rows: 23% auto;
         grid-gap: 1.5vw;
         margin: 0 0 1vh;
+        justify-items: left;
     }
     
     .gameTitlePort{
@@ -165,14 +166,6 @@ body, html{
     }
     
     .gameTitlePort img{
-        width: 100%;
-    }
-    
-    .navButtonBox{
-        grid-column: 4/ span 2;
-    }
-    
-    .navButtonBox img{
         width: 100%;
     }
     
@@ -215,7 +208,7 @@ body, html{
         border: solid black 6px;
         width: 90vw;
         margin: 0 auto;
-        grid-template-columns: 1r 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         grid-template-rows: 33% auto;
         grid-template-areas: 
             '. rules .'
@@ -223,6 +216,45 @@ body, html{
             '. loadsave .';
         justify-items: center;
     }
+
+    .textPageContainer{
+        display: grid;
+        grid-template-columns: 4fr 1fr;
+        grid-template-areas: 
+            '. header'
+            'text text';
+    }
+    
+    .js-backButtonInfoPage{
+        grid-area: header;
+        justify-self: end;
+        background: Transparent;
+        border: none;
+    }
+    
+    .scrollableContent{
+        grid-area: text;
+        height: 75vh;
+        overflow: auto;
+        padding: 3vw;
+    }
+    
+    /*   BUTTONS   */
+    
+    .navButton{
+        grid-column: 4/ span 2;
+        height: 9vh;
+        width: 23vw;
+        background: Transparent;
+        border: none;
+    }
+    
+    /* .navButton:focus{
+        height: 10vh;
+        width: 26vw;
+        background: no-repeat url('../Images/Buttons/Button_Glow.png');
+        background-size: cover;
+    } */
     
     .rulesButton{
         grid-area: rules;
@@ -249,19 +281,11 @@ body, html{
         grid-column: 2 / span 1;
     }
     
-    /*   BUTTONS   */
-    
-    .navButton{
-        height: 10vh;
-        background: Transparent;
-        border: none;
+    .js-infoButton{
+        position: absolute;
+        top: 0.5vh;
+        right: 3vw;
     }
-    
-    /* .navButton:focus{
-        height: 10vh;
-        background: no-repeat url('../Images/Buttons/Button_Glow.png');
-        background-size: cover;
-    } */
     
     .js-infoButton img{
         height: 8vh;
@@ -344,9 +368,13 @@ body, html{
         grid-gap: 0.5vh;
         height: 33vh;
         margin: 0 0 1vh;
+        grid-template-areas: 
+            '. title button'
+            '. score display';
     }
     
     .gameTitleLand{
+        grid-area: title;
         width: 20vw;
         grid-column: 2/4;
     }
@@ -355,15 +383,8 @@ body, html{
         height: 15vh;
     }
     
-    .navButtonBox{
-        grid-column: 4/ span 2;
-    }
-    
-    .navButtonBox img{
-        width: 100%;
-    }
-    
     .scoreBoard{
+        grid-area: score;
         width: 100%;
         border-radius: 10px;
         font-size: 0.9rem;
@@ -385,6 +406,7 @@ body, html{
     }
     
     .queenDisplay{
+        grid-area: display;
         grid-column: 4/5;
     }
     
@@ -466,18 +488,30 @@ body, html{
         border: none;
     }
     
+    .navButtonBox{
+        grid-area: button;
+        grid-column: 3/ span 2;
+    }
+    
     /* .navButton:focus{
         height: 10vh;
         background: no-repeat url('../Images/Buttons/Button_Glow.png');
         background-size: cover;
     } */
     
-    .js-infoButton img{
-        height: 8vh;
+    .js-infoButton{
+        position: absolute;
+        top: 0.5vh;
+        right: 1vw;
     }
     
+    .js-infoButton img{
+        height: 8vw;
+    }
+
     .js-backButton img{
-        height: 8vh;
+        height: 8vw;
+        width: auto;
     }
     
     .queenButton{
@@ -491,7 +525,7 @@ body, html{
     }
     
     .queenButton img{
-        height: 20vh;
+        height: 20vw;
     }
     
     .queenButton:focus{
@@ -847,9 +881,21 @@ body, html{
 
 .textPageContainer{
     display: grid;
+    grid-template-columns: 4fr 1fr;
+    grid-template-areas: 
+        '. header'
+        'text text';
+}
+
+.js-backButtonInfoPage{
+    grid-area: header;
+    justify-self: end;
+    background: Transparent;
+    border: none;
 }
 
 .scrollableContent{
+    grid-area: text;
     height: 90vh;
     overflow: auto;
     padding: 3vw;
@@ -858,188 +904,3 @@ body, html{
 .icons{
     width: 90vw;
 }
-
-  /**************************************************/
-  /* EVERYTHING BELOW HERE IS FROM RANSOM NOTE APP. */
-  /**************************************************/
-
-/*
-
-
-p{
-    font-weight: 600;
-    padding-top: 0.75em;
-}
-
-.techNote{
-    font-weight: 300;
-    font-size: 0.8em;
-}
-
-.js-pageViewMainHtml{
-    height: 100%;
-    padding: 10px;
-    background-image: url('Main_Back.jpg');
-    background-size: initial;
-    background-repeat: repeat;
-    background-color: linen;
-}
-
-.mainBox{
-    width: 350px;
-    border: solid 1px grey;
-    margin: 0 auto;
-    padding-bottom: 20px;
-    background-color: rgba(234, 234, 234, 0.85);
-}
-
-.js-pageViewRansomNoteHtml{
-    position: relative;
-    height: 100vh;
-}
-
-h1{
-    font-size: 1.2em;
-    font-weight: 800;
-    padding-top: 15px;
-    text-align: center;
-}
-
-.js-textForm{
-    font-weight: 700;
-}
-
-body{
-    margin: 0;
-    padding: 0;
-    background: #302f2f;
-    text-align: center;
-}
-
-.finalHint{
-    width: 310px;
-    height: 18px;
-    margin: 0 auto;
-    padding: 0;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    font-size: 1.5em;
-    color: limegreen;
-}
-
-.buttonForm{
-    position: absolute;
-    bottom: 3px;
-    width: 100%;
-}
-
-.buttonBox{
-    margin: 0 auto;
-    padding-bottom: 1vh;
-    min-height: 30px;
-    height: 5vh;
-    width: 200px;
-}
-
-.js-button{
-    font-family: 'Archivo Black', roboto, sans-serif;
-    margin: 0 auto;
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
-    color: rgb(6, 32, 146);
-    border-color: rgb(59, 147, 173);
-    background-color: rgb(174, 236, 255);
-    font-size: .9em;
-    font-weight: 700;
-}
-
-.ransomButtonBox{
-    width: 320px;
-}
-
-.js-shuffleButton, .js-distortButton, .js-undistortButton{
-    display: inline-block;
-    width: 30%;
-}
-
-.js-userButton{
-    width: 65%;
-}
-
-.instructionsBox{
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 20px;
-    text-align: left;
-    padding-right: 0.6em;
-    padding-left: 0.6em;
-    padding-bottom: 0.6em;
-    width: 85vw;
-    max-height: 70vh;
-    overflow: auto;
-    background-color: rgb(234, 234, 234);
-    border: 3px solid gray;
-}
-
-.inputBox{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 3px;
-}
-
-.js-inputLine{
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: bolder;
-    width: 190px;
-}
-
-.js-lineLabel{
-    padding-right: 4px;
-}
-
-.countDown{
-    display: inline-block;
-    width: 40px;
-    margin-left: 4px;
-    padding-top: 2px;
-    border: 1px solid gray;
-    background-color: white;
-}
-
-.display{
-    position: absolute;
-    width: 100%;
-    top: 20px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    padding-bottom: 0.7vh;
-    background-color: black;
-}
-
-.picTray{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    height: 13vh;
-    background-color: black;
-    color: white;
-}
-
-.js-charPic{
-    width: 5.2vw;
-    height: 5.2vw;
-    padding-left: 1px;
-    padding-right: 1px;
-}
-
-.space{
-    display: inline-block;
-    width: 2.6vw;
-    background-color: black;
-}
-
-*/
