@@ -59,7 +59,7 @@ Step 1b: Render each HTML page, based on the current state.
 
 const renderPage={
    doShowPages: function(){
-        console.log('In the doShowPages method.');
+        // console.log('In the doShowPages method.');
         if(STORE.currentView==='splash'){
             this.splashPage();
         }else if(STORE.currentView==='info'){
@@ -103,7 +103,7 @@ const renderPage={
     },
 
     rulesPage: function(){
-        console.log('In the rulesPage method.');
+        // console.log('In the rulesPage method.');
         this.showCurrentPage('div.js-pageViewRulesHtml');
         $('.js-backButtonRulesPage').focus();
     }
@@ -125,7 +125,7 @@ const Listeners={
     },
 
     handleInfoButton: function(){
-        console.log('In the handleInfoButton method.');
+        // console.log('In the handleInfoButton method.');
         $('.js-infoButton').on('click', function() {
             STORE.currentView='info';
             STORE.previousView='splash';
@@ -134,7 +134,7 @@ const Listeners={
     },
 
     handleQueenButton: function(){
-        console.log('In the handleQueenButton method.');
+        // console.log('In the handleQueenButton method.');
         $('.js-queenButton').on('click', function() {
             STORE.currentView='game';
             STORE.previousView='splash';
@@ -143,9 +143,8 @@ const Listeners={
     },
 
     handleRulesButton: function(){
-        console.log('In the handleRulesButton method.');
+        // console.log('In the handleRulesButton method.');
         $('.js-rulesButton').on('click', function() {
-            alert('Hey');
             STORE.currentView='rules';
             STORE.previousView='game';
             renderPage.doShowPages();
