@@ -7,6 +7,7 @@
 const STORE = {  // All the variables connected with the state of the DOM go here.
     currentView: 'splash',
     previousView: 'none',
+    startSquare: '',
     moves: [],
     redo: [],
     showLegalMoves: false  // Not an MVP feature.
@@ -118,14 +119,14 @@ Step 1c: Deal with the effects of selecting a square on the board.
 const processSquare={
     doSquare: function(selectedSquare){  // Lower left square -> selectedSquare = 'A1'
         // console.log('In the doSquare method.');
-        // console.log(`Square ${selectedSquare} was clicked.`);
-        let target='.js-'+selectedSquare;
-        // $(target).toggleClass("visited");
-        this.toggleVisited(target);
+        let moveCount=STORE.moves.length;
+        this.toggleVisited(selectedSquare);
     },
 
-    toggleVisited(target){
-        $(target).toggleClass("visited");
+    toggleVisited(visitSquare){  // Adds or removes a yellow overlay.
+        // console.log('In the toggleVisited method.');
+        $('.js-'+visitSquare).toggleClass("visited");
+        // console.log(`Square ${visitSquare} was changed.`);
     }
 };
 
