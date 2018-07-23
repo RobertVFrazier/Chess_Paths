@@ -121,7 +121,7 @@ const processSquare={
         let legalMove=false;
         if(STORE.moves.length>0){
             let previousSquare=STORE.moves[STORE.moves.length-1];
-            legalMove=this.testLegal(previousSquare, selectedSquare, legalMove);
+            legalMove=this.testLegal(previousSquare, selectedSquare);
             if(legalMove){
                 this.removePiece(previousSquare);
             }
@@ -132,7 +132,7 @@ const processSquare={
         }
     },
 
-    testLegal(currentSquare, proposedSquare, isLegal){  // Determines if a proposed move is legal.
+    testLegal(currentSquare, proposedSquare){  // Determines if a proposed move is legal.
         // console.log('In the testLegal method.');
         let currentColumnNumber=currentSquare.substring(0,1).charCodeAt(0)-64;
         let currentRowNumber=parseInt(currentSquare.substring(1), 10);
