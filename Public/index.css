@@ -654,7 +654,13 @@ body, html{
     background-color: rgba(243, 203, 44, 0.6);
     border: 2px solid rgb(243, 203, 44);
 }
- 
+
+.occupied{
+    background-image: url('../Images/2D_Pieces/Queen.png');
+    background-size: cover;
+}
+
+
 .A8{
     /* background-color: greenyellow; */
     /* background-image: url('../Images/Squares/A8.jpg'); */

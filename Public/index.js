@@ -119,14 +119,38 @@ Step 1c: Deal with the effects of selecting a square on the board.
 const processSquare={
     doSquare: function(selectedSquare){  // Lower left square -> selectedSquare = 'A1'
         // console.log('In the doSquare method.');
-        let moveCount=STORE.moves.length;
-        this.toggleVisited(selectedSquare);
+        let legalMove=false;
+        if(STORE.moves.length>0){
+            legalMove=this.testLegal(selectedSquare, legalMove);
+            console.log(legalMove);
+            if(legalMove){
+                this.removePiece(STORE.moves[STORE.moves.length-1]);
+            }
+        }
+        if(STORE.moves.length===0 || legalMove){
+            this.placePiece(selectedSquare);
+            STORE.moves.push(selectedSquare);
+        }
     },
 
-    toggleVisited(visitSquare){  // Adds or removes a yellow overlay.
-        // console.log('In the toggleVisited method.');
-        $('.js-'+visitSquare).toggleClass("visited");
-        // console.log(`Square ${visitSquare} was changed.`);
+    testLegal(proposedSquare, isLegal){  // Determines if a proposed move is legal.
+        console.log('In the testLegal method.');
+        isLegal = true;
+        console.log(proposedSquare, isLegal);
+        return isLegal;
+    },
+
+    placePiece(landedSquare){  // Adds a yellow overlay with chess piece on top.
+        // console.log('In the placePiece method.');
+        $('.js-'+landedSquare).addClass("visited");
+        $('.js-'+landedSquare).addClass("occupied");
+        // console.log(`Square ${landedSquare} was changed.`);
+    },
+
+    removePiece(vacatedSquare){  // Removes chess piece, leaving yellow overlay.
+        // console.log('In the removePiece method.');
+        $('.js-'+vacatedSquare).removeClass("occupied");
+        // console.log(`Square ${vacatedSquare} was changed.`);
     }
 };
 
