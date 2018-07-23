@@ -7,7 +7,9 @@
 const STORE = {  // All the variables connected with the state of the DOM go here.
     currentView: 'splash',
     previousView: 'none',
-    showLegalMoves: false
+    moves: [],
+    redo: [],
+    showLegalMoves: false  // Not an MVP feature.
   };
 
 /******************************************************** 
@@ -109,11 +111,29 @@ const renderPage={
     }
 };
 
+/******************************************************************** 
+Step 1c: Deal with the effects of selecting a square on the board. 
+*********************************************************************/
+
+const processSquare={
+    doSquare: function(selectedSquare){  // Lower left square -> selectedSquare = 'A1'
+        // console.log('In the doSquare method.');
+        // console.log(`Square ${selectedSquare} was clicked.`);
+        let target='.js-'+selectedSquare;
+        // $(target).toggleClass("visited");
+        this.toggleVisited(target);
+    },
+
+    toggleVisited(target){
+        $(target).toggleClass("visited");
+    }
+};
+
 /******************************************************** 
  * Step 2: Listen for user interactions.
  ********************************************************/
 
-const Listeners={
+const listeners={
     listen: function(){
         // console.log('In the listen method.');
         this.handleInfoButton();
@@ -249,64 +269,56 @@ const Listeners={
     handleA1: function(){
         // console.log('In the handleA1 method.');
         $('.js-A1').on('click', function() {
-            console.log('Square A1 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleA2: function(){
         // console.log('In the handleA2 method.');
         $('.js-A2').on('click', function() {
-            console.log('Square A2 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleA3: function(){
         // console.log('In the handleA3 method.');
         $('.js-A3').on('click', function() {
-            console.log('Square A3 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleA4: function(){
         // console.log('In the handleA4 method.');
         $('.js-A4').on('click', function() {
-            console.log('Square A4 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleA5: function(){
         // console.log('In the handleA5 method.');
         $('.js-A5').on('click', function() {
-            console.log('Square A5 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleA6: function(){
         // console.log('In the handleA6 method.');
         $('.js-A6').on('click', function() {
-            console.log('Square A6 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleA7: function(){
         // console.log('In the handleA7 method.');
         $('.js-A7').on('click', function() {
-            console.log('Square A7 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleA8: function(){
         // console.log('In the handleA8 method.');
         $('.js-A8').on('click', function() {
-            console.log('Square A8 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
@@ -317,64 +329,56 @@ const Listeners={
     handleB1: function(){
         // console.log('In the handleB1 method.');
         $('.js-B1').on('click', function() {
-            console.log('Square B1 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleB2: function(){
         // console.log('In the handleB2 method.');
         $('.js-B2').on('click', function() {
-            console.log('Square B2 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleB3: function(){
         // console.log('In the handleB3 method.');
         $('.js-B3').on('click', function() {
-            console.log('Square B3 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleB4: function(){
         // console.log('In the handleB4 method.');
         $('.js-B4').on('click', function() {
-            console.log('Square B4 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleB5: function(){
         // console.log('In the handleB5 method.');
         $('.js-B5').on('click', function() {
-            console.log('Square B5 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleB6: function(){
         // console.log('In the handleB6 method.');
         $('.js-B6').on('click', function() {
-            console.log('Square B6 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleB7: function(){
         // console.log('In the handleB7 method.');
         $('.js-B7').on('click', function() {
-            console.log('Square B7 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleB8: function(){
         // console.log('In the handleB8 method.');
         $('.js-B8').on('click', function() {
-            console.log('Square B8 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
@@ -385,64 +389,56 @@ const Listeners={
     handleC1: function(){
         // console.log('In the handleC1 method.');
         $('.js-C1').on('click', function() {
-            console.log('Square C1 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleC2: function(){
         // console.log('In the handleC2 method.');
         $('.js-C2').on('click', function() {
-            console.log('Square C2 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleC3: function(){
         // console.log('In the handleC3 method.');
         $('.js-C3').on('click', function() {
-            console.log('Square C3 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleC4: function(){
         // console.log('In the handleC4 method.');
         $('.js-C4').on('click', function() {
-            console.log('Square C4 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleC5: function(){
         // console.log('In the handleC5 method.');
         $('.js-C5').on('click', function() {
-            console.log('Square C5 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleC6: function(){
         // console.log('In the handleC6 method.');
         $('.js-C6').on('click', function() {
-            console.log('Square C6 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleC7: function(){
         // console.log('In the handleC7 method.');
         $('.js-C7').on('click', function() {
-            console.log('Square C7 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleC8: function(){
         // console.log('In the handleC8 method.');
         $('.js-C8').on('click', function() {
-            console.log('Square C8 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
@@ -453,64 +449,56 @@ const Listeners={
     handleD1: function(){
         // console.log('In the handleD1 method.');
         $('.js-D1').on('click', function() {
-            console.log('Square D1 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleD2: function(){
         // console.log('In the handleD2 method.');
         $('.js-D2').on('click', function() {
-            console.log('Square D2 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleD3: function(){
         // console.log('In the handleD3 method.');
         $('.js-D3').on('click', function() {
-            console.log('Square D3 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleD4: function(){
         // console.log('In the handleD4 method.');
         $('.js-D4').on('click', function() {
-            console.log('Square D4 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleD5: function(){
         // console.log('In the handleD5 method.');
         $('.js-D5').on('click', function() {
-            console.log('Square D5 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleD6: function(){
         // console.log('In the handleD6 method.');
         $('.js-D6').on('click', function() {
-            console.log('Square D6 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleD7: function(){
         // console.log('In the handleD7 method.');
         $('.js-D7').on('click', function() {
-            console.log('Square D7 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleD8: function(){
         // console.log('In the handleD8 method.');
         $('.js-D8').on('click', function() {
-            console.log('Square D8 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
@@ -521,64 +509,56 @@ const Listeners={
     handleE1: function(){
         // console.log('In the handleE1 method.');
         $('.js-E1').on('click', function() {
-            console.log('Square E1 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleE2: function(){
         // console.log('In the handleE2 method.');
         $('.js-E2').on('click', function() {
-            console.log('Square E2 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleE3: function(){
         // console.log('In the handleE3 method.');
         $('.js-E3').on('click', function() {
-            console.log('Square E3 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleE4: function(){
         // console.log('In the handleE4 method.');
         $('.js-E4').on('click', function() {
-            console.log('Square E4 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleE5: function(){
         // console.log('In the handleE5 method.');
         $('.js-E5').on('click', function() {
-            console.log('Square E5 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleE6: function(){
         // console.log('In the handleE6 method.');
         $('.js-E6').on('click', function() {
-            console.log('Square E6 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleE7: function(){
         // console.log('In the handleE7 method.');
         $('.js-E7').on('click', function() {
-            console.log('Square E7 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleE8: function(){
         // console.log('In the handleE8 method.');
         $('.js-E8').on('click', function() {
-            console.log('Square E8 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
@@ -589,64 +569,56 @@ const Listeners={
     handleF1: function(){
         // console.log('In the handleF1 method.');
         $('.js-F1').on('click', function() {
-            console.log('Square F1 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleF2: function(){
         // console.log('In the handleF2 method.');
         $('.js-F2').on('click', function() {
-            console.log('Square F2 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleF3: function(){
         // console.log('In the handleF3 method.');
         $('.js-F3').on('click', function() {
-            console.log('Square F3 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleF4: function(){
         // console.log('In the handleF4 method.');
         $('.js-F4').on('click', function() {
-            console.log('Square F4 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleF5: function(){
         // console.log('In the handleF5 method.');
         $('.js-F5').on('click', function() {
-            console.log('Square F5 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleF6: function(){
         // console.log('In the handleF6 method.');
         $('.js-F6').on('click', function() {
-            console.log('Square F6 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleF7: function(){
         // console.log('In the handleF7 method.');
         $('.js-F7').on('click', function() {
-            console.log('Square F7 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleF8: function(){
         // console.log('In the handleF8 method.');
         $('.js-F8').on('click', function() {
-            console.log('Square F8 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
@@ -657,64 +629,56 @@ const Listeners={
     handleG1: function(){
         // console.log('In the handleG1 method.');
         $('.js-G1').on('click', function() {
-            console.log('Square G1 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleG2: function(){
         // console.log('In the handleG2 method.');
         $('.js-G2').on('click', function() {
-            console.log('Square G2 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleG3: function(){
         // console.log('In the handleG3 method.');
         $('.js-G3').on('click', function() {
-            console.log('Square G3 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleG4: function(){
         // console.log('In the handleG4 method.');
         $('.js-G4').on('click', function() {
-            console.log('Square G4 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleG5: function(){
         // console.log('In the handleG5 method.');
         $('.js-G5').on('click', function() {
-            console.log('Square G5 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleG6: function(){
         // console.log('In the handleG6 method.');
         $('.js-G6').on('click', function() {
-            console.log('Square G6 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleG7: function(){
         // console.log('In the handleG7 method.');
         $('.js-G7').on('click', function() {
-            console.log('Square G7 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleG8: function(){
         // console.log('In the handleG8 method.');
         $('.js-G8').on('click', function() {
-            console.log('Square G8 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
@@ -725,64 +689,56 @@ const Listeners={
     handleH1: function(){
         // console.log('In the handleH1 method.');
         $('.js-H1').on('click', function() {
-            console.log('Square H1 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleH2: function(){
         // console.log('In the handleH2 method.');
         $('.js-H2').on('click', function() {
-            console.log('Square H2 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleH3: function(){
         // console.log('In the handleH3 method.');
         $('.js-H3').on('click', function() {
-            console.log('Square H3 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleH4: function(){
         // console.log('In the handleH4 method.');
         $('.js-H4').on('click', function() {
-            console.log('Square H4 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleH5: function(){
         // console.log('In the handleH5 method.');
         $('.js-H5').on('click', function() {
-            console.log('Square H5 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleH6: function(){
         // console.log('In the handleH6 method.');
         $('.js-H6').on('click', function() {
-            console.log('Square H6 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleH7: function(){
         // console.log('In the handleH7 method.');
         $('.js-H7').on('click', function() {
-            console.log('Square H7 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     },
 
     handleH8: function(){
         // console.log('In the handleH8 method.');
         $('.js-H8').on('click', function() {
-            console.log('Square H8 clicked.');
-            $(this).toggleClass("visited");
+            processSquare.doSquare(this.className.substring(10,12));
         });
     }
 };
@@ -801,7 +757,7 @@ const Listeners={
 function main(){
     // console.log('Begin the program');
     renderPage.doShowPages();
-    Listeners.listen();
+    listeners.listen();
 };
 
 $(main);
