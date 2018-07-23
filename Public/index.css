@@ -123,6 +123,10 @@ body, html{
     display: none;
 }
 
+.js-pageViewRulesHtml{
+    display: none;
+}
+
 .icons{
     width: 90vw;
 }
