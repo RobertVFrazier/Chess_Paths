@@ -286,6 +286,10 @@ const listeners={
         this.handleInfoButton();
         this.handleQueenButton();
         this.handleRulesButton();
+        this.handleResetButton();
+        this.handleUndoButton();
+        this.handleRedoButton();
+        this.handleLoadSaveButton();
         this.handleBackButtonInfoPage();
         this.handleBackButtonGamePage();
         this.handlebackButtonRulesPage();
@@ -316,6 +320,76 @@ const listeners={
             STORE.currentView='rules';
             STORE.previousView='game';
             renderPage.doShowPages();
+        });
+    },
+
+    handleResetButton: function(){
+        // console.log('In the handleResetButton method.');
+        $('.js-resetButton').on('click', function() {
+            STORE.moves=[];
+            STORE.redo=[];
+            STORE.scoreMoves=0;
+            STORE.scoreSquares=0;
+            STORE.targetMoves=14;
+            STORE.targetSquares=64;
+            for(let i=1; i<9; i++){
+                for(let j=1; j<9; j++){
+                    let resetSquare=String.fromCharCode(64+i)+(j);
+                    $('.js-'+resetSquare).removeClass("visited");
+                    $('.js-'+resetSquare).removeClass("occupied");
+                }
+            }
+            $('.scoreTableMovesDone').html(`${STORE.scoreMoves}`);
+            $('.scoreTableMovesToDo').html(`${STORE.targetMoves-STORE.scoreMoves}`);
+            $('.scoreTableSquaresDone').html(`${STORE.scoreSquares}`);
+            $('.scoreTableSquaresToDo').html(`${STORE.targetSquares-STORE.scoreSquares}`);
+        });
+    },
+
+    handleUndoButton: function(){
+        // console.log('In the handleUndoButton method.');
+        $('.js-undoButton').on('click', function() {
+            if(STORE.redo===[]){
+                STORE.redo=STORE.moves;
+            };
+            console.log(STORE.moves);
+            STORE.moves.pop();
+            console.log(STORE.moves);
+            let recording=STORE.moves;
+            STORE.moves=[];
+            STORE.scoreMoves=0;
+            STORE.scoreSquares=0;
+            STORE.targetMoves=14;
+            STORE.targetSquares=64;
+            for(let i=1; i<9; i++){
+                for(let j=1; j<9; j++){
+                    let resetSquare=String.fromCharCode(64+i)+(j);
+                    $('.js-'+resetSquare).removeClass("visited");
+                    $('.js-'+resetSquare).removeClass("occupied");
+                }
+            }
+            for(let k=0; k<recording.length; k++){
+                console.log(recording[k]);
+                processSquare.doSquare(recording[k]);
+            }
+            $('.scoreTableMovesDone').html(`${STORE.scoreMoves}`);
+            $('.scoreTableMovesToDo').html(`${STORE.targetMoves-STORE.scoreMoves}`);
+            $('.scoreTableSquaresDone').html(`${STORE.scoreSquares}`);
+            $('.scoreTableSquaresToDo').html(`${STORE.targetSquares-STORE.scoreSquares}`);
+        });
+    },
+
+    handleRedoButton: function(){
+        // console.log('In the handleRedoButton method.');
+        $('.js-redoButton').on('click', function() {
+            console.log('redo clicked');
+        });
+    },
+
+    handleLoadSaveButton: function(){
+        // console.log('In the handleLoadSaveButton method.');
+        $('.js-loadSaveButton').on('click', function() {
+            console.log('load/save clicked');
         });
     },
 

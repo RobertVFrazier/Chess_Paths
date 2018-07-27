@@ -48,16 +48,16 @@
                             <div class='rulesButton js-rulesButton'>
                                 <img src='Images/Buttons/Rules_Button.png' alt='Rules Button' class='gameButton'>
                             </div>
-                            <div class='undoButton'>
+                            <div class='undoButton js-undoButton'>
                                 <img src='Images/Buttons/Undo_Button.png' alt='Undo Button' class='gameButton'>
                             </div>
-                            <div class='resetButton'>
+                            <div class='resetButton js-resetButton'>
                                 <img src='Images/Buttons/Reset_Button.png' alt='Reset Button' class='gameButton'>
                             </div>
-                            <div class='redoButton'>
+                            <div class='redoButton js-redoButton'>
                                 <img src='Images/Buttons/Redo_Button.png' alt='Redo Button' class='gameButton'>
                             </div>
-                            <div class='loadSaveButton'>
+                            <div class='loadSaveButton js-loadSaveButton'>
                                 <img src='Images/Buttons/Load_Save_Button.png' alt='Load / Save Button' class='gameButton'>
                             </div>
                     </div>
@@ -140,10 +140,10 @@
                             <table class='scoreTable'>
                                 <tr id="row1">
                                     <th>   <th>Done&nbsp;&nbsp;  <th>To Do
-                                <tr id="row2">
-                                    <th>Moves  <th>10  <th>4
-                                <tr id="row3">
-                                    <th>Squares  <th>35  <th>29
+                                        <tr id="row2">
+                                            <th>Moves  <th><div class='scoreTableMovesDone'>0</div>  <th><div class='scoreTableMovesToDo'>0</div>
+                                        <tr id="row3">
+                                            <th>Squares  <th><div class='scoreTableSquaresDone'>0</div>  <th><div class='scoreTableSquaresToDo'>0</div>
                             </table>
                         </div>
                         <div class='queenDisplay'>
@@ -154,16 +154,16 @@
                             <div class='rulesButton js-rulesButton'>
                                 <img src='Images/Buttons/Rules_Button.png' alt='Rules Button' class='gameButton'>
                             </div>
-                            <div class='undoButton'>
+                            <div class='undoButton js-undoButton'>
                                 <img src='Images/Buttons/Undo_Button.png' alt='Undo Button' class='gameButton'>
                             </div>
-                            <div class='redoButton'>
+                            <div class='redoButton js-redoButton'>
                                 <img src='Images/Buttons/Redo_Button.png' alt='Redo Button' class='gameButton'>
                             </div>
-                            <div class='resetButton'>
+                            <div class='resetButton js-resetButton'>
                                 <img src='Images/Buttons/Reset_Button.png' alt='Reset Button' class='gameButton'>
                             </div>
-                            <div class='loadSaveButton'>
+                            <div class='loadSaveButton js-loadSaveButton'>
                                 <img src='Images/Buttons/Load_Save_Button.png' alt='Load / Save Button' class='gameButton'>
                             </div>
                     </div>
@@ -223,16 +223,23 @@
                     </button>
                     <div class='scrollableContent'>
                         <h3>Instructions for playing the Chess Paths queen puzzle.</center></h3><br>
+                        <p>Here is the challenge as originally written by Henry Ernest Dudeney: "To cover all the cells 
+                            of the chessboard going from the cell c5 to the cell d4 in exactly 14 legal movements of 
+                            the queen."</p><br>
+                        <p>There are other paths for the queen to visit all of the squares in 14 moves, but not ending
+                            up one square away from where she started. There are many more ways to cover the board in 15 
+                            moves.
+                        </p><br>
                         <p>Click or tap on the chessboard to place the queen. (Keyboard users: tab to the chessboard, 
                             use the arrow keys to move, then hit Space or Enter to place the queen.) Placing the 
                             queen does not count as a move, but it does mark the square as visited.
                         </p><br>
-                        <p>You have fourteen moves to visit each square on the chessboard and end on a square next to 
-                            the square you started from. A square is visited if the queen has either moved through it, 
-                            or landed on it.
+                        <p>You have fourteen moves to visit each square on the chessboard, starting from C5 and ending on 
+                            D4, one square away from where you started. A square is visited if the queen has either moved 
+                            through it, or landed on it.
                         </p><br>
-                        <p>So, if you start on square A1, lower left corner, and move to square H1, lower right corner, 
-                            that is one move, with eight squares visited.
+                        <p>So, if you were to start on square A1, lower left corner, and move to square H1, lower right 
+                            corner, that is one move, with eight squares visited.
                         </p><br>
                         <p>Only moves which are legal for a chess queen to make will be allowed. If you are not familiar 
                             with the legal moves for a queen, click the Moves button below. Short version: a queen can move 
