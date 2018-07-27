@@ -56,6 +56,13 @@ const generateHtml={
         let pageRulesHtml=
         $('div.js-pageViewInstructionsHtml').html(pageRulesHtml);
         $('div.js-pageViewInstructionsHtml').hide();
+    },
+
+    movesHtml: function(){
+        // console.log('In the movesHtml method.');
+        let pageMovesHtml=
+        $('div.js-pageViewInstructionsHtml').html(pageMovesHtml);
+        $('div.js-pageViewInstructionsHtml').hide();
     }
 };
 
@@ -74,6 +81,8 @@ const renderPage={
             this.gamePage();
         }else if(STORE.currentView==='rules'){
             this.rulesPage();
+        }else if(STORE.currentView==='moves'){
+            this.movesPage();
         }
    },
 
@@ -83,6 +92,7 @@ const renderPage={
         $('div.js-pageViewInfoHtml').hide();
         $('div.js-pageViewGameBoardHtml').hide();
         $('div.js-pageViewRulesHtml').hide();
+        $('div.js-pageViewMovesHtml').hide();
         $(pageToShow).show();
     },
 
@@ -116,6 +126,12 @@ const renderPage={
         // console.log('In the rulesPage method.');
         this.showCurrentPage('div.js-pageViewRulesHtml');
         $('.js-backButtonRulesPage').focus();
+    },
+
+    movesPage: function(){
+        // console.log('In the movesPage method.');
+        this.showCurrentPage('div.js-pageViewMovesHtml');
+        $('.js-backButtonMovesPage').focus();
     }
 };
 
@@ -302,6 +318,7 @@ const listeners={
         this.handleInfoButton();
         this.handleQueenButton();
         this.handleRulesButton();
+        this.handleMovesButton();
         this.handleResetButton();
         this.handleUndoButton();
         this.handleRedoButton();
@@ -309,6 +326,7 @@ const listeners={
         this.handleBackButtonInfoPage();
         this.handleBackButtonGamePage();
         this.handlebackButtonRulesPage();
+        this.handlebackButtonMovesPage();
         this.handleSquare();
     },
 
@@ -335,6 +353,15 @@ const listeners={
         $('.js-rulesButton').on('click', function() {
             STORE.currentView='rules';
             STORE.previousView='game';
+            renderPage.doShowPages();
+        });
+    },
+
+    handleMovesButton: function(){
+        // console.log('In the handleMovesButton method.');
+        $('.js-movesButton').on('click', function() {
+            STORE.currentView='moves';
+            STORE.previousView='rules';
             renderPage.doShowPages();
         });
     },
@@ -437,6 +464,15 @@ const listeners={
         });
     },
 
+    handlebackButtonMovesPage: function(){
+        // console.log('In the handlebackButtonMovesPage method.');
+        $('.js-backButtonMovesPage').on('click', function() {
+            STORE.currentView='rules';
+            STORE.previousView='moves';
+            renderPage.doShowPages();
+        });
+    },
+
     handleSquare: function(){
         // console.log('In the handleSquare method.');
         $('.square').click(function() {
@@ -450,7 +486,7 @@ const listeners={
  * Step 3: Get API data to match user inputs.
  ********************************************************/
 
-// const getFlickrPics={
+// const getGameData={
 // };
 
 /***************************** 
