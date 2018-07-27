@@ -137,6 +137,15 @@ const processSquare={
         if(STORE.moves.length===0){
             this.placePiece(selectedSquare);
             STORE.moves.push(selectedSquare);
+            if(STORE.moves.length>STORE.redo.length>0){
+                STORE.redo.push(selectedSquare);
+            };
+            for(let i=0; i<STORE.moves.length; i++){
+                if(STORE.moves[i]!==STORE.redo[i]){
+                    STORE.redo=[...STORE.moves];
+                    break;
+                }
+            }
             this.updateScoreBoard(0, 1);
         }else if(legalMoveString!==''){
             let previousSquare=STORE.moves[STORE.moves.length-1];
@@ -231,6 +240,15 @@ const processSquare={
             }
             this.placePiece(selectedSquare);
             STORE.moves.push(selectedSquare);
+            if(STORE.moves.length>STORE.redo.length>0){
+                STORE.redo.push(selectedSquare);
+            };
+            for(let i=0; i<STORE.moves.length; i++){
+                if(STORE.moves[i]!==STORE.redo[i]){
+                    STORE.redo=[...STORE.moves];
+                    break;
+                }
+            }
         }
     },
 
@@ -256,13 +274,11 @@ const processSquare={
         // console.log('In the placePiece method.');
         $('.js-'+landedSquare).addClass("visited");
         $('.js-'+landedSquare).addClass("occupied");
-        // console.log(`Square ${landedSquare} was changed.`);
     },
 
     removePiece(vacatedSquare){  // Removes chess piece, leaving yellow overlay.
         // console.log('In the removePiece method.');
         $('.js-'+vacatedSquare).removeClass("occupied");
-        // console.log(`Square ${vacatedSquare} was changed.`);
     },
 
     updateScoreBoard(movesincr, squaresincr){
@@ -349,13 +365,8 @@ const listeners={
     handleUndoButton: function(){
         // console.log('In the handleUndoButton method.');
         $('.js-undoButton').on('click', function() {
-            if(STORE.redo===[]){
-                STORE.redo=STORE.moves;
-            };
-            console.log(STORE.moves);
             STORE.moves.pop();
-            console.log(STORE.moves);
-            let recording=STORE.moves;
+            let recording=STORE.moves; // Cannot use STORE.moves in the second loop; it becomes endless.
             STORE.moves=[];
             STORE.scoreMoves=0;
             STORE.scoreSquares=0;
@@ -368,9 +379,8 @@ const listeners={
                     $('.js-'+resetSquare).removeClass("occupied");
                 }
             }
-            for(let k=0; k<recording.length; k++){
-                console.log(recording[k]);
-                processSquare.doSquare(recording[k]);
+            for(let i=0; i<recording.length; i++){
+                processSquare.doSquare(recording[i]);
             }
             $('.scoreTableMovesDone').html(`${STORE.scoreMoves}`);
             $('.scoreTableMovesToDo').html(`${STORE.targetMoves-STORE.scoreMoves}`);
@@ -382,7 +392,14 @@ const listeners={
     handleRedoButton: function(){
         // console.log('In the handleRedoButton method.');
         $('.js-redoButton').on('click', function() {
-            console.log('redo clicked');
+            for(let i=STORE.moves.length; i<STORE.redo.length; i++){
+                processSquare.doSquare(STORE.redo[i]);
+                break;
+            }
+            $('.scoreTableMovesDone').html(`${STORE.scoreMoves}`);
+            $('.scoreTableMovesToDo').html(`${STORE.targetMoves-STORE.scoreMoves}`);
+            $('.scoreTableSquaresDone').html(`${STORE.scoreSquares}`);
+            $('.scoreTableSquaresToDo').html(`${STORE.targetSquares-STORE.scoreSquares}`);
         });
     },
 
