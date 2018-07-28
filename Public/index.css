@@ -85,6 +85,10 @@ h3{
     margin-bottom: 3px;
 }
 
+em{
+    font-style: italic;
+}
+
 body, html{
     height: 100%;
 }
@@ -124,6 +128,10 @@ body, html{
 }
 
 .js-pageViewRulesHtml{
+    display: none;
+}
+
+.js-pageViewMovesHtml{
     display: none;
 }
 
