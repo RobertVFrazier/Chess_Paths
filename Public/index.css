@@ -388,6 +388,10 @@ body, html{
     .square:hover > .handles {
       display: block;
     }
+
+    .diagram{
+        height: 95vw;
+    }
 }
 
 /*****************/
@@ -649,6 +653,10 @@ body, html{
     
     .js-movesButton img{
         height: 14vh;
+    }
+
+    .diagram{
+        height: 75vh;
     }
 }
 
