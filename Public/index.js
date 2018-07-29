@@ -172,21 +172,21 @@ const processSquare={
                 if(newColNum>oldColNum){ // right
                     for(let i=1; i<(newColNum-oldColNum); i++){
                         let betweenSquare=String.fromCharCode(64+oldColNum+i)+(RowNum);
-                        if(document.querySelector(`.js-${betweenSquare}`).classList.contains("visited")===false){
+                        if(document.querySelector(`.js-${betweenSquare}`).classList.contains('visited')===false){
                             STORE.scoreSquares++;
                             this.visitSquare(betweenSquare);
                         }
                     }
-                    this.updateScoreBoard(1, document.querySelector(`.js-${selectedSquare}`).classList.contains("visited")===false ? 1 : 0);
+                    this.updateScoreBoard(1, document.querySelector(`.js-${selectedSquare}`).classList.contains('visited')===false ? 1 : 0);
                 }else if(newColNum<oldColNum){ // left
                     for(let i=1; i<(oldColNum-newColNum); i++){  
                         let betweenSquare=String.fromCharCode(64+oldColNum-i)+(RowNum);
-                        if(document.querySelector(`.js-${betweenSquare}`).classList.contains("visited")===false){
+                        if(document.querySelector(`.js-${betweenSquare}`).classList.contains('visited')===false){
                             STORE.scoreSquares++;
                             this.visitSquare(betweenSquare);
                         }
                     }
-                    this.updateScoreBoard(1, document.querySelector(`.js-${selectedSquare}`).classList.contains("visited")===false ? 1 : 0);
+                    this.updateScoreBoard(1, document.querySelector(`.js-${selectedSquare}`).classList.contains('visited')===false ? 1 : 0);
                 }
             }else if(legalMoveString==='V'){   // vertical move
                 let oldRowNum=parseInt(previousSquare.substring(1), 10);
@@ -195,21 +195,21 @@ const processSquare={
                 if(newRowNum>oldRowNum){ // up
                     for(let i=1; i<(newRowNum-oldRowNum); i++){
                         let betweenSquare=String.fromCharCode(64+ColNum)+(oldRowNum+i);
-                        if(document.querySelector(`.js-${betweenSquare}`).classList.contains("visited")===false){
+                        if(document.querySelector(`.js-${betweenSquare}`).classList.contains('visited')===false){
                             STORE.scoreSquares++;
                             this.visitSquare(betweenSquare);
                         }
                     }
-                    this.updateScoreBoard(1, document.querySelector(`.js-${selectedSquare}`).classList.contains("visited")===false ? 1 : 0);
+                    this.updateScoreBoard(1, document.querySelector(`.js-${selectedSquare}`).classList.contains('visited')===false ? 1 : 0);
                 }else if(newRowNum<oldRowNum){ // down
                     for(let i=1; i<(oldRowNum-newRowNum); i++){  
                         let betweenSquare=String.fromCharCode(64+ColNum)+(oldRowNum-i);
-                        if(document.querySelector(`.js-${betweenSquare}`).classList.contains("visited")===false){
+                        if(document.querySelector(`.js-${betweenSquare}`).classList.contains('visited')===false){
                             STORE.scoreSquares++;
                             this.visitSquare(betweenSquare);
                         }
                     }
-                    this.updateScoreBoard(1, document.querySelector(`.js-${selectedSquare}`).classList.contains("visited")===false ? 1 : 0);
+                    this.updateScoreBoard(1, document.querySelector(`.js-${selectedSquare}`).classList.contains('visited')===false ? 1 : 0);
                 }
             }else if(legalMoveString==='D'){   // diagonal move
                 let oldColNum=previousSquare.substring(0,1).charCodeAt(0)-64;
@@ -219,39 +219,39 @@ const processSquare={
                 if(newColNum>oldColNum && newRowNum>oldRowNum){ // up and right
                     for(let i=1; i<(newColNum-oldColNum); i++){
                         let betweenSquare=String.fromCharCode(64+oldColNum+i)+(oldRowNum+i);
-                        if(document.querySelector(`.js-${betweenSquare}`).classList.contains("visited")===false){
+                        if(document.querySelector(`.js-${betweenSquare}`).classList.contains('visited')===false){
                             STORE.scoreSquares++;
                             this.visitSquare(betweenSquare);
                         }
                     }
-                    this.updateScoreBoard(1, document.querySelector(`.js-${selectedSquare}`).classList.contains("visited")===false ? 1 : 0);
+                    this.updateScoreBoard(1, document.querySelector(`.js-${selectedSquare}`).classList.contains('visited')===false ? 1 : 0);
                 }else if(newColNum>oldColNum && newRowNum<oldRowNum){ // down and right
                     for(let i=1; i<(newColNum-oldColNum); i++){
                         let betweenSquare=String.fromCharCode(64+oldColNum+i)+(oldRowNum-i);
-                        if(document.querySelector(`.js-${betweenSquare}`).classList.contains("visited")===false){
+                        if(document.querySelector(`.js-${betweenSquare}`).classList.contains('visited')===false){
                             STORE.scoreSquares++;
                             this.visitSquare(betweenSquare);
                         }
                     }
-                    this.updateScoreBoard(1, document.querySelector(`.js-${selectedSquare}`).classList.contains("visited")===false ? 1 : 0);
+                    this.updateScoreBoard(1, document.querySelector(`.js-${selectedSquare}`).classList.contains('visited')===false ? 1 : 0);
                 }else if(newColNum<oldColNum && newRowNum<oldRowNum){ // down and left
                     for(let i=1; i<(oldColNum-newColNum); i++){
                         let betweenSquare=String.fromCharCode(64+oldColNum-i)+(oldRowNum-i);
-                        if(document.querySelector(`.js-${betweenSquare}`).classList.contains("visited")===false){
+                        if(document.querySelector(`.js-${betweenSquare}`).classList.contains('visited')===false){
                             STORE.scoreSquares++;
                             this.visitSquare(betweenSquare);
                         }
                     }
-                    this.updateScoreBoard(1, document.querySelector(`.js-${selectedSquare}`).classList.contains("visited")===false ? 1 : 0);
+                    this.updateScoreBoard(1, document.querySelector(`.js-${selectedSquare}`).classList.contains('visited')===false ? 1 : 0);
                 }else if(newColNum<oldColNum && newRowNum>oldRowNum){ // up and left
                     for(let i=1; i<(oldColNum-newColNum); i++){
                         let betweenSquare=String.fromCharCode(64+oldColNum-i)+(oldRowNum+i);
-                        if(document.querySelector(`.js-${betweenSquare}`).classList.contains("visited")===false){
+                        if(document.querySelector(`.js-${betweenSquare}`).classList.contains('visited')===false){
                             STORE.scoreSquares++;
                             this.visitSquare(betweenSquare);
                         }
                     }
-                    this.updateScoreBoard(1, document.querySelector(`.js-${selectedSquare}`).classList.contains("visited")===false ? 1 : 0);
+                    this.updateScoreBoard(1, document.querySelector(`.js-${selectedSquare}`).classList.contains('visited')===false ? 1 : 0);
                 }
             }
             this.placePiece(selectedSquare);
@@ -282,19 +282,19 @@ const processSquare={
 
     visitSquare(visitedSquare){  // Adds a yellow overlay to a square. Maybe more code later.
         // console.log('In the visitSquare method.');
-        $('.js-'+visitedSquare).addClass("visited");
+        $('.js-'+visitedSquare).addClass('visited');
         // console.log(`Square ${visitedSquare} was visited.`);
     },
 
     placePiece(landedSquare){  // Adds a yellow overlay with chess piece on top.
         // console.log('In the placePiece method.');
-        $('.js-'+landedSquare).addClass("visited");
-        $('.js-'+landedSquare).addClass("occupied");
+        $('.js-'+landedSquare).addClass('visited');
+        $('.js-'+landedSquare).addClass('occupied');
     },
 
     removePiece(vacatedSquare){  // Removes chess piece, leaving yellow overlay.
         // console.log('In the removePiece method.');
-        $('.js-'+vacatedSquare).removeClass("occupied");
+        $('.js-'+vacatedSquare).removeClass('occupied');
     },
 
     updateScoreBoard(movesincr, squaresincr){
@@ -378,8 +378,8 @@ const listeners={
             for(let i=1; i<9; i++){
                 for(let j=1; j<9; j++){
                     let resetSquare=String.fromCharCode(64+i)+(j);
-                    $('.js-'+resetSquare).removeClass("visited");
-                    $('.js-'+resetSquare).removeClass("occupied");
+                    $('.js-'+resetSquare).removeClass('visited');
+                    $('.js-'+resetSquare).removeClass('occupied');
                 }
             }
             $('.scoreTableMovesDone').html(`${STORE.scoreMoves}`);
@@ -402,8 +402,8 @@ const listeners={
             for(let i=1; i<9; i++){
                 for(let j=1; j<9; j++){
                     let resetSquare=String.fromCharCode(64+i)+(j);
-                    $('.js-'+resetSquare).removeClass("visited");
-                    $('.js-'+resetSquare).removeClass("occupied");
+                    $('.js-'+resetSquare).removeClass('visited');
+                    $('.js-'+resetSquare).removeClass('occupied');
                 }
             }
             for(let i=0; i<recording.length; i++){
