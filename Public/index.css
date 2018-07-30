@@ -239,14 +239,7 @@ body, html{
             'text text';
     }
     
-    .js-backButtonInfoPage{
-        grid-area: header;
-        justify-self: end;
-        background: Transparent;
-        border: none;
-    }
-    
-    .js-backButtonRulesPage{
+    .js-backButton{
         grid-area: header;
         justify-self: end;
         background: Transparent;
@@ -627,20 +620,13 @@ body, html{
             'title header'
             'text text';
     }
-    
-    .js-backButtonInfoPage{
-        grid-area: header;
-        justify-self: end;
-        background: Transparent;
-        border: none;
-    }
 
     .title{
         grid-area: title;
         align-self: center;
     }
-        
-    .js-backButtonRulesPage{
+    
+    .js-backButton{
         grid-area: header;
         justify-self: end;
         background: Transparent;
