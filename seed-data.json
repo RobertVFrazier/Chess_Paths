@@ -1,10 +1,10 @@
-{"userId": "ClarkKent", "puzzle": "queen", "moves": "["A1", "C1", "C3", "E5"]","created": "10/15/2017 10:55 PM"}
-{"userId": "PeterParker", "puzzle": "queen", "moves": "["D5", "G2", "G8", "B8"]","created": "10/15/2017 10:55 PM"}
-{"userId": "AlanScott", "puzzle": "queen", "moves": "["C5", "F8", "H6", "E3"]","created": "10/15/2017 10:55 PM"}
-{"userId": "TonyStark", "puzzle": "queen", "moves": "["C5", "C8", "A6", "F1"]","created": "10/15/2017 10:55 PM"}
-{"userId": "DinahLance", "puzzle": "queen", "moves": "["A3", "H3", "D7", "A4"]","created": "10/15/2017 10:55 PM"}
-{"userId": "OroroMonroe", "puzzle": "queen", "moves": "["G8", "C4", "G4", "D1"]","created": "10/15/2017 10:55 PM"}
-{"userId": "LoisLane", "puzzle": "queen", "moves": "["C5", "C1", "G1", "G5", "D5"]","created": "10/15/2017 10:55 PM"}
-{"userId": "JanetVanDyne", "puzzle": "queen", "moves": "["H8", "A1", "A8", "H1"]","created": "10/15/2017 10:55 PM"}
-{"userId": "TonyStark", "puzzle": "queen", "moves": "["G6", "G4", "B4", "B6", "D8", "F6"]","created": "10/15/2017 10:55 PM"}
-{"userId": "OroroMonroe", "puzzle": "queen", "moves": "["H8", "E5", "H2", "G1", "A1", "D4", "A7", "B8"]","created": "10/15/2017 10:55 PM"}
+{"user": "ClarkKent", "puzzle": "queen", "moves": "["A1", "C1", "C3", "E5"]","created": "10/15/2017 10:55 PM"}
+{"user": "PeterParker", "puzzle": "queen", "moves": "["D5", "G2", "G8", "B8"]","created": "10/15/2017 10:55 PM"}
+{"user": "AlanScott", "puzzle": "queen", "moves": "["C5", "F8", "H6", "E3"]","created": "10/15/2017 10:55 PM"}
+{"user": "TonyStark", "puzzle": "queen", "moves": "["C5", "C8", "A6", "F1"]","created": "10/15/2017 10:55 PM"}
+{"user": "DinahLance", "puzzle": "queen", "moves": "["A3", "H3", "D7", "A4"]","created": "10/15/2017 10:55 PM"}
+{"user": "OroroMonroe", "puzzle": "queen", "moves": "["G8", "C4", "G4", "D1"]","created": "10/15/2017 10:55 PM"}
+{"user": "LoisLane", "puzzle": "queen", "moves": "["C5", "C1", "G1", "G5", "D5"]","created": "10/15/2017 10:55 PM"}
+{"user": "JanetVanDyne", "puzzle": "queen", "moves": "["H8", "A1", "A8", "H1"]","created": "10/15/2017 10:55 PM"}
+{"user": "TonyStark", "puzzle": "queen", "moves": "["G6", "G4", "B4", "B6", "D8", "F6"]","created": "10/15/2017 10:55 PM"}
+{"user": "OroroMonroe", "puzzle": "queen", "moves": "["H8", "E5", "H2", "G1", "A1", "D4", "A7", "B8"]","created": "10/15/2017 10:55 PM"}
