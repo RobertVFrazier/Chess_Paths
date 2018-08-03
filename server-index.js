@@ -47,9 +47,9 @@ app.post('/games',(req,res)=>{
 
 app.get('/games', (req, res) => {
   Game
-    .find()
+    .find().populate("user")
     .then(games=>{
-      res.json(games.map(game=>game));
+      res.json(games);
     })
     .catch(err=>{
       console.error(err);
@@ -59,7 +59,7 @@ app.get('/games', (req, res) => {
 
 app.get('/games/:id',(req,res)=>{  // NOTE: Replace :id with the id number, no quotes.
   Game                             // Example: localhost:8080/games/5b6085f50d94523750b5de06
-    .findById(req.params.id)
+    .findById(req.params.id).populate("user")
     .then(game=>{
       res.json(game);
     })
@@ -73,8 +73,8 @@ app.get('/games/:id',(req,res)=>{  // NOTE: Replace :id with the id number, no q
 
 app.put('/games/:id',(req,res)=>{  // NOTE: Replace :id with the id number, no quotes.
   if(!(req.params.id && req.body.id && req.params.id === req.body.id)){
-    res.status(400).json({
-      error: 'The request path id and the request body id values must match.'
+      return res.status(400).json({
+      error: `The request path id (${req.params.id}) and the request body id (${req.body.id}) values must match.`
     });
   }
 
@@ -168,8 +168,8 @@ app.get('/users/:id',(req,res)=>{  // NOTE: Replace :id with the id number, no q
 
 app.put('/users/:id',(req,res)=>{  // NOTE: Replace :id with the id number, no quotes.
   if(!(req.params.id && req.body.id && req.params.id === req.body.id)){
-    res.status(400).json({
-      error: 'The request path id and the request body id values must match.'
+      return res.status(400).json({
+      error: `The request path id (${req.params.id}) and the request body id (${req.body.id}) values must match.`
     });
   }
 
