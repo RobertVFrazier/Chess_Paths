@@ -25,40 +25,40 @@ Step 1a: Generate the HTML code.
 ********************************************************/
 
 const generateHtml={
-    doHtmlPages: function(){
+    doHtmlPages(){
         // console.log('In the doHtmlPages method.');
         this.splashHtml();
     },
 
-    splashHtml: function(){
+    splashHtml(){
         // console.log('In the splashHtml method.');
         let pageSplashHtml=
         $('div.js-pageViewSplashHtml').html(pageSplashHtml);
         $('div.js-pageViewSplashHtml').hide();
     },
 
-    gameHtml: function(){
+    gameHtml(){
         // console.log('In the gameHtml method.');
         let pageGameHtml=
         $('div.js-pageViewGameBoardHtml').html(pageGameHtml);
         $('div.js-pageViewGameBoardHtml').hide();
     },
 
-    infoHtml: function(){
+    infoHtml(){
         // console.log('In the infoHtml method.');
         let pageInfoHtml=
         $('div.js-pageViewInstructionsHtml').html(pageInfoHtml);
         $('div.js-pageViewInstructionsHtml').hide();
     },
 
-    rulesHtml: function(){
+    rulesHtml(){
         // console.log('In the rulesHtml method.');
         let pageRulesHtml=
         $('div.js-pageViewInstructionsHtml').html(pageRulesHtml);
         $('div.js-pageViewInstructionsHtml').hide();
     },
 
-    movesHtml: function(){
+    movesHtml(){
         // console.log('In the movesHtml method.');
         let pageMovesHtml=
         $('div.js-pageViewInstructionsHtml').html(pageMovesHtml);
@@ -71,7 +71,7 @@ Step 1b: Render each HTML page, based on the current state.
 **************************************************************/
 
 const renderPage={
-   doShowPages: function(){
+   doShowPages(){
         // console.log('In the doShowPages method.');
         if(STORE.currentView==='splash'){
             this.splashPage();
@@ -83,20 +83,26 @@ const renderPage={
             this.rulesPage();
         }else if(STORE.currentView==='moves'){
             this.movesPage();
+        }else if(STORE.currentView==='saves'){
+            this.savesPage();
+        }else if(STORE.currentView==='credentials'){
+            this.credentialsPage();
         }
    },
 
-    showCurrentPage: function(pageToShow){
+    showCurrentPage(pageToShow){
         // console.log('In the showCurrentPage method.');
         $('div.js-pageViewSplashHtml').hide();
         $('div.js-pageViewInfoHtml').hide();
         $('div.js-pageViewGameBoardHtml').hide();
         $('div.js-pageViewRulesHtml').hide();
         $('div.js-pageViewMovesHtml').hide();
+        $('div.js-pageViewSavesHtml').hide();
+        $('div.js-pageViewCredentialsHtml').hide();
         $(pageToShow).show();
     },
 
-    splashPage: function(){
+    splashPage(){
         // console.log('In the splashPage method.');
         this.showCurrentPage('div.js-pageViewSplashHtml');
         if(STORE.previousView==='info'){
@@ -106,13 +112,13 @@ const renderPage={
         }
     },
 
-    infoPage: function(){
+    infoPage(){
         // console.log('In the infoPage method.');
         this.showCurrentPage('div.js-pageViewInfoHtml');
         $('.js-backButtonInfoPage').focus();
     },
 
-    gamePage: function(){
+    gamePage(){
         // console.log('In the gamePage method.');
         this.showCurrentPage('div.js-pageViewGameBoardHtml');
         $('.js-backButtonGamePage').focus();
@@ -122,16 +128,28 @@ const renderPage={
         $('.scoreTableSquaresToDo').html(`${STORE.targetSquares}`);
     },
 
-    rulesPage: function(){
+    rulesPage(){
         // console.log('In the rulesPage method.');
         this.showCurrentPage('div.js-pageViewRulesHtml');
         $('.js-backButtonRulesPage').focus();
     },
 
-    movesPage: function(){
+    movesPage(){
         // console.log('In the movesPage method.');
         this.showCurrentPage('div.js-pageViewMovesHtml');
         $('.js-backButtonMovesPage').focus();
+    },
+
+    savesPage(){
+        // console.log('In the savesPage method.');
+        this.showCurrentPage('div.js-pageViewSavesHtml');
+        $('.js-backButtonSavesPage').focus();
+    },
+
+    credentialsPage(){
+        // console.log('In the credentialsPage method.');
+        this.showCurrentPage('div.js-pageViewCredentialsHtml');
+        $('.js-backButtonCredentialsPage').focus();
     }
 };
 
@@ -140,7 +158,7 @@ Step 1c: Deal with the effects of selecting a square on the board.
 *********************************************************************/
 
 const processSquare={
-    doSquare: function(selectedSquare){  // Lower left square -> selectedSquare = 'A1'
+    doSquare(selectedSquare){  // Lower left square -> selectedSquare = 'A1'
         // console.log('In the doSquare method.');
         let legalMoveString='';
         if(STORE.moves.length>0){
@@ -308,12 +326,60 @@ const processSquare={
     }
 };
 
+/******************************************************************** 
+Step 1d: Deal with save game actions. 
+*********************************************************************/
+
+const processSavedGames={
+    doSavedGames(action){
+        if(action==='save'){
+            this.saveGame();
+        }else if(action==='load'){
+            this.loadGame();
+        }else if(action==='replace'){
+            this.replaceGame();
+        }else if(action==='delete'){
+            this.deleteGame();
+        }
+    },
+
+    saveGame(){  
+        // console.log('In the saveGame method.');
+        console.log('This will be the save game function.');
+    },
+
+    loadGame(){  
+        // console.log('In the loadGame method.');
+        console.log('This will be the load game function.');
+    },
+
+    replaceGame(){  
+        // console.log('In the replaceGame method.');
+        console.log('This will be the replace game function.');
+    },
+
+    deleteGame(){  
+        // console.log('In the deleteGame method.');
+        console.log('This will be the delete game function.');
+    }
+};
+
+/******************************************************************** 
+Step 1e: Deal with user entering credentials. 
+*********************************************************************/
+
+const processCredentials={
+    doCredentials(){
+        console.log('Sign up or log in button clicked.');
+    }
+};
+
 /******************************************************** 
  * Step 2: Listen for user interactions.
  ********************************************************/
 
 const listeners={
-    listen: function(){
+    listen(){
         // console.log('In the listen method.');
         this.handleInfoButton();
         this.handleQueenButton();
@@ -325,12 +391,22 @@ const listeners={
         this.handleLoadSaveButton();
         this.handleBackButtonInfoPage();
         this.handleBackButtonGamePage();
-        this.handlebackButtonRulesPage();
-        this.handlebackButtonMovesPage();
+        this.handleBackButtonRulesPage();
+        this.handleBackButtonMovesPage();
+        this.handleBackButtonSavesPage();
+        this.handleSignUpNavButton();
+        this.handleLogInNavButton();
+        this.handleSaveButton();
+        this.handleLoadButton();
+        this.handleUpdateButton();
+        this.handleDeleteButton();
+        this.handleBackButtonCredentialsPage();
+        this.handleFormSignUpButton();
+        this.handleFormLogInButton();
         this.handleSquare();
     },
 
-    handleInfoButton: function(){
+    handleInfoButton(){
         // console.log('In the handleInfoButton method.');
         $('.js-infoButton').on('click', function() {
             STORE.currentView='info';
@@ -339,7 +415,7 @@ const listeners={
         });
     },
 
-    handleQueenButton: function(){
+    handleQueenButton(){
         // console.log('In the handleQueenButton method.');
         $('.js-queenButton').on('click', function() {
             STORE.currentView='game';
@@ -348,7 +424,7 @@ const listeners={
         });
     },
 
-    handleRulesButton: function(){
+    handleRulesButton(){
         // console.log('In the handleRulesButton method.');
         $('.js-rulesButton').on('click', function() {
             STORE.currentView='rules';
@@ -357,7 +433,7 @@ const listeners={
         });
     },
 
-    handleMovesButton: function(){
+    handleMovesButton(){
         // console.log('In the handleMovesButton method.');
         $('.js-movesButton').on('click', function() {
             STORE.currentView='moves';
@@ -366,7 +442,7 @@ const listeners={
         });
     },
 
-    handleResetButton: function(){
+    handleResetButton(){
         // console.log('In the handleResetButton method.');
         $('.js-resetButton').on('click', function() {
             STORE.moves=[];
@@ -389,7 +465,7 @@ const listeners={
         });
     },
 
-    handleUndoButton: function(){
+    handleUndoButton(){
         // console.log('In the handleUndoButton method.');
         $('.js-undoButton').on('click', function() {
             STORE.moves.pop();
@@ -416,7 +492,7 @@ const listeners={
         });
     },
 
-    handleRedoButton: function(){
+    handleRedoButton(){
         // console.log('In the handleRedoButton method.');
         $('.js-redoButton').on('click', function() {
             for(let i=STORE.moves.length; i<STORE.redo.length; i++){
@@ -430,14 +506,16 @@ const listeners={
         });
     },
 
-    handleLoadSaveButton: function(){
+    handleLoadSaveButton(){
         // console.log('In the handleLoadSaveButton method.');
         $('.js-loadSaveButton').on('click', function() {
-            console.log('load/save clicked');
+            STORE.currentView='saves';
+            STORE.previousView='game';
+            renderPage.doShowPages();
         });
     },
 
-    handleBackButtonInfoPage: function(){
+    handleBackButtonInfoPage(){
         // console.log('In the handleBackButtonInfoPage method.');
         $('.js-backButtonInfoPage').on('click', function() {
             STORE.currentView='splash';
@@ -446,7 +524,7 @@ const listeners={
         });
     },
 
-    handleBackButtonGamePage: function(){
+    handleBackButtonGamePage(){
         // console.log('In the handleBackButtonGamePage method.');
         $('.js-backButtonGamePage').on('click', function() {
             STORE.currentView='splash';
@@ -455,8 +533,8 @@ const listeners={
         });
     },
 
-    handlebackButtonRulesPage: function(){
-        // console.log('In the handlebackButtonRulesPage method.');
+    handleBackButtonRulesPage(){
+        // console.log('In the handleBackButtonRulesPage method.');
         $('.js-backButtonRulesPage').on('click', function() {
             STORE.currentView='game';
             STORE.previousView='rules';
@@ -464,8 +542,8 @@ const listeners={
         });
     },
 
-    handlebackButtonMovesPage: function(){
-        // console.log('In the handlebackButtonMovesPage method.');
+    handleBackButtonMovesPage(){
+        // console.log('In the handleBackButtonMovesPage method.');
         $('.js-backButtonMovesPage').on('click', function() {
             STORE.currentView='rules';
             STORE.previousView='moves';
@@ -473,7 +551,86 @@ const listeners={
         });
     },
 
-    handleSquare: function(){
+    handleBackButtonSavesPage(){
+        // console.log('In the handleBackButtonSavesPage method.');
+        $('.js-backButtonSavesPage').on('click', function() {
+            STORE.currentView='game';
+            STORE.previousView='saves';
+            renderPage.doShowPages();
+        });
+    },
+
+    handleSignUpNavButton(){
+        // console.log('In the handleSignUpNavButton method.');
+        $('.js-signUpNavButton').on('click', function() {
+            STORE.currentView='credentials';
+            STORE.previousView='saves';
+            renderPage.doShowPages();
+        });
+    },
+
+    handleLogInNavButton(){
+        // console.log('In the handleLogInNavButton method.');
+        $('.js-LogInNavButton').on('click', function() {
+            STORE.currentView='credentials';
+            STORE.previousView='saves';
+            renderPage.doShowPages();
+        });
+    },
+
+    handleSaveButton(){
+        // console.log('In the handleSaveButton method.');
+        $('.js-saveGameButton').on('click', function() {
+            console.log('Save Game button clicked');
+        });
+    },
+
+    handleLoadButton(){
+        // console.log('In the handleLoadButton method.');
+        $('.js-loadGameButton').on('click', function() {
+            console.log('Load Game button clicked');
+        });
+    },
+
+    handleUpdateButton(){
+        // console.log('In the handleUpdateButton method.');
+        $('.js-replaceGameButton').on('click', function() {
+            console.log('Replace Game button clicked');
+        });
+    },
+
+    handleDeleteButton(){
+        // console.log('In the handleDeleteButton method.');
+        $('.js-deleteGameButton').on('click', function() {
+            console.log('Delete Game button clicked');
+        });
+    },
+
+    handleBackButtonCredentialsPage(){
+        // console.log('In the handleBackButtonCredentialsPage method.');
+        $('.js-backButtonCredentialsPage').on('click', function() {
+            console.log('back button on credentials page clicked');
+            STORE.currentView='saves';
+            STORE.previousView='credentials';
+            renderPage.doShowPages();
+        });
+    },
+
+    handleFormSignUpButton(){
+        // console.log('In the handleFormSignUpButton method.');
+        $('.js-formSignUpButton').on('click', function() {
+            processCredentials.doCredentials();
+        });
+    },
+
+    handleFormLogInButton(){
+        // console.log('In the handleFormLogInButton method.');
+        $('.js-formLogInButton').on('click', function() {
+            processCredentials.doCredentials();
+        });
+    },
+
+    handleSquare(){
         // console.log('In the handleSquare method.');
         $('.square').click(function() {
             let location=$(this).data('location');

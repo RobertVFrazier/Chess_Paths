@@ -350,21 +350,16 @@ body, html{
     .js-movesButton img{    
         height: 14vw;
     }
-    
-    /* .square{
-        height: 12.5vw;
-        width: 12.5vw;
-        background-size: cover;
-        float: left;
-    } */
 
     .square {
       border: solid 1px rgba(0,0,0,0.1);
       position: relative;
     }
+
     .square:hover {
       box-shadow: 0 0 1px 2px rgba(0,255,0,0.6);
     }
+
     .handles-tl {
       border-top: solid 2px green;
       border-left: solid 2px green;
@@ -374,6 +369,7 @@ body, html{
       top: 2px;
       left: 2px;
     }
+
     .handles-tr {
       border-top: solid 2px green;
       border-right: solid 2px green;
@@ -383,15 +379,55 @@ body, html{
       top: 2px;
       right: 2px
     }
+
     .handles {
       display: none;
     }
+
     .square:hover > .handles {
       display: block;
     }
 
     .diagram{
         height: 95vw;
+    }
+
+    .savesPageContainer{
+        display: grid;
+        grid-template-columns: 4fr 1fr 1fr;
+        grid-template-areas: 
+            'title nav header';
+    }
+
+    .js-signUpNavButton{
+        grid-area: nav;
+        justify-self: center;
+        background: Transparent;
+        border: none;
+    }
+
+    .js-signUpNavButton img{
+        height: 14vw;
+    }
+
+    .gameButtonsContainer{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-areas: 
+            'buttons buttons buttons buttons';
+    }
+
+    .js-gameButton{
+        grid-area: buttons;
+        grid-column-start: auto;
+        grid-column-end: auto;
+        justify-self: center;
+        background: Transparent;
+        border: none;
+    }
+
+    .js-gameButton img{
+        height: 11.5vw;
     }
 }
 
@@ -651,6 +687,43 @@ body, html{
 
     .diagram{
         height: 75vh;
+    }
+
+    .savesPageContainer{
+        display: grid;
+        grid-template-columns: 4fr 1fr 1fr;
+        grid-template-areas: 
+            'title nav header';
+    }
+
+    .js-signUpNavButton{
+        grid-area: nav;
+        justify-self: center;
+        background: Transparent;
+        border: none;
+    }
+
+    .js-signUpNavButton img{
+        height: 16vh;
+    }
+
+    .gameButtonsContainer{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-areas: 
+            'buttons buttons buttons buttons';
+    }
+
+    .js-gameButton{
+        grid-area: buttons;
+        grid-column-start: auto;
+        grid-column-end: auto;
+        background: Transparent;
+        border: none;
+    }
+
+    .js-gameButton img{
+        height: 16vh;
     }
 }
 
