@@ -307,8 +307,8 @@
             <!-- Saved Games page -->
             <div class='js-backGround js-pageViewSavesHtml'>
                 <div class='savesPageContainer'>
-                    <div class='title'>
-                        <h2>Save and Load Games</h2>
+                    <div class='savedGamesTitle'>
+                        Save and Load Games
                     </div>
                     <button class='js-signUpNavButton'>
                         <img src='Images/Buttons/Sign_Up_Button.png' alt='Sign Up button'>
@@ -343,30 +343,29 @@
                     <button class='js-backButton js-backButtonCredentialsPage'>
                         <img src='Images/Buttons/Back_Button.png' alt='Back button'>
                     </button>
-                    <fieldset name='Sign Up/Log In'>
-                            <legend class='js-sign-up'>Sign Up</legend>
-                            <!-- <legend class='js-log-in'>Log In</legend> -->
-                            <div>
-                                <label for='userName'>User Name:</label>
-                                <input type='text' id='username' name='username' required/>
-                            </div>
-                        
-                            <div>
-                                <label for='password'>Password:</label>
-                                <input type='password' id='password' name='password'
-                                    minlength='8' maxlength='20' required
-                                    placeholder='8 to 20 characters'/>
-                            </div>
-                          </fieldset>
+                </div>
+                <fieldset name='Sign Up/Log In'>
+                    <legend class='js-sign-up'>Sign Up</legend>
+                    <!-- <legend class='js-log-in'>Log In</legend> -->
+                    <div>
+                        <label for='userName'>User Name:</label>
+                        <input type='text' id='username' name='username' required/>
+                    </div>
+                
+                    <div>
+                        <label for='password'>Password:</label>
+                        <input type='password' id='password' name='password'
+                            minlength='8' maxlength='20' required
+                            placeholder='8 to 20 characters'/>
+                    </div>
                     <button class='js-formSignUpButton'>
                         <img src='Images/Buttons/Sign_Up_Button.png' alt='Sign Up button'>
                     </button>
                     <!-- <button class='js-formLogInButton'>
                         <img src='Images/Buttons/Log_In_Button.png' alt='Log In button'>
                     </button> -->
-                </div>
+                </fieldset>
             </div>
-
         </main>
         <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
         <script src='index.js'></script>

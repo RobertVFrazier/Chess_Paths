@@ -396,14 +396,29 @@ body, html{
         display: grid;
         grid-template-columns: 4fr 1fr 1fr;
         grid-template-areas: 
-            'title nav header';
+            '. nav header'
+            'title title title';
+    }
+
+    .savedGamesTitle{
+        grid-area: title;
+        align-self: start;
+        font-size: 1.5rem;
+        font-display: bold;
+        text-align: center;
     }
 
     .js-signUpNavButton{
         grid-area: nav;
+        align-self: start;
         justify-self: center;
         background: Transparent;
         border: none;
+    }
+
+    .js-backButtonSavesPage{
+        grid-area: header;
+        align-self: start;
     }
 
     .js-signUpNavButton img{
@@ -428,6 +443,17 @@ body, html{
 
     .js-gameButton img{
         height: 11.5vw;
+    }
+
+    .credentialsPageContainer{
+        display: grid;
+        grid-template-columns: 4fr 1fr;
+        grid-template-areas: 
+            'blank header';
+    }
+
+    .js-backButtonCredentialsPage{
+        grid-area: header
     }
 }
 
@@ -696,6 +722,14 @@ body, html{
             'title nav header';
     }
 
+    .savedGamesTitle{
+        grid-area: title;
+        align-self: center;
+        font-size: 1.5rem;
+        font-display: bold;
+        text-align: center;
+    }
+
     .js-signUpNavButton{
         grid-area: nav;
         justify-self: center;
@@ -723,7 +757,7 @@ body, html{
     }
 
     .js-gameButton img{
-        height: 16vh;
+        height: 11.5vh;
     }
 }
 
