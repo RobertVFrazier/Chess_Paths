@@ -135,8 +135,63 @@ body, html{
     display: none;
 }
 
+.js-pageViewSavesHtml{
+    position: fixed;
+    background-image: url('../Images/Paper.jpg');
+    background-size: cover;
+    display: none;
+}
+
+.js-pageViewCredentialsHtml{
+    position: fixed;
+    background-image: url('../Images/Paper.jpg');
+    background-size: cover;
+    display: none;
+}
+
 .icons{
     width: 90vw;
+}
+
+.credentialsForm fieldset{
+    padding: 3px 5px;
+    border: solid black 3px;
+    border-radius: 20px;
+    text-align: center;
+    margin: auto;
+    width: 92vw;
+    display: table;
+    background-color: antiquewhite;
+}
+
+.credentialsForm label {
+	display: inline-block;
+	vertical-align: middle;
+	width: 90px;
+	text-align: left;
+	margin: 5px 0;
+}
+
+.credentialsForm legend{
+    padding: 1px 2px;
+    font-weight: 800;
+    text-align: center;
+}
+
+.js-formSignUpButton{
+    background: Transparent;
+    border: none;
+}
+
+.credentialsPageContainer{
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    grid-template-areas: 
+        '. header';
+}
+
+.js-backButtonCredentialsPage{
+    grid-area: header
 }
 
 /****************/
@@ -445,15 +500,8 @@ body, html{
         height: 11.5vw;
     }
 
-    .credentialsPageContainer{
-        display: grid;
-        grid-template-columns: 4fr 1fr;
-        grid-template-areas: 
-            'blank header';
-    }
-
-    .js-backButtonCredentialsPage{
-        grid-area: header
+    .js-formSignUpButton input{
+        height: 16vw;
     }
 }
 
@@ -758,6 +806,14 @@ body, html{
 
     .js-gameButton img{
         height: 11.5vh;
+    }
+
+    .js-formSignUpButton input{
+        height: 16vh;
+    }
+
+    .credentialsForm fieldset{
+        width: 62vw;
     }
 }
 

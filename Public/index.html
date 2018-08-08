@@ -344,27 +344,32 @@
                         <img src='Images/Buttons/Back_Button.png' alt='Back button'>
                     </button>
                 </div>
-                <fieldset name='Sign Up/Log In'>
-                    <legend class='js-sign-up'>Sign Up</legend>
-                    <!-- <legend class='js-log-in'>Log In</legend> -->
-                    <div>
-                        <label for='userName'>User Name:</label>
-                        <input type='text' id='username' name='username' required/>
-                    </div>
-                
-                    <div>
-                        <label for='password'>Password:</label>
-                        <input type='password' id='password' name='password'
-                            minlength='8' maxlength='20' required
-                            placeholder='8 to 20 characters'/>
-                    </div>
-                    <button class='js-formSignUpButton'>
-                        <img src='Images/Buttons/Sign_Up_Button.png' alt='Sign Up button'>
-                    </button>
-                    <!-- <button class='js-formLogInButton'>
-                        <img src='Images/Buttons/Log_In_Button.png' alt='Log In button'>
-                    </button> -->
-                </fieldset>
+                <form  class="credentialsForm" method="post" action="">
+                    <fieldset name='Sign Up/Log In' class='js-credentialsForm'>
+                        <legend class='fieldsTitle js-sign-up'>Sign Up</legend>
+                        <!-- <legend class='fieldsTitle js-log-in'>Log In</legend> -->
+                        <div>
+                            <label for='userName' class='nameLabel'>User Name:</label>
+                            <input type='text' id='username' name='username' required/>
+                        </div>
+                        <div>
+                            <label for='password' class='passLabel'>Password:</label>
+                            <input type='password' id='password' name='password'
+                                minlength='8' maxlength='20' required
+                                placeholder='8 to 20 characters'/>
+                        </div>
+                        <div class='js-formSignUpButton'>
+                            <input type='image' src='Images/Buttons/Sign_Up_Button.png' alt='Sign Up button'>
+                        </div>
+
+                        <!-- <button class='js-formSignUpButton'>
+                            <img src='Images/Buttons/Sign_Up_Button.png' alt='Sign Up button'>
+                        </button> -->
+                        <!-- <div class='js-formSignUpButton'>
+                            <input type='image' src='Images/Buttons/Sign_Up_Button.png' alt='Sign Up button'>
+                        </div> -->
+                    </fieldset>
+                </form>
             </div>
         </main>
         <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
