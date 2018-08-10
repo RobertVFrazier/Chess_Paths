@@ -370,7 +370,16 @@ Step 1e: Deal with user entering credentials.
 
 const processCredentials={
     doCredentials(){
-        console.log('Sign up or log in button clicked.');
+        let credentialsUser=$('#username').val();
+        let credentialsPassword=$('#password').val();
+        let data={user:credentialsUser,password:credentialsPassword};
+        fetch('/api/auth/login',{
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers:{'Content-Type': 'application/json'}
+    }).then(res=>res.json())
+    .catch(error=>console.error('Error:', error))
+    .then(response=>console.log('Success:', response));
     }
 };
 
@@ -404,6 +413,7 @@ const listeners={
         this.handleFormSignUpButton();
         this.handleFormLogInButton();
         this.handleSquare();
+        this.handleSubmit();
     },
 
     handleInfoButton(){
@@ -634,6 +644,13 @@ const listeners={
         $('.square').click(function() {
             let location=$(this).data('location');
             processSquare.doSquare(location);
+        });
+    },
+
+    handleSubmit(){
+        // console.log('In the handleSubmit method.');
+        $('.credentialsForm').on('submit', function(event){
+            event.preventDefault();
         });
     }
 };

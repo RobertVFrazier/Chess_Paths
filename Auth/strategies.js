@@ -1,19 +1,19 @@
 'use strict';
-const {Strategy: LocalStrategy} = require('passport-local');
+const {Strategy: LocalStrategy}=require('passport-local');
 
 // Assigns the Strategy export to the name JwtStrategy using object destructuring
 // https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#Assigning_to_new_variable_names
-const {Strategy: JwtStrategy,ExtractJwt} = require('passport-jwt');
+const {Strategy: JwtStrategy,ExtractJwt}=require('passport-jwt');
 
 const {User}=require('../Models/user-model');
 const JWT_SECRET=process.env.JWT_SECRET;
 
-const localStrategy = new LocalStrategy((user, password, callback) => {
+const localStrategy=new LocalStrategy({usernameField:'user'},(user, password, callback) => {
   let user_text;
   console.log(user, password);
   User.findOne({ user: user })
     .then(_user => {
-        user_text = _user;
+        user_text=_user;
       if (!user_text) {
         // Return a rejected promise so we break out of the chain of .thens.
         // Any errors like this will be handled in the catch block.
@@ -41,7 +41,7 @@ const localStrategy = new LocalStrategy((user, password, callback) => {
     });
 });
 
-const jwtStrategy = new JwtStrategy(
+const jwtStrategy=new JwtStrategy(
   {
     secretOrKey: JWT_SECRET,
     // Look for the JWT as a Bearer auth header
@@ -54,4 +54,4 @@ const jwtStrategy = new JwtStrategy(
   }
 );
 
-module.exports = { localStrategy, jwtStrategy };
+module.exports={ localStrategy, jwtStrategy };
