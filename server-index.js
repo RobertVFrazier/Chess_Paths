@@ -1,15 +1,19 @@
 'use strict';
 
 require ('dotenv').config();  
-const express = require('express');
-const morgan = require('morgan');
-const mongoose = require('mongoose');
+const express=require('express');
+const morgan=require('morgan');
+const mongoose=require('mongoose');
+const passport=require('passport');
+// This destructuring looks like a source of confusion.
+const {router: usersRouter} = require('./Users');
+const {router: authRouter,localStrategy,jwtStrategy} = require('./Auth');
 mongoose.Promise = global.Promise;
 
-const DATABASE_URL=process.env.DATABASE_URL || 'mongodb://localhost/chess-paths';
+const DATABASE_URL=process.env.DATABASE_URL || 'mongodb://localhost:27017/chess-paths';
 const PORT=process.env.PORT || 8080;
 
-const app = express();
+const app=express();
 const {Game}=require('./Models/game-model');
 const {User}=require('./Models/user-model');
 
@@ -109,34 +113,36 @@ app.delete('/games/:id',(req,res)=>{  // NOTE: Replace :id with the id number, n
     });
 });
 
-// Don't know if I'll need all CRUD endpoints for the gamet I'll add them for completeness.
-// The two that are absolutely necessary are Post, because the games Post endpoint can't work until
-// there is a user, and Get, because I will need to restrict the saved games to the current user.
+// Don't know if I'll need all CRUD endpoints for the users. I'll add them for completeness.
+// The two that are absolutely necessary are Post: because the games Post endpoint can't work until
+// there is a user, and Get: because I will need to restrict the saved games to the current user.
 
 // CREATE USERS
 
-app.post('/users',(req,res)=>{
-  const requiredFields=['user','password'];
-  for(let i=0; i<requiredFields.length; i++){
-    const field=requiredFields[i];
-    if(!(field in req.body)){
-      const message=`Missing '${field}' in reqest body.`;
-      console.error(message);
-      return res.status(400).send(message);
-    }
-  }
+// app.post('/users',(req,res)=>{
+//   const requiredFields=['user','password'];
+//   for(let i=0; i<requiredFields.length; i++){
+//     const field=requiredFields[i];
+//     if(!(field in req.body)){
+//       const message=`Missing '${field}' in reqest body.`;
+//       console.error(message);
+//       return res.status(400).send(message);
+//     }
+//   }
 
-  User
-    .create({
-      user: req.body.user,
-      password: req.body.password
-    })
-    .then(user=>res.status(201).json(user))
-    .catch(err=>{
-      console.error(err);
-      res.status(500).json({error: `Could not create the user file for '${req.body.user}'.`});
-    });
-});
+//   User
+//     .create({
+//       user: req.body.user,
+//       password: req.body.password
+//     })
+//     .then(user=>res.status(201).json(user))
+//     .catch(err=>{
+//       console.error(err);
+//       res.status(500).json({error: `Could not create the user file for '${req.body.user}'.`});
+//     });
+// });
+
+
 
 // READ USERS
 
@@ -204,6 +210,38 @@ app.delete('/users/:id',(req,res)=>{  // NOTE: Replace :id with the id number, n
     });
 });
 
+// CORS
+
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE');
+  if (req.method === 'OPTIONS') {
+    return res.send(204);
+  }
+  next();
+});
+
+passport.use(localStrategy);
+passport.use(jwtStrategy);
+
+app.use('/api/users/', usersRouter);
+app.use('/api/auth/', authRouter);
+
+const jwtAuth = passport.authenticate('jwt', { session: false });
+
+// A protected endpoint which needs a valid JWT to access it.
+// Not sure how this relates to the Chess Paths app, if at all.
+app.get('/api/protected', jwtAuth, (req, res) => {
+  return res.json({
+    data: 'rosebud'
+  });
+});
+
+app.use('*', (req, res) => {
+  return res.status(404).json({ message: 'Not Found.' });
+});
+
 // The next three lines are replaced with runServer(), below.
 // app.listen(process.env.PORT, () => {
 //   console.log(`Your app is listening on port ${process.env.PORT}`);
@@ -214,7 +252,7 @@ let server;
 // Connect to the database and start the server.
 function runServer(databaseUrl, port=PORT){
   return new Promise((resolve,reject)=>{
-    mongoose.connect(databaseUrl,err=>{
+    mongoose.connect(databaseUrl,{useNewUrlParser:true},err=>{
       if(err){
         return reject(err);
       }
@@ -250,4 +288,4 @@ if (require.main === module) {
   runServer(DATABASE_URL).catch(err => console.error(err));
 }
 
-module.exports = {runServer,app,closeServer};
+module.exports={runServer,app,closeServer};

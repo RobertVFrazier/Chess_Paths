@@ -609,7 +609,6 @@ const listeners={
     handleBackButtonCredentialsPage(){
         // console.log('In the handleBackButtonCredentialsPage method.');
         $('.js-backButtonCredentialsPage').on('click', function() {
-            console.log('back button on credentials page clicked');
             STORE.currentView='saves';
             STORE.previousView='credentials';
             renderPage.doShowPages();
