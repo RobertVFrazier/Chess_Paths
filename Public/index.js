@@ -659,8 +659,8 @@ const listeners={
  * Step 3: Get API data to match user inputs.
  ********************************************************/
 
-// const getGameData={
-// };
+const getGameData={
+};
 
 /***************************** 
  * Javascript starts here.
