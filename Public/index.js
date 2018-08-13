@@ -13,6 +13,8 @@ const STORE = {  // All the variables connected with the state of the DOM go her
     scoreSquares: 0,
     targetMoves: 14,
     targetSquares: 64,
+    returningUser: false,
+    authenticatedUser: '',
     showLegalMoves: false  // Not an MVP feature.
   };
 
@@ -143,6 +145,7 @@ const renderPage={
     savesPage(){
         // console.log('In the savesPage method.');
         this.showCurrentPage('div.js-pageViewSavesHtml');
+        $('.js-savedGamesUserName').text(STORE.authenticatedUser);
         $('.js-backButtonSavesPage').focus();
     },
 
@@ -353,7 +356,7 @@ const processSavedGames={
         console.log('This will be the load game function.');
     },
 
-    replaceGame(){  
+    replaceGame(){
         // console.log('In the replaceGame method.');
         console.log('This will be the replace game function.');
     },
@@ -369,7 +372,36 @@ Step 1e: Deal with user entering credentials.
 *********************************************************************/
 
 const processCredentials={
-    doCredentials(){
+    doCredentials(action){
+        if(action==='signUp'){
+            this.userSignUp();
+        }else if(action==='logIn'){
+            this.usersLogIn();
+        }
+    },
+
+    userSignUp(){
+        // console.log('In the userSignUp method.');
+        let credentialsUser=$('#username').val();
+        let credentialsPassword=$('#password').val();
+        let data={user:credentialsUser,password:credentialsPassword};
+        fetch('/api/users',{
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers:{'Content-Type': 'application/json'}
+    }).then(res=>res.json())
+    .catch(error=>console.error('Error:', error))
+    .then(response=>{
+        // console.log('Success:', response);
+        STORE.authenticatedUser=response.user;
+        STORE.currentView='saves';
+        STORE.previousView='credentials';
+        renderPage.doShowPages();
+        });
+    },
+
+    userLogIn(){
+        // console.log('In the userLogIn method.');
         let credentialsUser=$('#username').val();
         let credentialsPassword=$('#password').val();
         let data={user:credentialsUser,password:credentialsPassword};
@@ -379,7 +411,13 @@ const processCredentials={
             headers:{'Content-Type': 'application/json'}
     }).then(res=>res.json())
     .catch(error=>console.error('Error:', error))
-    .then(response=>console.log('Success:', response));
+    .then(response=>{
+        // console.log('Success:', response);
+        STORE.authenticatedUser=response.user;
+        STORE.currentView='saves';
+        STORE.previousView='credentials';
+        renderPage.doShowPages();
+        });
     }
 };
 
@@ -628,14 +666,14 @@ const listeners={
     handleFormSignUpButton(){
         // console.log('In the handleFormSignUpButton method.');
         $('.js-formSignUpButton').on('click', function() {
-            processCredentials.doCredentials();
+            processCredentials.doCredentials('signUp');
         });
     },
 
     handleFormLogInButton(){
         // console.log('In the handleFormLogInButton method.');
         $('.js-formLogInButton').on('click', function() {
-            processCredentials.doCredentials();
+            processCredentials.doCredentials('logIn');
         });
     },
 

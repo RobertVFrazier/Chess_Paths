@@ -451,8 +451,14 @@ body, html{
         display: grid;
         grid-template-columns: 4fr 1fr 1fr;
         grid-template-areas: 
-            '. nav header'
+            'user nav header'
             'title title title';
+    }
+
+    .js-savedGamesUserName{
+        grid-area: user;
+        align-self: center;
+        text-align: center;
     }
 
     .savedGamesTitle{
@@ -767,6 +773,7 @@ body, html{
         display: grid;
         grid-template-columns: 4fr 1fr 1fr;
         grid-template-areas: 
+            'user nav header'
             'title nav header';
     }
 
@@ -775,6 +782,12 @@ body, html{
         align-self: center;
         font-size: 1.5rem;
         font-display: bold;
+        text-align: center;
+    }
+
+    .js-savedGamesUserName{
+        grid-area: user;
+        align-self: center;
         text-align: center;
     }
 
