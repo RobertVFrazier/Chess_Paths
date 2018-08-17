@@ -11,10 +11,10 @@
         <main role='main'>
             <!-- Splash page -->
             <div class='js-backGround js-pageViewSplashHtml'>
-                <button autofocus class='queenButton js-queenButton'>
+                <button autofocus class='queenButton js-button js-queenButton'>
                     <img src='Images/Buttons/Queen_Button.png' alt='Queen button'>
                 </button>
-                <button class='navButton js-infoButton'>
+                <button class='navButton js-button js-infoButton'>
                     <img src='Images/Buttons/Info_Button.png' alt='Information button'>
                 </button>
             </div>
@@ -27,7 +27,7 @@
                             <img src='Images/Title_Port.png' alt='Chess Paths: Queen Puzzle'>
                         </div>
                         <div class='navButtonBox'>
-                            <button class='navButton js-backButton js-backButtonGamePage'>
+                            <button class='navButton js-button js-backButton js-backButtonGamePage'>
                                 <img src='Images/Buttons/Back_Button.png' alt='Back button'>
                             </button>
                         </div>
@@ -46,21 +46,21 @@
                         </div>
                     </div>
                     <div class='lowerContainer'>
-                            <div class='rulesButton js-rulesButton'>
+                            <button class='rulesButton js-button js-rulesButton'>
                                 <img src='Images/Buttons/Rules_Button.png' alt='Rules Button' class='gameButton'>
-                            </div>
-                            <div class='undoButton js-undoButton'>
+                            </button>
+                            <button class='undoButton js-button js-undoButton'>
                                 <img src='Images/Buttons/Undo_Button.png' alt='Undo Button' class='gameButton'>
-                            </div>
-                            <div class='resetButton js-resetButton'>
+                            </button>
+                            <button class='resetButton js-button js-resetButton'>
                                 <img src='Images/Buttons/Reset_Button.png' alt='Reset Button' class='gameButton'>
-                            </div>
-                            <div class='redoButton js-redoButton'>
+                            </button>
+                            <button class='redoButton js-button js-redoButton'>
                                 <img src='Images/Buttons/Redo_Button.png' alt='Redo Button' class='gameButton'>
-                            </div>
-                            <div class='loadSaveButton js-loadSaveButton'>
+                            </button>
+                            <button class='loadSaveButton js-button js-loadSaveButton'>
                                 <img src='Images/Buttons/Load_Save_Button.png' alt='Load / Save Button' class='gameButton'>
-                            </div>
+                            </button>
                     </div>
                     <div class='boardContainer'>
                             <div class='square js-A8' data-location='A8'></div>
@@ -133,7 +133,7 @@
                             <img src='Images/Title_Land.png' alt='Chess Paths: Queen Puzzle'>
                         </div>
                         <div class='navButtonBox'>
-                            <button class='navButton js-backButton js-backButtonGamePage'>
+                            <button class='navButton js-button js-backButton js-backButtonGamePage'>
                                 <img src='Images/Buttons/Back_Button.png' alt='Back button'>
                             </button>  
                         </div>
@@ -152,19 +152,19 @@
                         </div>
                     </div>
                     <div class='lowerRightContainer'>
-                            <div class='rulesButton js-rulesButton'>
+                            <div class='rulesButton js-button js-rulesButton'>
                                 <img src='Images/Buttons/Rules_Button.png' alt='Rules Button' class='gameButton'>
                             </div>
-                            <div class='undoButton js-undoButton'>
+                            <div class='undoButton js-button js-undoButton'>
                                 <img src='Images/Buttons/Undo_Button.png' alt='Undo Button' class='gameButton'>
                             </div>
-                            <div class='redoButton js-redoButton'>
+                            <div class='redoButton js-button js-redoButton'>
                                 <img src='Images/Buttons/Redo_Button.png' alt='Redo Button' class='gameButton'>
                             </div>
-                            <div class='resetButton js-resetButton'>
+                            <div class='resetButton js-button js-resetButton'>
                                 <img src='Images/Buttons/Reset_Button.png' alt='Reset Button' class='gameButton'>
                             </div>
-                            <div class='loadSaveButton js-loadSaveButton'>
+                            <div class='loadSaveButton js-button js-loadSaveButton'>
                                 <img src='Images/Buttons/Load_Save_Button.png' alt='Load / Save Button' class='gameButton'>
                             </div>
                     </div>
@@ -177,7 +177,7 @@
                         <div class='title'>
                             <h2>Information</h2>
                         </div>
-                    <button class='js-backButton js-backButtonInfoPage'>
+                    <button class='js-backButton js-button js-backButtonInfoPage'>
                         <img src='Images/Buttons/Back_Button.png' alt='Back button'>
                     </button>
                     <div class='scrollableContent'>
@@ -219,7 +219,7 @@
                     <div class='title'>
                         <h2>Rules</h2>
                     </div>
-                    <button class='js-backButton js-backButtonRulesPage'>
+                    <button class='js-backButton js-button js-backButtonRulesPage'>
                         <img src='Images/Buttons/Back_Button.png' alt='Back button'>
                     </button>
                     <div class='scrollableContent'>
@@ -246,7 +246,7 @@
                             with the legal moves for a queen, click the Moves button below. 
                         </p><br>
                         <p>
-                            <button class='js-movesButton'>
+                            <button class='js-movesButton js-button'>
                                 <img src='Images/Buttons/Moves_Button.png' alt='Moves button'>
                             </button>
                         </p><br>
@@ -270,7 +270,7 @@
                     <div class='title'>
                         <h2>Moves</h2>
                     </div>
-                    <button class='js-backButton js-backButtonMovesPage'>
+                    <button class='js-backButton js-button js-backButtonMovesPage'>
                         <img src='Images/Buttons/Back_Button.png' alt='Back button'>
                     </button>
                     <div class='scrollableContent'>
@@ -312,28 +312,31 @@
                         Save and Load Games
                     </div>
                     <div class='js-savedGamesUserName'></div>
-                    <button class='js-signUpNavButton'>
+                    <button class='js-signUpNavButton js-button'>
                         <img src='Images/Buttons/Sign_Up_Button.png' alt='Sign Up button'>
                     </button>
-                    <!-- <button class='js-LogInNavButton'>
+                    <button class='js-logInNavButton js-button'>
                         <img src='Images/Buttons/Log_In_Button.png' alt='Log In button'>
-                    </button> -->
-                    <button class='js-backButton js-backButtonSavesPage'>
+                    </button>
+                    <button class='js-logOutNavButton js-button'>
+                        <img src='Images/Buttons/Log_Out_Button.png' alt='Log Out button'>
+                    </button>
+                    <button class='js-backButton js-button js-backButtonSavesPage'>
                         <img src='Images/Buttons/Back_Button.png' alt='Back button'>
                     </button>
                 </div>
                 
                 <div class='gameButtonsContainer'>
-                    <button class='js-gameButton js-saveGameButton'>
+                    <button class='js-gameButton js-button js-saveGameButton'>
                         <img src='Images/Buttons/Save_Game_Button.png' alt='Save Game button'>
                     </button>
-                    <button class='js-gameButton js-loadGameButton'>
+                    <button class='js-gameButton js-button js-loadGameButton'>
                         <img src='Images/Buttons/Load_Game_Button.png' alt='Load Game button'>
                     </button>
-                    <button class='js-gameButton js-replaceGameButton'>
+                    <button class='js-gameButton js-button js-replaceGameButton'>
                         <img src='Images/Buttons/Replace_Game_Button.png' alt='Replace Game button'>
                     </button>
-                    <button class='js-gameButton js-deleteGameButton'>
+                    <button class='js-gameButton js-button js-deleteGameButton'>
                         <img src='Images/Buttons/Delete_Game_Button.png' alt='Delete Game button'>
                     </button>
                 </div>
@@ -342,14 +345,13 @@
             <!-- Credentials page -->
             <div class='js-backGround js-pageViewCredentialsHtml'>
                 <div class='credentialsPageContainer'>
-                    <button class='js-backButton js-backButtonCredentialsPage'>
+                    <button class='js-backButton js-button js-backButtonCredentialsPage'>
                         <img src='Images/Buttons/Back_Button.png' alt='Back button'>
                     </button>
                 </div>
                 <form  class='credentialsForm' method='post' action=''>
                     <fieldset name='Sign Up/Log In' class='js-credentialsForm'>
-                        <legend class='fieldsTitle js-sign-up'>Sign Up</legend>
-                        <!-- <legend class='fieldsTitle js-log-in'>Log In</legend> -->
+                        <legend class='js-fieldsTitle'></legend>
                         <div>
                             <label for='username' class='nameLabel'>User Name:</label>
                             <input type='text' id='username' name='username' required/>
@@ -360,16 +362,12 @@
                                 minlength='8' maxlength='20' required
                                 placeholder='8 to 20 characters'/>
                         </div>
-                        <div class='js-formSignUpButton'>
+                        <button class='js-formSignUpButton js-button'>
                             <input type='image' src='Images/Buttons/Sign_Up_Button.png' alt='Sign Up button'>
-                        </div>
-
-                        <!-- <button class='js-formSignUpButton'>
-                            <img src='Images/Buttons/Sign_Up_Button.png' alt='Sign Up button'>
-                        </button> -->
-                        <!-- <div class='js-formSignUpButton'>
-                            <input type='image' src='Images/Buttons/Sign_Up_Button.png' alt='Sign Up button'>
-                        </div> -->
+                        </button>
+                        <button class='js-formLogInButton js-button'>
+                            <input type='image' src='Images/Buttons/Log_In_Button.png' alt='Log In button'>
+                        </button>
                     </fieldset>
                 </form>
             </div>

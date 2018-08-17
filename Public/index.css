@@ -106,6 +106,12 @@ body, html{
     width: 100%;
     height: 100%;
 }
+
+.js-button{
+    cursor: pointer;
+    background: Transparent;
+    border: none;
+}
     
 /*   PAGES   */
 
@@ -179,6 +185,11 @@ body, html{
 }
 
 .js-formSignUpButton{
+    background: Transparent;
+    border: none;
+}
+
+.js-formLogInButton{
     background: Transparent;
     border: none;
 }
@@ -449,10 +460,10 @@ body, html{
 
     .savesPageContainer{
         display: grid;
-        grid-template-columns: 4fr 1fr 1fr;
+        grid-template-columns: 3fr 1fr 1fr 1fr;
         grid-template-areas: 
-            'user nav header'
-            'title title title';
+            'user nav1 nav2 header'
+            'title title title title';
     }
 
     .js-savedGamesUserName{
@@ -470,20 +481,44 @@ body, html{
     }
 
     .js-signUpNavButton{
-        grid-area: nav;
+        grid-area: nav1;
         align-self: start;
         justify-self: center;
         background: Transparent;
         border: none;
     }
 
+    .js-signUpNavButton img{
+        height: 14vw;
+    }
+
+    .js-logInNavButton{
+        grid-area: nav2;
+        align-self: start;
+        justify-self: center;
+        background: Transparent;
+        border: none;
+    }
+
+    .js-logInNavButton img{
+        height: 14vw;
+    }
+
+    .js-logOutNavButton{
+        grid-area: nav2;
+        align-self: start;
+        justify-self: center;
+        background: Transparent;
+        border: none;
+    }
+
+    .js-logOutNavButton img{
+        height: 14vw;
+    }
+
     .js-backButtonSavesPage{
         grid-area: header;
         align-self: start;
-    }
-
-    .js-signUpNavButton img{
-        height: 14vw;
     }
 
     .gameButtonsContainer{
@@ -507,6 +542,10 @@ body, html{
     }
 
     .js-formSignUpButton input{
+        height: 16vw;
+    }
+
+    .js-formLogInButton input{
         height: 16vw;
     }
 }
@@ -771,10 +810,10 @@ body, html{
 
     .savesPageContainer{
         display: grid;
-        grid-template-columns: 4fr 1fr 1fr;
+        grid-template-columns: 3fr 1fr 1fr 1fr;
         grid-template-areas: 
-            'user nav header'
-            'title nav header';
+            'user nav1 nav2 header'
+            'title nav1 nav2 header';
     }
 
     .savedGamesTitle{
@@ -792,13 +831,37 @@ body, html{
     }
 
     .js-signUpNavButton{
-        grid-area: nav;
+        grid-area: nav1;
         justify-self: center;
         background: Transparent;
         border: none;
     }
 
     .js-signUpNavButton img{
+        height: 16vh;
+    }
+
+    .js-logInNavButton{
+        grid-area: nav2;
+        align-self: start;
+        justify-self: center;
+        background: Transparent;
+        border: none;
+    }
+
+    .js-logInNavButton img{
+        height: 16vh;
+    }
+
+    .js-logOutNavButton{
+        grid-area: nav2;
+        align-self: start;
+        justify-self: center;
+        background: Transparent;
+        border: none;
+    }
+
+    .js-logOutNavButton img{
         height: 16vh;
     }
 
@@ -822,6 +885,10 @@ body, html{
     }
 
     .js-formSignUpButton input{
+        height: 16vh;
+    }
+
+    .js-formLogInButton input{
         height: 16vh;
     }
 

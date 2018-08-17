@@ -13,8 +13,8 @@ const STORE = {  // All the variables connected with the state of the DOM go her
     scoreSquares: 0,
     targetMoves: 14,
     targetSquares: 64,
-    returningUser: false,
-    authenticatedUser: '',
+    activeUser: '',
+    jwt: '',
     showLegalMoves: false  // Not an MVP feature.
   };
 
@@ -128,6 +128,14 @@ const renderPage={
         $('.scoreTableSquaresDone').html(`${STORE.scoreSquares}`);
         $('.scoreTableMovesToDo').html(`${STORE.targetMoves}`);
         $('.scoreTableSquaresToDo').html(`${STORE.targetSquares}`);
+        if(STORE.moves.length===0){
+            $('.js-undoButton').prop("disabled",true).css('cursor','not-allowed');
+            $('.js-undoButton img').attr('src','Images/Buttons/Undo_Grey_Button.png');
+            $('.js-redoButton').prop("disabled",true).css('cursor','not-allowed');
+            $('.js-redoButton img').attr('src','Images/Buttons/Redo_Grey_Button.png');
+            $('.js-resetButton').prop("disabled",true).css('cursor','not-allowed');
+            $('.js-resetButton img').attr('src','Images/Buttons/Reset_Grey_Button.png');
+        };
     },
 
     rulesPage(){
@@ -145,7 +153,63 @@ const renderPage={
     savesPage(){
         // console.log('In the savesPage method.');
         this.showCurrentPage('div.js-pageViewSavesHtml');
-        $('.js-savedGamesUserName').text(STORE.authenticatedUser);
+        if(localStorage.getItem('jwt')!==''){
+            // let JWT_SECRET=../.env.JWT_SECRET;
+            // console.log(JWT_SECRET);
+            // STORE.activeUser='';
+        };
+        if(STORE.activeUser===''){
+            $('.js-logInNavButton').show();
+            $('.js-signUpNavButton').show();
+            $('.js-logOutNavButton').hide();
+            $('.js-saveGameButton').prop("disabled",true).css('cursor','not-allowed');
+            $('.js-saveGameButton img').attr('src','Images/Buttons/Save_Game_Grey_Button.png');
+            $('.js-loadGameButton').prop("disabled",true).css('cursor','not-allowed');
+            $('.js-loadGameButton img').attr('src','Images/Buttons/Load_Game_Grey_Button.png');
+            $('.js-replaceGameButton').prop("disabled",true).css('cursor','not-allowed');
+            $('.js-replaceGameButton img').attr('src','Images/Buttons/Replace_Game_Grey_Button.png');
+            $('.js-deleteGameButton').prop("disabled",true).css('cursor','not-allowed');
+            $('.js-deleteGameButton img').attr('src','Images/Buttons/Delete_Game_Grey_Button.png');
+            if(localStorage.getItem('jwt')===''){
+                $('.js-logInNavButton').prop("disabled",true).css('cursor','not-allowed');
+                $('.js-logInNavButton img').attr('src','Images/Buttons/Log_In_Grey_Button.png');
+            }else{
+                $('.js-logInNavButton').prop("disabled",false).css('cursor','pointer');
+                $('.js-logInNavButton img').attr('src','Images/Buttons/Log_In_Button.png');};
+        }else{
+            $('.js-logInNavButton').hide();
+            $('.js-signUpNavButton').hide();
+            $('.js-logOutNavButton').show();
+            if(STORE.moves.length>0){
+                $('.js-saveGameButton').prop("disabled",false).css('cursor','pointer');
+                $('.js-saveGameButton img').attr('src','Images/Buttons/Save_Game_Button.png');
+            }else{
+                $('.js-saveGameButton').prop("disabled",true).css('cursor','not-allowed');
+                $('.js-saveGameButton img').attr('src','Images/Buttons/Save_Game_Grey_Button.png');
+            };
+            if(true){  // Test for existing saved game data for this user goes here.
+                $('.js-loadGameButton').prop("disabled",false).css('cursor','pointer');
+                $('.js-loadGameButton img').attr('src','Images/Buttons/Load_Game_Button.png');
+            }else{
+                $('.js-loadGameButton').prop("disabled",true).css('cursor','not-allowed');
+                $('.js-loadGameButton img').attr('src','Images/Buttons/Load_Game_Grey_Button.png');
+            };
+            if(STORE.moves.length>0){  // && test for existing saved game data for this user goes here.
+                $('.js-replaceGameButton').prop("disabled",false).css('cursor','pointer');
+                $('.js-replaceGameButton img').attr('src','Images/Buttons/Replace_Game_Button.png');
+            }else{
+                $('.js-replaceGameButton').prop("disabled",true).css('cursor','not-allowed');
+                $('.js-replaceGameButton img').attr('src','Images/Buttons/Replace_Game_Grey_Button.png');
+            };
+            if(true){  // Test for existing saved game data for this user goes here.
+                $('.js-deleteGameButton').prop("disabled",false).css('cursor','pointer');
+                $('.js-deleteGameButton img').attr('src','Images/Buttons/Delete_Game_Button.png');
+            }else{
+                $('.js-deleteGameButton').prop("disabled",true).css('cursor','not-allowed');
+                $('.js-deleteGameButton img').attr('src','Images/Buttons/Delete_Game_Grey_Button.png');
+            };
+        };
+        $('.js-savedGamesUserName').text(STORE.activeUser);
         $('.js-backButtonSavesPage').focus();
     },
 
@@ -183,6 +247,10 @@ const processSquare={
                     break;
                 }
             }
+            $('.js-undoButton').prop("disabled",false).css('cursor','pointer');
+            $('.js-undoButton img').attr('src','Images/Buttons/Undo_Button.png');
+            $('.js-resetButton').prop("disabled",false).css('cursor','pointer');
+            $('.js-resetButton img').attr('src','Images/Buttons/Reset_Button.png');
             this.updateScoreBoard(0, 1);
         }else if(legalMoveString!==''){
             let previousSquare=STORE.moves[STORE.moves.length-1];
@@ -376,7 +444,7 @@ const processCredentials={
         if(action==='signUp'){
             this.userSignUp();
         }else if(action==='logIn'){
-            this.usersLogIn();
+            this.userLogIn();
         }
     },
 
@@ -389,14 +457,12 @@ const processCredentials={
             method: 'POST',
             body: JSON.stringify(data),
             headers:{'Content-Type': 'application/json'}
-    }).then(res=>res.json())
-    .catch(error=>console.error('Error:', error))
-    .then(response=>{
-        // console.log('Success:', response);
-        STORE.authenticatedUser=response.user;
-        STORE.currentView='saves';
-        STORE.previousView='credentials';
-        renderPage.doShowPages();
+        }).then(res=>res.json())
+        .catch(error=>console.error('Error:', error))
+        .then(response=>{
+            console.log('Success:', response);
+            STORE.activeUser=response.user;
+            this.doLogIn(credentialsUser,credentialsPassword);
         });
     },
 
@@ -404,19 +470,25 @@ const processCredentials={
         // console.log('In the userLogIn method.');
         let credentialsUser=$('#username').val();
         let credentialsPassword=$('#password').val();
-        let data={user:credentialsUser,password:credentialsPassword};
+        this.doLogIn(credentialsUser,credentialsPassword);
+    },
+
+    doLogIn(parmUser,parmPassword){
+        // console.log('In the doLogIn method.');
+        let data={user:parmUser,password:parmPassword};
         fetch('/api/auth/login',{
             method: 'POST',
             body: JSON.stringify(data),
             headers:{'Content-Type': 'application/json'}
-    }).then(res=>res.json())
-    .catch(error=>console.error('Error:', error))
-    .then(response=>{
-        // console.log('Success:', response);
-        STORE.authenticatedUser=response.user;
-        STORE.currentView='saves';
-        STORE.previousView='credentials';
-        renderPage.doShowPages();
+        }).then(res=>res.json())
+        .catch(error=>console.error('Error:', error))
+        .then(response=>{
+            console.log('Success:', response.authToken);
+            localStorage.setItem('jwt',response.authToken);
+            STORE.activeUser=parmUser;
+            STORE.currentView='saves';
+            STORE.previousView='credentials';
+            renderPage.doShowPages();
         });
     }
 };
@@ -443,6 +515,7 @@ const listeners={
         this.handleBackButtonSavesPage();
         this.handleSignUpNavButton();
         this.handleLogInNavButton();
+        this.handleLogOutNavButton();
         this.handleSaveButton();
         this.handleLoadButton();
         this.handleUpdateButton();
@@ -510,6 +583,12 @@ const listeners={
             $('.scoreTableMovesToDo').html(`${STORE.targetMoves-STORE.scoreMoves}`);
             $('.scoreTableSquaresDone').html(`${STORE.scoreSquares}`);
             $('.scoreTableSquaresToDo').html(`${STORE.targetSquares-STORE.scoreSquares}`);
+            $('.js-undoButton').prop("disabled",true).css('cursor','not-allowed');
+            $('.js-undoButton img').attr('src','Images/Buttons/Undo_Grey_Button.png');
+            $('.js-redoButton').prop("disabled",true).css('cursor','not-allowed');
+            $('.js-redoButton img').attr('src','Images/Buttons/Redo_Grey_Button.png');
+            $('.js-resetButton').prop("disabled",true).css('cursor','not-allowed');
+            $('.js-resetButton img').attr('src','Images/Buttons/Reset_Grey_Button.png');
         });
     },
 
@@ -533,6 +612,14 @@ const listeners={
             for(let i=0; i<recording.length; i++){
                 processSquare.doSquare(recording[i]);
             }
+            if(STORE.moves.length===0){
+                $('.js-undoButton').prop("disabled",true).css('cursor','not-allowed');
+                $('.js-undoButton img').attr('src','Images/Buttons/Undo_Grey_Button.png');
+            };
+            if(STORE.moves.length<STORE.redo.length){
+                $('.js-redoButton').prop("disabled",false).css('cursor','pointer');
+                $('.js-redoButton img').attr('src','Images/Buttons/Redo_Button.png');
+            };
             $('.scoreTableMovesDone').html(`${STORE.scoreMoves}`);
             $('.scoreTableMovesToDo').html(`${STORE.targetMoves-STORE.scoreMoves}`);
             $('.scoreTableSquaresDone').html(`${STORE.scoreSquares}`);
@@ -545,6 +632,14 @@ const listeners={
         $('.js-redoButton').on('click', function() {
             for(let i=STORE.moves.length; i<STORE.redo.length; i++){
                 processSquare.doSquare(STORE.redo[i]);
+                if(STORE.moves.length===STORE.redo.length){
+                    $('.js-redoButton').prop("disabled",true).css('cursor','not-allowed');
+                    $('.js-redoButton img').attr('src','Images/Buttons/Redo_Grey_Button.png');
+                };
+                if(STORE.moves.length>0){
+                    $('.js-undoButton').prop("disabled",false).css('cursor','pointer');
+                    $('.js-undoButton img').attr('src','Images/Buttons/Undo_Button.png');
+                };
                 break;
             }
             $('.scoreTableMovesDone').html(`${STORE.scoreMoves}`);
@@ -611,6 +706,9 @@ const listeners={
     handleSignUpNavButton(){
         // console.log('In the handleSignUpNavButton method.');
         $('.js-signUpNavButton').on('click', function() {
+            $('.js-formSignUpButton').show();
+            $('.js-formLogInButton').hide();
+            $('.js-fieldsTitle').text('Sign Up');
             STORE.currentView='credentials';
             STORE.previousView='saves';
             renderPage.doShowPages();
@@ -619,8 +717,21 @@ const listeners={
 
     handleLogInNavButton(){
         // console.log('In the handleLogInNavButton method.');
-        $('.js-LogInNavButton').on('click', function() {
+        $('.js-logInNavButton').on('click', function() {
+            $('.js-formSignUpButton').hide();
+            $('.js-formLogInButton').show();
+            $('.js-fieldsTitle').text('Log In');
             STORE.currentView='credentials';
+            STORE.previousView='saves';
+            renderPage.doShowPages();
+        });
+    },
+
+    handleLogOutNavButton(){
+        // console.log('In the handleLogOutNavButton method.');
+        $('.js-logOutNavButton').on('click', function() {
+            STORE.activeUser='';
+            STORE.currentView='saves';
             STORE.previousView='saves';
             renderPage.doShowPages();
         });
