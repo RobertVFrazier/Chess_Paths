@@ -14,6 +14,7 @@ const STORE = {  // All the variables connected with the state of the DOM go her
     targetMoves: 14,
     targetSquares: 64,
     activeUser: '',
+    newSession: true,
     jwt: '',
     showLegalMoves: false  // Not an MVP feature.
   };
@@ -153,10 +154,18 @@ const renderPage={
     savesPage(){
         // console.log('In the savesPage method.');
         this.showCurrentPage('div.js-pageViewSavesHtml');
-        if(localStorage.getItem('jwt')!==''){
-            // let JWT_SECRET=../.env.JWT_SECRET;
-            // console.log(JWT_SECRET);
-            // STORE.activeUser='';
+        if(STORE.newSession===true && localStorage.getItem('jwt')!==''){
+            console.log(localStorage.getItem('jwt'));
+            fetch('/api/protected',{
+                method:'GET',
+                headers: {Authorization: `Bearer ${localStorage.getItem('jwt')}`}
+            }).then(data=>data.json().then(user=>{
+                STORE.activeUser=user.user;
+                STORE.newSession=false;
+                STORE.currentView='saves';
+                STORE.previousView='game';
+                renderPage.doShowPages();
+            }));
         };
         if(STORE.activeUser===''){
             $('.js-logInNavButton').show();
@@ -245,8 +254,8 @@ const processSquare={
                 if(STORE.moves[i]!==STORE.redo[i]){
                     STORE.redo=[...STORE.moves];
                     break;
-                }
-            }
+                };
+            };
             $('.js-undoButton').prop("disabled",false).css('cursor','pointer');
             $('.js-undoButton img').attr('src','Images/Buttons/Undo_Button.png');
             $('.js-resetButton').prop("disabled",false).css('cursor','pointer');
@@ -354,7 +363,7 @@ const processSquare={
                     break;
                 }
             }
-        }
+        };
     },
 
     testLegal(currentSquare, proposedSquare){  // Determines if a proposed move is legal.
@@ -436,7 +445,7 @@ const processSavedGames={
 };
 
 /******************************************************************** 
-Step 1e: Deal with user entering credentials. 
+Step 1e: Deal with authenticating a user.
 *********************************************************************/
 
 const processCredentials={

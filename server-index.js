@@ -6,9 +6,9 @@ const morgan=require('morgan');
 const mongoose=require('mongoose');
 const passport=require('passport');
 // This destructuring looks like a source of confusion.
-const {router: usersRouter} = require('./Users');
-const {router: authRouter,localStrategy,jwtStrategy} = require('./Auth');
-mongoose.Promise = global.Promise;
+const {router: usersRouter}=require('./Users');
+const {router: authRouter,localStrategy,jwtStrategy}=require('./Auth');
+mongoose.Promise=global.Promise;
 
 const DATABASE_URL=process.env.DATABASE_URL || 'mongodb://localhost:27017/chess-paths';
 const PORT=process.env.PORT || 8080;
@@ -20,6 +20,18 @@ const {User}=require('./Models/user-model');
 app.use(morgan('common'));
 app.use(express.json());
 app.use(express.static('public'));
+
+passport.use(localStrategy);
+passport.use(jwtStrategy);
+
+app.use('/api/users/',usersRouter);
+app.use('/api/auth/',authRouter);
+const jwtAuth=passport.authenticate('jwt',{session: false});
+// A protected endpoint which needs a valid JWT to access it.
+app.get('/api/protected',jwtAuth,(req,res)=>{
+  console.log(req.user);
+  return res.json(req.user);
+});
 
 // CREATE GAMES
 
@@ -49,7 +61,7 @@ app.post('/games',(req,res)=>{
 
 // READ GAMES
 
-app.get('/games', (req, res) => {
+app.get('/games',(req,res) => {
   Game
     .find().populate("user")
     .then(games=>{
@@ -146,7 +158,7 @@ app.delete('/games/:id',(req,res)=>{  // NOTE: Replace :id with the id number, n
 
 // READ USERS
 
-app.get('/users', (req, res) => {
+app.get('/users',(req,res) => {
   User
     .find()
     .then(users=>{
@@ -212,45 +224,29 @@ app.delete('/users/:id',(req,res)=>{  // NOTE: Replace :id with the id number, n
 
 // CORS
 
-app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
-  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE');
+app.use(function (req,res,next) {
+  res.header('Access-Control-Allow-Origin','*');
+  res.header('Access-Control-Allow-Headers','Content-Type,Authorization');
+  res.header('Access-Control-Allow-Methods','GET,POST,PUT,PATCH,DELETE');
   if (req.method === 'OPTIONS') {
     return res.send(204);
   }
   next();
 });
 
-passport.use(localStrategy);
-passport.use(jwtStrategy);
-
-app.use('/api/users/', usersRouter);
-app.use('/api/auth/', authRouter);
-
-const jwtAuth = passport.authenticate('jwt', { session: false });
-
-// A protected endpoint which needs a valid JWT to access it.
-// Not sure how this relates to the Chess Paths app, if at all.
-app.get('/api/protected', jwtAuth, (req, res) => {
-  return res.json({
-    data: 'rosebud'
-  });
-});
-
-app.use('*', (req, res) => {
+app.use('*',(req,res) => {
   return res.status(404).json({ message: 'Not Found.' });
 });
 
 // The next three lines are replaced with runServer(), below.
-// app.listen(process.env.PORT, () => {
+// app.listen(process.env.PORT,() => {
 //   console.log(`Your app is listening on port ${process.env.PORT}`);
 // });
 
 let server;
 
 // Connect to the database and start the server.
-function runServer(databaseUrl, port=PORT){
+function runServer(databaseUrl,port=PORT){
   return new Promise((resolve,reject)=>{
     mongoose.connect(databaseUrl,{useNewUrlParser:true},err=>{
       if(err){

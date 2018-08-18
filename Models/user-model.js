@@ -7,7 +7,7 @@ mongoose.Promise=global.Promise;
 const UserSchema=mongoose.Schema({
     user: {type: String,required: true,unique: true},
     password: {type: String,required: true},
-    games: [{type: mongoose.Schema.Types.ObjectId, ref: 'game'}],
+    games: [{type: mongoose.Schema.Types.ObjectId,ref: 'game'}],
     created: {type: Date,default: Date.now}
 });
 
@@ -25,6 +25,6 @@ UserSchema.statics.hashPassword=function(password){
     return bcrypt.hash(password,10);
 };
 
-const User = mongoose.model('user', UserSchema);
+const User=mongoose.model('user',UserSchema);
 
-module.exports = {User};
+module.exports={User};
