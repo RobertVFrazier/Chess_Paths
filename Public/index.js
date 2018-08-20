@@ -7,6 +7,7 @@
 const STORE = {  // All the variables connected with the state of the DOM go here.
     currentView: 'splash',
     previousView: 'none',
+    puzzle: 'queen',
     moves: [],
     redo: [],
     scoreMoves: 0,
@@ -16,6 +17,7 @@ const STORE = {  // All the variables connected with the state of the DOM go her
     activeUser: '',
     newSession: true,
     jwt: '',
+    savedGames: [],
     showLegalMoves: false  // Not an MVP feature.
   };
 
@@ -167,10 +169,21 @@ const renderPage={
                 renderPage.doShowPages();
             }));
         };
+        if(STORE.activeUser!==''){
+            this.fetchGameData();
+        };
+        this.configureGameButtons();
+        $('.js-savedGamesUserName').text(STORE.activeUser);
+        $('.js-backButtonSavesPage').focus();
+    },
+
+    configureGameButtons(){
+        // console.log('In the configureGameButtons method.');
         if(STORE.activeUser===''){
             $('.js-logInNavButton').show();
             $('.js-signUpNavButton').show();
             $('.js-logOutNavButton').hide();
+            $('.savedGamesContainer').html('');
             $('.js-saveGameButton').prop("disabled",true).css('cursor','not-allowed');
             $('.js-saveGameButton img').attr('src','Images/Buttons/Save_Game_Grey_Button.png');
             $('.js-loadGameButton').prop("disabled",true).css('cursor','not-allowed');
@@ -184,7 +197,8 @@ const renderPage={
                 $('.js-logInNavButton img').attr('src','Images/Buttons/Log_In_Grey_Button.png');
             }else{
                 $('.js-logInNavButton').prop("disabled",false).css('cursor','pointer');
-                $('.js-logInNavButton img').attr('src','Images/Buttons/Log_In_Button.png');};
+                $('.js-logInNavButton img').attr('src','Images/Buttons/Log_In_Button.png');
+            };
         }else{
             $('.js-logInNavButton').hide();
             $('.js-signUpNavButton').hide();
@@ -196,21 +210,21 @@ const renderPage={
                 $('.js-saveGameButton').prop("disabled",true).css('cursor','not-allowed');
                 $('.js-saveGameButton img').attr('src','Images/Buttons/Save_Game_Grey_Button.png');
             };
-            if(true){  // Test for existing saved game data for this user goes here.
+            if(STORE.savedGames.length>0){
                 $('.js-loadGameButton').prop("disabled",false).css('cursor','pointer');
                 $('.js-loadGameButton img').attr('src','Images/Buttons/Load_Game_Button.png');
             }else{
                 $('.js-loadGameButton').prop("disabled",true).css('cursor','not-allowed');
                 $('.js-loadGameButton img').attr('src','Images/Buttons/Load_Game_Grey_Button.png');
             };
-            if(STORE.moves.length>0){  // && test for existing saved game data for this user goes here.
+            if(STORE.moves.length>0 && STORE.savedGames.length>0){
                 $('.js-replaceGameButton').prop("disabled",false).css('cursor','pointer');
                 $('.js-replaceGameButton img').attr('src','Images/Buttons/Replace_Game_Button.png');
             }else{
                 $('.js-replaceGameButton').prop("disabled",true).css('cursor','not-allowed');
                 $('.js-replaceGameButton img').attr('src','Images/Buttons/Replace_Game_Grey_Button.png');
             };
-            if(true){  // Test for existing saved game data for this user goes here.
+            if(STORE.savedGames.length>0){
                 $('.js-deleteGameButton').prop("disabled",false).css('cursor','pointer');
                 $('.js-deleteGameButton img').attr('src','Images/Buttons/Delete_Game_Button.png');
             }else{
@@ -218,8 +232,42 @@ const renderPage={
                 $('.js-deleteGameButton img').attr('src','Images/Buttons/Delete_Game_Grey_Button.png');
             };
         };
-        $('.js-savedGamesUserName').text(STORE.activeUser);
-        $('.js-backButtonSavesPage').focus();
+    },
+
+    fetchGameData(){
+        // console.log('In the fetchGameData method.');
+        // Get the user id for the active user.
+        let fetchedUserID='';
+        let htmlGameMoves='';
+        fetch(`/api/users/name/${STORE.activeUser}`,{
+            method: 'GET',
+            headers:{'Content-Type': 'application/json'}
+        }).then(res=>res.json())
+        .catch(error=>console.error('Error:', error))
+        .then(response=>{
+            fetchedUserID=response[0]._id;
+            console.log(`${STORE.activeUser}'s user id is ${fetchedUserID}.`);
+            // Get all saved game move data for the active user.
+            fetch(`/api/games/userid/${fetchedUserID}`,{
+                method: 'GET',
+                headers:{'Content-Type': 'application/json'}
+            }).then(res=>res.json())
+            .catch(error=>console.error('Error:', error))
+            .then(response=>{
+                STORE.savedGames=[];
+                for(let i=0; i<response.length; i++){
+                    if(response[i].puzzle===STORE.puzzle){
+                        STORE.savedGames.push(response[i].moves);
+                    }
+                };
+                console.log(STORE.savedGames);
+                for(let i=0; i<STORE.savedGames.length; i++){
+                    htmlGameMoves+=`<p>Game ${i+1}:</p><br><p>${STORE.savedGames[i].toString()}:</p><br>`;
+                };
+                $('.savedGamesContainer').html(htmlGameMoves);
+                this.configureGameButtons();
+            });
+        });
     },
 
     credentialsPage(){
@@ -574,7 +622,7 @@ const listeners={
 
     handleResetButton(){
         // console.log('In the handleResetButton method.');
-        $('.js-resetButton').on('click', function() {
+        $('.js-resetButton').on('click',function(){
             STORE.moves=[];
             STORE.redo=[];
             STORE.scoreMoves=0;
@@ -718,6 +766,8 @@ const listeners={
             $('.js-formSignUpButton').show();
             $('.js-formLogInButton').hide();
             $('.js-fieldsTitle').text('Sign Up');
+            $('#username').val('');
+            $('#password').val('');
             STORE.currentView='credentials';
             STORE.previousView='saves';
             renderPage.doShowPages();
@@ -730,6 +780,8 @@ const listeners={
             $('.js-formSignUpButton').hide();
             $('.js-formLogInButton').show();
             $('.js-fieldsTitle').text('Log In');
+            $('#username').val('');
+            $('#password').val('');
             STORE.currentView='credentials';
             STORE.previousView='saves';
             renderPage.doShowPages();
@@ -740,6 +792,18 @@ const listeners={
         // console.log('In the handleLogOutNavButton method.');
         $('.js-logOutNavButton').on('click', function() {
             STORE.activeUser='';
+            STORE.moves=[];
+            STORE.redo=[];
+            STORE.savedGames=[];
+            STORE.scoreMoves=0;
+            STORE.scoreSquares=0;
+            for(let i=1; i<9; i++){
+                for(let j=1; j<9; j++){
+                    let resetSquare=String.fromCharCode(64+i)+(j);
+                    $('.js-'+resetSquare).removeClass('visited');
+                    $('.js-'+resetSquare).removeClass('occupied');
+                }
+            }
             STORE.currentView='saves';
             STORE.previousView='saves';
             renderPage.doShowPages();
