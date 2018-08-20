@@ -7,6 +7,7 @@ const mongoose=require('mongoose');
 const passport=require('passport');
 // This destructuring looks like a source of confusion.
 const {router: usersRouter}=require('./Users');
+const {router: gamesRouter}=require('./Games');
 const {router: authRouter,localStrategy,jwtStrategy}=require('./Auth');
 mongoose.Promise=global.Promise;
 
@@ -25,6 +26,7 @@ passport.use(localStrategy);
 passport.use(jwtStrategy);
 
 app.use('/api/users/',usersRouter);
+app.use('/api/games/',gamesRouter);
 app.use('/api/auth/',authRouter);
 const jwtAuth=passport.authenticate('jwt',{session: false});
 // A protected endpoint which needs a valid JWT to access it.
@@ -158,17 +160,17 @@ app.delete('/games/:id',(req,res)=>{  // NOTE: Replace :id with the id number, n
 
 // READ USERS
 
-app.get('/users',(req,res) => {
-  User
-    .find()
-    .then(users=>{
-      res.json(users.map(user=>user));
-    })
-    .catch(err=>{
-      console.error(err);
-      res.status(500).json({ error: 'Could not get any users.' });
-    });
-});
+// app.get('/users',(req,res) => {
+//   User
+//     .find()
+//     .then(users=>{
+//       res.json(users.map(user=>user));
+//     })
+//     .catch(err=>{
+//       console.error(err);
+//       res.status(500).json({ error: 'Could not get any users.' });
+//     });
+// });
 
 app.get('/users/:id',(req,res)=>{  // NOTE: Replace :id with the id number, no quotes.
   User                             // Example: localhost:8080/users/5b6085710d94523750b5de05

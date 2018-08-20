@@ -750,6 +750,23 @@ const listeners={
         // console.log('In the handleSaveButton method.');
         $('.js-saveGameButton').on('click', function() {
             console.log('Save Game button clicked');
+
+
+            // let credentialsUser=$('#username').val();
+            // let credentialsPassword=$('#password').val();
+            // let data={user:credentialsUser,password:credentialsPassword};
+            // fetch('/api/users',{
+            //     method: 'POST',
+            //     body: JSON.stringify(data),
+            //     headers:{'Content-Type': 'application/json'}
+            // }).then(res=>res.json())
+            // .catch(error=>console.error('Error:', error))
+            // .then(response=>{
+            //     console.log('Success:', response);
+            //     STORE.activeUser=response.user;
+            //     this.doLogIn(credentialsUser,credentialsPassword);
+            // });
+
         });
     },
 
