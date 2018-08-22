@@ -2,12 +2,15 @@
 const express=require('express');
 const bodyParser=require('body-parser');
 const {Game}=require('../Models/game-model');
+const {User}=require('../Models/user-model');
 const router=express.Router();
+const passport=require('passport');
 const jsonParser=bodyParser.json();
+const jwtAuth=passport.authenticate('jwt',{session: false});
 
 // Post to save a new game.
-router.post('/',jsonParser,(req,res)=>{
-  const requiredFields=['user','puzzle','moves'];
+router.post('/',jwtAuth,jsonParser,(req,res)=>{
+  const requiredFields=['puzzle','moves'];
   const missingField=requiredFields.find(field=>!(field in req.body));
 
   if (missingField) {
@@ -19,7 +22,7 @@ router.post('/',jsonParser,(req,res)=>{
     });
   }
 
-  const stringFields=['user','puzzle'];
+  const stringFields=['puzzle'];
   const nonStringField=stringFields.find(
     field=>field in req.body && typeof req.body[field] !== 'string'
   );
@@ -33,30 +36,40 @@ router.post('/',jsonParser,(req,res)=>{
     });
   }
 
-  let {user,puzzle,moves}=req.body;
+  let {puzzle,moves}=req.body;
 
-  return Game.create({
-      user,
+  return User
+  .findById(req.user.id)  // load the user from the db
+  .then( user => {
+    return Game.create({   //actually create the game
+      user: user._id, //associate the user with the game
       puzzle,
       moves
     })
-    .then(game=>{
-      return res.status(201).json(game);
+    .then(game => {
+      user.games.push(game._id); //associate game with user
+      return user
+        .save()  //save the changed user
+        .then( user => {
+          return res.status(201).json(game); //respond
+      })
     })
-    .catch(err=>{
-      // Forward validation errors on to the client, otherwise give a 500
-      // error because something unexpected has happened.
-      if (err.reason === 'ValidationError') {
-        return res.status(err.code).json(err);
-      }
-      res.status(500).json({code: 500,message: 'Internal server error'});
-    });
+  })
+.catch(err=>{
+  // Forward validation errors on to the client, otherwise give a 500
+  // error because something unexpected has happened.
+  if (err.reason === 'ValidationError') {
+    return res.status(err.code).json(err);
+  }
+  res.status(500).json({code: 500,message: 'Internal server error'});
+});
 });
 
 // GET all games.
-router.get('/',(req,res)=>{
-  return Game.find()
-    .then(games=>res.json(games.map(gameFound=>gameFound)))
+router.get('/',jwtAuth,(req,res)=>{
+  console.log(req.user);
+  User.findById(req.user.id)
+    .then(user=>res.json(user.games))
     .catch(err=>res.status(500).json({message: 'Could not get any games. Internal server error.'}));
 });
 

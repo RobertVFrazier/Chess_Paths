@@ -25,56 +25,6 @@ const STORE = {  // All the variables connected with the state of the DOM go her
 Step 1: Render the DOM. 
 ********************************************************/
 
-/******************************************************** 
-Step 1a: Generate the HTML code. 
-********************************************************/
-
-const generateHtml={
-    doHtmlPages(){
-        // console.log('In the doHtmlPages method.');
-        this.splashHtml();
-    },
-
-    splashHtml(){
-        // console.log('In the splashHtml method.');
-        let pageSplashHtml=
-        $('div.js-pageViewSplashHtml').html(pageSplashHtml);
-        $('div.js-pageViewSplashHtml').hide();
-    },
-
-    gameHtml(){
-        // console.log('In the gameHtml method.');
-        let pageGameHtml=
-        $('div.js-pageViewGameBoardHtml').html(pageGameHtml);
-        $('div.js-pageViewGameBoardHtml').hide();
-    },
-
-    infoHtml(){
-        // console.log('In the infoHtml method.');
-        let pageInfoHtml=
-        $('div.js-pageViewInstructionsHtml').html(pageInfoHtml);
-        $('div.js-pageViewInstructionsHtml').hide();
-    },
-
-    rulesHtml(){
-        // console.log('In the rulesHtml method.');
-        let pageRulesHtml=
-        $('div.js-pageViewInstructionsHtml').html(pageRulesHtml);
-        $('div.js-pageViewInstructionsHtml').hide();
-    },
-
-    movesHtml(){
-        // console.log('In the movesHtml method.');
-        let pageMovesHtml=
-        $('div.js-pageViewInstructionsHtml').html(pageMovesHtml);
-        $('div.js-pageViewInstructionsHtml').hide();
-    }
-};
-
-/************************************************************* 
-Step 1b: Render each HTML page, based on the current state. 
-**************************************************************/
-
 const renderPage={
    doShowPages(){
         // console.log('In the doShowPages method.');
@@ -234,6 +184,16 @@ const renderPage={
         };
     },
 
+    credentialsPage(){
+        // console.log('In the credentialsPage method.');
+        this.showCurrentPage('div.js-pageViewCredentialsHtml');
+        $('.js-backButtonCredentialsPage').focus();
+    },
+
+/******************************************************** 
+Need to move fetchGameData to Step 3.
+********************************************************/
+
     fetchGameData(){
         // console.log('In the fetchGameData method.');
         // Get the user id for the active user.
@@ -268,17 +228,12 @@ const renderPage={
                 this.configureGameButtons();
             });
         });
-    },
-
-    credentialsPage(){
-        // console.log('In the credentialsPage method.');
-        this.showCurrentPage('div.js-pageViewCredentialsHtml');
-        $('.js-backButtonCredentialsPage').focus();
     }
 };
 
 /******************************************************************** 
 Step 1c: Deal with the effects of selecting a square on the board. 
+Need to move to Step 3.
 *********************************************************************/
 
 const processSquare={
@@ -454,102 +409,6 @@ const processSquare={
     }
 };
 
-/******************************************************************** 
-Step 1d: Deal with save game actions. 
-*********************************************************************/
-
-const processSavedGames={
-    doSavedGames(action){
-        if(action==='save'){
-            this.saveGame();
-        }else if(action==='load'){
-            this.loadGame();
-        }else if(action==='replace'){
-            this.replaceGame();
-        }else if(action==='delete'){
-            this.deleteGame();
-        }
-    },
-
-    saveGame(){  
-        // console.log('In the saveGame method.');
-        console.log('This will be the save game function.');
-    },
-
-    loadGame(){  
-        // console.log('In the loadGame method.');
-        console.log('This will be the load game function.');
-    },
-
-    replaceGame(){
-        // console.log('In the replaceGame method.');
-        console.log('This will be the replace game function.');
-    },
-
-    deleteGame(){  
-        // console.log('In the deleteGame method.');
-        console.log('This will be the delete game function.');
-    }
-};
-
-/******************************************************************** 
-Step 1e: Deal with authenticating a user.
-*********************************************************************/
-
-const processCredentials={
-    doCredentials(action){
-        if(action==='signUp'){
-            this.userSignUp();
-        }else if(action==='logIn'){
-            this.userLogIn();
-        }
-    },
-
-    userSignUp(){
-        // console.log('In the userSignUp method.');
-        let credentialsUser=$('#username').val();
-        let credentialsPassword=$('#password').val();
-        let data={user:credentialsUser,password:credentialsPassword};
-        fetch('/api/users',{
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers:{'Content-Type': 'application/json'}
-        }).then(res=>res.json())
-        .catch(error=>console.error('Error:', error))
-        .then(response=>{
-            console.log('Success:', response);
-            STORE.activeUser=response.user;
-            this.doLogIn(credentialsUser,credentialsPassword);
-        });
-    },
-
-    userLogIn(){
-        // console.log('In the userLogIn method.');
-        let credentialsUser=$('#username').val();
-        let credentialsPassword=$('#password').val();
-        this.doLogIn(credentialsUser,credentialsPassword);
-    },
-
-    doLogIn(parmUser,parmPassword){
-        // console.log('In the doLogIn method.');
-        let data={user:parmUser,password:parmPassword};
-        fetch('/api/auth/login',{
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers:{'Content-Type': 'application/json'}
-        }).then(res=>res.json())
-        .catch(error=>console.error('Error:', error))
-        .then(response=>{
-            console.log('Success:', response.authToken);
-            localStorage.setItem('jwt',response.authToken);
-            STORE.activeUser=parmUser;
-            STORE.currentView='saves';
-            STORE.previousView='credentials';
-            renderPage.doShowPages();
-        });
-    }
-};
-
 /******************************************************** 
  * Step 2: Listen for user interactions.
  ********************************************************/
@@ -586,319 +445,413 @@ const listeners={
 
     handleInfoButton(){
         // console.log('In the handleInfoButton method.');
-        $('.js-infoButton').on('click', function() {
-            STORE.currentView='info';
-            STORE.previousView='splash';
-            renderPage.doShowPages();
+        $('.js-infoButton').on('click',()=>{
+            actions.do('nav','info','splash');
         });
     },
 
     handleQueenButton(){
         // console.log('In the handleQueenButton method.');
-        $('.js-queenButton').on('click', function() {
-            STORE.currentView='game';
-            STORE.previousView='splash';
-            renderPage.doShowPages();
+        $('.js-queenButton').on('click',()=>{
+            actions.do('nav','game','splash');
         });
     },
 
     handleRulesButton(){
         // console.log('In the handleRulesButton method.');
-        $('.js-rulesButton').on('click', function() {
-            STORE.currentView='rules';
-            STORE.previousView='game';
-            renderPage.doShowPages();
+        $('.js-rulesButton').on('click',()=>{
+            actions.do('nav','rules','game');
         });
     },
 
     handleMovesButton(){
         // console.log('In the handleMovesButton method.');
-        $('.js-movesButton').on('click', function() {
-            STORE.currentView='moves';
-            STORE.previousView='rules';
-            renderPage.doShowPages();
-        });
-    },
-
-    handleResetButton(){
-        // console.log('In the handleResetButton method.');
-        $('.js-resetButton').on('click',function(){
-            STORE.moves=[];
-            STORE.redo=[];
-            STORE.scoreMoves=0;
-            STORE.scoreSquares=0;
-            STORE.targetMoves=14;
-            STORE.targetSquares=64;
-            for(let i=1; i<9; i++){
-                for(let j=1; j<9; j++){
-                    let resetSquare=String.fromCharCode(64+i)+(j);
-                    $('.js-'+resetSquare).removeClass('visited');
-                    $('.js-'+resetSquare).removeClass('occupied');
-                }
-            }
-            $('.scoreTableMovesDone').html(`${STORE.scoreMoves}`);
-            $('.scoreTableMovesToDo').html(`${STORE.targetMoves-STORE.scoreMoves}`);
-            $('.scoreTableSquaresDone').html(`${STORE.scoreSquares}`);
-            $('.scoreTableSquaresToDo').html(`${STORE.targetSquares-STORE.scoreSquares}`);
-            $('.js-undoButton').prop("disabled",true).css('cursor','not-allowed');
-            $('.js-undoButton img').attr('src','Images/Buttons/Undo_Grey_Button.png');
-            $('.js-redoButton').prop("disabled",true).css('cursor','not-allowed');
-            $('.js-redoButton img').attr('src','Images/Buttons/Redo_Grey_Button.png');
-            $('.js-resetButton').prop("disabled",true).css('cursor','not-allowed');
-            $('.js-resetButton img').attr('src','Images/Buttons/Reset_Grey_Button.png');
-        });
-    },
-
-    handleUndoButton(){
-        // console.log('In the handleUndoButton method.');
-        $('.js-undoButton').on('click', function() {
-            STORE.moves.pop();
-            let recording=STORE.moves; // Cannot use STORE.moves in the second loop; it becomes endless.
-            STORE.moves=[];
-            STORE.scoreMoves=0;
-            STORE.scoreSquares=0;
-            STORE.targetMoves=14;
-            STORE.targetSquares=64;
-            for(let i=1; i<9; i++){
-                for(let j=1; j<9; j++){
-                    let resetSquare=String.fromCharCode(64+i)+(j);
-                    $('.js-'+resetSquare).removeClass('visited');
-                    $('.js-'+resetSquare).removeClass('occupied');
-                }
-            }
-            for(let i=0; i<recording.length; i++){
-                processSquare.doSquare(recording[i]);
-            }
-            if(STORE.moves.length===0){
-                $('.js-undoButton').prop("disabled",true).css('cursor','not-allowed');
-                $('.js-undoButton img').attr('src','Images/Buttons/Undo_Grey_Button.png');
-            };
-            if(STORE.moves.length<STORE.redo.length){
-                $('.js-redoButton').prop("disabled",false).css('cursor','pointer');
-                $('.js-redoButton img').attr('src','Images/Buttons/Redo_Button.png');
-            };
-            $('.scoreTableMovesDone').html(`${STORE.scoreMoves}`);
-            $('.scoreTableMovesToDo').html(`${STORE.targetMoves-STORE.scoreMoves}`);
-            $('.scoreTableSquaresDone').html(`${STORE.scoreSquares}`);
-            $('.scoreTableSquaresToDo').html(`${STORE.targetSquares-STORE.scoreSquares}`);
-        });
-    },
-
-    handleRedoButton(){
-        // console.log('In the handleRedoButton method.');
-        $('.js-redoButton').on('click', function() {
-            for(let i=STORE.moves.length; i<STORE.redo.length; i++){
-                processSquare.doSquare(STORE.redo[i]);
-                if(STORE.moves.length===STORE.redo.length){
-                    $('.js-redoButton').prop("disabled",true).css('cursor','not-allowed');
-                    $('.js-redoButton img').attr('src','Images/Buttons/Redo_Grey_Button.png');
-                };
-                if(STORE.moves.length>0){
-                    $('.js-undoButton').prop("disabled",false).css('cursor','pointer');
-                    $('.js-undoButton img').attr('src','Images/Buttons/Undo_Button.png');
-                };
-                break;
-            }
-            $('.scoreTableMovesDone').html(`${STORE.scoreMoves}`);
-            $('.scoreTableMovesToDo').html(`${STORE.targetMoves-STORE.scoreMoves}`);
-            $('.scoreTableSquaresDone').html(`${STORE.scoreSquares}`);
-            $('.scoreTableSquaresToDo').html(`${STORE.targetSquares-STORE.scoreSquares}`);
+        $('.js-movesButton').on('click',()=>{
+            actions.do('nav','moves','rules');
         });
     },
 
     handleLoadSaveButton(){
         // console.log('In the handleLoadSaveButton method.');
-        $('.js-loadSaveButton').on('click', function() {
-            STORE.currentView='saves';
-            STORE.previousView='game';
-            renderPage.doShowPages();
+        $('.js-loadSaveButton').on('click',()=>{
+            actions.do('nav','saves','game');
         });
     },
 
     handleBackButtonInfoPage(){
         // console.log('In the handleBackButtonInfoPage method.');
-        $('.js-backButtonInfoPage').on('click', function() {
-            STORE.currentView='splash';
-            STORE.previousView='info';
-            renderPage.doShowPages();
+        $('.js-backButtonInfoPage').on('click',()=>{
+            actions.do('nav','splash','info');
         });
     },
 
     handleBackButtonGamePage(){
         // console.log('In the handleBackButtonGamePage method.');
-        $('.js-backButtonGamePage').on('click', function() {
-            STORE.currentView='splash';
-            STORE.previousView='game';
-            renderPage.doShowPages();
+        $('.js-backButtonGamePage').on('click',()=>{
+            actions.do('nav','splash','game');
         });
     },
 
     handleBackButtonRulesPage(){
         // console.log('In the handleBackButtonRulesPage method.');
-        $('.js-backButtonRulesPage').on('click', function() {
-            STORE.currentView='game';
-            STORE.previousView='rules';
-            renderPage.doShowPages();
+        $('.js-backButtonRulesPage').on('click',()=>{
+            actions.do('nav','game','rules');
         });
     },
 
     handleBackButtonMovesPage(){
         // console.log('In the handleBackButtonMovesPage method.');
-        $('.js-backButtonMovesPage').on('click', function() {
-            STORE.currentView='rules';
-            STORE.previousView='moves';
-            renderPage.doShowPages();
+        $('.js-backButtonMovesPage').on('click',()=>{
+            actions.do('nav','rules','maves');
         });
     },
 
     handleBackButtonSavesPage(){
         // console.log('In the handleBackButtonSavesPage method.');
-        $('.js-backButtonSavesPage').on('click', function() {
-            STORE.currentView='game';
-            STORE.previousView='saves';
-            renderPage.doShowPages();
-        });
-    },
-
-    handleSignUpNavButton(){
-        // console.log('In the handleSignUpNavButton method.');
-        $('.js-signUpNavButton').on('click', function() {
-            $('.js-formSignUpButton').show();
-            $('.js-formLogInButton').hide();
-            $('.js-fieldsTitle').text('Sign Up');
-            $('#username').val('');
-            $('#password').val('');
-            STORE.currentView='credentials';
-            STORE.previousView='saves';
-            renderPage.doShowPages();
-        });
-    },
-
-    handleLogInNavButton(){
-        // console.log('In the handleLogInNavButton method.');
-        $('.js-logInNavButton').on('click', function() {
-            $('.js-formSignUpButton').hide();
-            $('.js-formLogInButton').show();
-            $('.js-fieldsTitle').text('Log In');
-            $('#username').val('');
-            $('#password').val('');
-            STORE.currentView='credentials';
-            STORE.previousView='saves';
-            renderPage.doShowPages();
-        });
-    },
-
-    handleLogOutNavButton(){
-        // console.log('In the handleLogOutNavButton method.');
-        $('.js-logOutNavButton').on('click', function() {
-            STORE.activeUser='';
-            STORE.moves=[];
-            STORE.redo=[];
-            STORE.savedGames=[];
-            STORE.scoreMoves=0;
-            STORE.scoreSquares=0;
-            for(let i=1; i<9; i++){
-                for(let j=1; j<9; j++){
-                    let resetSquare=String.fromCharCode(64+i)+(j);
-                    $('.js-'+resetSquare).removeClass('visited');
-                    $('.js-'+resetSquare).removeClass('occupied');
-                }
-            }
-            STORE.currentView='saves';
-            STORE.previousView='saves';
-            renderPage.doShowPages();
-        });
-    },
-
-    handleSaveButton(){
-        // console.log('In the handleSaveButton method.');
-        $('.js-saveGameButton').on('click', function() {
-            console.log('Save Game button clicked');
-
-
-            // let credentialsUser=$('#username').val();
-            // let credentialsPassword=$('#password').val();
-            // let data={user:credentialsUser,password:credentialsPassword};
-            // fetch('/api/users',{
-            //     method: 'POST',
-            //     body: JSON.stringify(data),
-            //     headers:{'Content-Type': 'application/json'}
-            // }).then(res=>res.json())
-            // .catch(error=>console.error('Error:', error))
-            // .then(response=>{
-            //     console.log('Success:', response);
-            //     STORE.activeUser=response.user;
-            //     this.doLogIn(credentialsUser,credentialsPassword);
-            // });
-
-        });
-    },
-
-    handleLoadButton(){
-        // console.log('In the handleLoadButton method.');
-        $('.js-loadGameButton').on('click', function() {
-            console.log('Load Game button clicked');
-        });
-    },
-
-    handleUpdateButton(){
-        // console.log('In the handleUpdateButton method.');
-        $('.js-replaceGameButton').on('click', function() {
-            console.log('Replace Game button clicked');
-        });
-    },
-
-    handleDeleteButton(){
-        // console.log('In the handleDeleteButton method.');
-        $('.js-deleteGameButton').on('click', function() {
-            console.log('Delete Game button clicked');
+        $('.js-backButtonSavesPage').on('click',()=>{
+            actions.do('nav','game','saves');
         });
     },
 
     handleBackButtonCredentialsPage(){
         // console.log('In the handleBackButtonCredentialsPage method.');
-        $('.js-backButtonCredentialsPage').on('click', function() {
+        $('.js-backButtonCredentialsPage').on('click',()=>{
+            actions.do('nav','saves','credentials');
+        });
+    },
+
+    handleResetButton(){
+        // console.log('In the handleResetButton method.');
+        $('.js-resetButton').on('click',()=>{
+            actions.do('reset');
+        });
+    },
+
+    handleUndoButton(){
+        // console.log('In the handleUndoButton method.');
+        $('.js-undoButton').on('click',()=>{
+            actions.do('undo');
+        });
+    },
+
+    handleRedoButton(){
+        // console.log('In the handleRedoButton method.');
+        $('.js-redoButton').on('click',()=>{
+            actions.do('redo');
+        });
+    },
+
+    handleSignUpNavButton(){
+        // console.log('In the handleSignUpNavButton method.');
+        $('.js-signUpNavButton').on('click',()=>{
+            actions.do('signUpNav','credentials','saves');
+        });
+    },
+
+    handleLogInNavButton(){
+        // console.log('In the handleLogInNavButton method.');
+        $('.js-logInNavButton').on('click',()=>{
+            actions.do('logInNav','credentials','saves');
+        });
+    },
+
+    handleLogOutNavButton(){
+        // console.log('In the handleLogOutNavButton method.');
+        $('.js-logOutNavButton').on('click',()=>{
+            actions.do('logOutNav','saves','saves');
+        });
+    },
+
+    handleSaveButton(){
+        // console.log('In the handleSaveButton method.');
+        $('.js-saveGameButton').on('click',()=>{
+            actions.do('save');
+        });
+    },
+
+    handleLoadButton(){
+        // console.log('In the handleLoadButton method.');
+        $('.js-loadGameButton').on('click',()=>{
+            actions.do('load');
+        });
+    },
+
+    handleUpdateButton(){
+        // console.log('In the handleUpdateButton method.');
+        $('.js-replaceGameButton').on('click',()=>{
+            actions.do('replace');
+        });
+    },
+
+    handleDeleteButton(){
+        // console.log('In the handleDeleteButton method.');
+        $('.js-deleteGameButton').on('click',()=>{
+            actions.do('delete');
+        });
+    },
+
+    handleFormSignUpButton(){
+        // console.log('In the handleFormSignUpButton method.');
+        $('.js-formSignUpButton').on('click',()=>{
+            actions.do('signUp');
+        });
+    },
+
+    handleFormLogInButton(){
+        // console.log('In the handleFormLogInButton method.');
+        $('.js-formLogInButton').on('click',()=>{
+            actions.do('logIn');
+        });
+    },
+
+    handleSubmit(){
+        // console.log('In the handleSubmit method.');
+        $('.credentialsForm').on('submit',(event)=>{
+            event.preventDefault();
+        });
+    },
+
+    handleSquare(){
+        // console.log('In the handleSquare method.');
+        $('.square').click(function(){
+            let location=$(this).data('location');
+            processSquare.doSquare(location);
+        });
+    }
+};
+
+/******************************************************** 
+ * Step 3: Take actions based on user inputs.
+ ********************************************************/
+
+const actions={
+    do(parm1,parm2,parm3){
+        if(parm1==='nav'){
+            this.navigate(parm2,parm3);
+        }else if(parm1==='reset'){
+            this.reset();
+        }else if(parm1==='undo'){
+            this.undo();
+        }else if(parm1==='redo'){
+            this.redo();
+        }else if(parm1==='signUpNav'){
+            this.signUpNav(parm2,parm3);
+        }else if(parm1==='logInNav'){
+            this.logInNav(parm2,parm3);
+        }else if(parm1==='logOutNav'){
+            this.logOutNav(parm2,parm3);
+        }else if(parm1==='signUp'){
+            this.signUp();
+        }else if(parm1==='logIn'){
+            this.logIn();
+        }else if(parm1==='save'){
+            this.save();
+        }else if(parm1==='load'){
+            this.load();
+        }else if(parm1==='replace'){
+            this.replace();
+        }else if(parm1==='delete'){
+            this.delete();
+        }
+    },
+
+    navigate(currentView,previousView){
+        STORE.currentView=currentView;
+        STORE.previousView=previousView;
+        renderPage.doShowPages();
+    },
+
+    reset(){
+        STORE.moves=[];
+        STORE.redo=[];
+        STORE.scoreMoves=0;
+        STORE.scoreSquares=0;
+        STORE.targetMoves=14;
+        STORE.targetSquares=64;
+        for(let i=1; i<9; i++){
+            for(let j=1; j<9; j++){
+                let resetSquare=String.fromCharCode(64+i)+(j);
+                $('.js-'+resetSquare).removeClass('visited');
+                $('.js-'+resetSquare).removeClass('occupied');
+            }
+        }
+        $('.scoreTableMovesDone').html(`${STORE.scoreMoves}`);
+        $('.scoreTableMovesToDo').html(`${STORE.targetMoves-STORE.scoreMoves}`);
+        $('.scoreTableSquaresDone').html(`${STORE.scoreSquares}`);
+        $('.scoreTableSquaresToDo').html(`${STORE.targetSquares-STORE.scoreSquares}`);
+        $('.js-undoButton').prop("disabled",true).css('cursor','not-allowed');
+        $('.js-undoButton img').attr('src','Images/Buttons/Undo_Grey_Button.png');
+        $('.js-redoButton').prop("disabled",true).css('cursor','not-allowed');
+        $('.js-redoButton img').attr('src','Images/Buttons/Redo_Grey_Button.png');
+        $('.js-resetButton').prop("disabled",true).css('cursor','not-allowed');
+        $('.js-resetButton img').attr('src','Images/Buttons/Reset_Grey_Button.png');
+    },
+
+    undo(){
+        STORE.moves.pop();
+        let recording=STORE.moves; // Cannot use STORE.moves in the second loop; it becomes endless.
+        STORE.moves=[];
+        STORE.scoreMoves=0;
+        STORE.scoreSquares=0;
+        STORE.targetMoves=14;
+        STORE.targetSquares=64;
+        for(let i=1; i<9; i++){
+            for(let j=1; j<9; j++){
+                let resetSquare=String.fromCharCode(64+i)+(j);
+                $('.js-'+resetSquare).removeClass('visited');
+                $('.js-'+resetSquare).removeClass('occupied');
+            }
+        }
+        for(let i=0; i<recording.length; i++){
+            processSquare.doSquare(recording[i]);
+        }
+        if(STORE.moves.length===0){
+            $('.js-undoButton').prop("disabled",true).css('cursor','not-allowed');
+            $('.js-undoButton img').attr('src','Images/Buttons/Undo_Grey_Button.png');
+        };
+        if(STORE.moves.length<STORE.redo.length){
+            $('.js-redoButton').prop("disabled",false).css('cursor','pointer');
+            $('.js-redoButton img').attr('src','Images/Buttons/Redo_Button.png');
+        };
+        $('.scoreTableMovesDone').html(`${STORE.scoreMoves}`);
+        $('.scoreTableMovesToDo').html(`${STORE.targetMoves-STORE.scoreMoves}`);
+        $('.scoreTableSquaresDone').html(`${STORE.scoreSquares}`);
+        $('.scoreTableSquaresToDo').html(`${STORE.targetSquares-STORE.scoreSquares}`);
+    },
+
+    redo(){
+        for(let i=STORE.moves.length; i<STORE.redo.length; i++){
+            processSquare.doSquare(STORE.redo[i]);
+            if(STORE.moves.length===STORE.redo.length){
+                $('.js-redoButton').prop("disabled",true).css('cursor','not-allowed');
+                $('.js-redoButton img').attr('src','Images/Buttons/Redo_Grey_Button.png');
+            };
+            if(STORE.moves.length>0){
+                $('.js-undoButton').prop("disabled",false).css('cursor','pointer');
+                $('.js-undoButton img').attr('src','Images/Buttons/Undo_Button.png');
+            };
+            break;
+        }
+        $('.scoreTableMovesDone').html(`${STORE.scoreMoves}`);
+        $('.scoreTableMovesToDo').html(`${STORE.targetMoves-STORE.scoreMoves}`);
+        $('.scoreTableSquaresDone').html(`${STORE.scoreSquares}`);
+        $('.scoreTableSquaresToDo').html(`${STORE.targetSquares-STORE.scoreSquares}`);
+    },
+
+    signUpNav(parm2,parm3){
+        $('.js-formSignUpButton').show();
+        $('.js-formLogInButton').hide();
+        $('.js-fieldsTitle').text('Sign Up');
+        $('#username').val('');
+        $('#password').val('');
+        this.navigate(parm2,parm3);
+    },
+
+    logInNav(parm2,parm3){
+        $('.js-formSignUpButton').hide();
+        $('.js-formLogInButton').show();
+        $('.js-fieldsTitle').text('Log In');
+        $('#username').val('');
+        $('#password').val('');
+        this.navigate(parm2,parm3);
+    },
+
+    logOutNav(parm2,parm3){
+        STORE.activeUser='';
+        STORE.moves=[];
+        STORE.redo=[];
+        STORE.savedGames=[];
+        STORE.scoreMoves=0;
+        STORE.scoreSquares=0;
+        for(let i=1; i<9; i++){
+            for(let j=1; j<9; j++){
+                let resetSquare=String.fromCharCode(64+i)+(j);
+                $('.js-'+resetSquare).removeClass('visited');
+                $('.js-'+resetSquare).removeClass('occupied');
+            }
+        }
+        this.navigate(parm2,parm3);
+    },
+
+    signUp(){
+        // console.log('In the signUp method.');
+        let credentialsUser=$('#username').val();
+        let credentialsPassword=$('#password').val();
+        let data={user:credentialsUser,password:credentialsPassword};
+        fetch('/api/users',{
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers:{'Content-Type': 'application/json'}
+        }).then(res=>res.json())
+        .catch(error=>console.error('Error:', error))
+        .then(response=>{
+            console.log('Success:', response);
+            STORE.activeUser=response.user;
+            this.doLogIn(credentialsUser,credentialsPassword);
+        });
+    },
+
+    logIn(){
+        // console.log('In the logIn method.');
+        let credentialsUser=$('#username').val();
+        let credentialsPassword=$('#password').val();
+        this.doLogIn(credentialsUser,credentialsPassword);
+    },
+
+    doLogIn(parmUser,parmPassword){
+        // console.log('In the doLogIn method.');
+        let data={user:parmUser,password:parmPassword};
+        fetch('/api/auth/login',{
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers:{'Content-Type': 'application/json'}
+        }).then(res=>res.json())
+        .catch(error=>console.error('Error:', error))
+        .then(response=>{
+            console.log('Success:', response.authToken);
+            localStorage.setItem('jwt',response.authToken);
+            STORE.activeUser=parmUser;
             STORE.currentView='saves';
             STORE.previousView='credentials';
             renderPage.doShowPages();
         });
     },
 
-    handleFormSignUpButton(){
-        // console.log('In the handleFormSignUpButton method.');
-        $('.js-formSignUpButton').on('click', function() {
-            processCredentials.doCredentials('signUp');
-        });
+    save(){
+        // console.log('In the save method.');
+        console.log('Save Game button clicked');
+
+        // let credentialsUser=$('#username').val();
+        // let credentialsPassword=$('#password').val();
+        // let data={user:credentialsUser,password:credentialsPassword};
+        // fetch('/api/users',{
+        //     method: 'POST',
+        //     body: JSON.stringify(data),
+        //     headers:{'Content-Type': 'application/json'}
+        // }).then(res=>res.json())
+        // .catch(error=>console.error('Error:', error))
+        // .then(response=>{
+        //     console.log('Success:', response);
+        //     STORE.activeUser=response.user;
+        //     this.doLogIn(credentialsUser,credentialsPassword);
+        // });
+
     },
 
-    handleFormLogInButton(){
-        // console.log('In the handleFormLogInButton method.');
-        $('.js-formLogInButton').on('click', function() {
-            processCredentials.doCredentials('logIn');
-        });
+    load(){
+        // console.log('In the load method.');
+        console.log('Load Game button clicked');
     },
 
-    handleSquare(){
-        // console.log('In the handleSquare method.');
-        $('.square').click(function() {
-            let location=$(this).data('location');
-            processSquare.doSquare(location);
-        });
+    replace(){
+        // console.log('In the replace method.');
+        console.log('Replace Game button clicked');
     },
 
-    handleSubmit(){
-        // console.log('In the handleSubmit method.');
-        $('.credentialsForm').on('submit', function(event){
-            event.preventDefault();
-        });
+    delete(){
+        // console.log('In the delete method.');
+        console.log('Delete Game button clicked');
     }
-};
-
-/******************************************************** 
- * Step 3: Get API data to match user inputs.
- ********************************************************/
-
-const getGameData={
 };
 
 /***************************** 
