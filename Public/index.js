@@ -471,7 +471,7 @@ const actions={
         }else if(parm1==='delete'){
             this.delete();
         }else if(parm1==='square'){
-            this.doSquare(parm2);
+            this.square(parm2);
         }
     },
 
@@ -523,7 +523,7 @@ const actions={
             }
         }
         for(let i=0; i<recording.length; i++){
-            this.doSquare(recording[i]);
+            this.square(recording[i]);
         }
         if(STORE.moves.length===0){
             $('.js-undoButton').prop("disabled",true).css('cursor','not-allowed');
@@ -541,7 +541,7 @@ const actions={
 
     redo(){
         for(let i=STORE.moves.length; i<STORE.redo.length; i++){
-            this.doSquare(STORE.redo[i]);
+            this.square(STORE.redo[i]);
             if(STORE.moves.length===STORE.redo.length){
                 $('.js-redoButton').prop("disabled",true).css('cursor','not-allowed');
                 $('.js-redoButton img').attr('src','Images/Buttons/Redo_Grey_Button.png');
@@ -637,8 +637,8 @@ const actions={
         });
     },
 
-    doSquare(selectedSquare){  // Lower left square -> selectedSquare = 'A1'
-        // console.log('In the doSquare method.');
+    square(selectedSquare){  // Lower left square -> selectedSquare = 'A1'
+        // console.log('In the square method.');
         let legalMoveString='';
         if(STORE.moves.length>0){
             let previousSquare=STORE.moves[STORE.moves.length-1];

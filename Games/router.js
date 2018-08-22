@@ -40,17 +40,17 @@ router.post('/',jwtAuth,jsonParser,(req,res)=>{
 
   return User
   .findById(req.user.id)  // load the user from the db
-  .then( user => {
+  .then( user=>{
     return Game.create({   //actually create the game
       user: user._id, //associate the user with the game
       puzzle,
       moves
     })
-    .then(game => {
+    .then(game=>{
       user.games.push(game._id); //associate game with user
       return user
         .save()  //save the changed user
-        .then( user => {
+        .then( user=>{
           return res.status(201).json(game); //respond
       })
     })
