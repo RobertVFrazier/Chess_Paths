@@ -116,7 +116,8 @@ const renderPage={
             console.log(localStorage.getItem('jwt'));
             fetch('/api/protected',{
                 method:'GET',
-                headers: {Authorization: `Bearer ${localStorage.getItem('jwt')}`}
+                headers:{'Content-Type': 'application/json; charset=utf-8',
+                         'Authorization': `Bearer ${localStorage.getItem('jwt')}`}
             }).then(data=>data.json().then(user=>{
                 STORE.activeUser=user.user;
                 STORE.newSession=false;
@@ -134,38 +135,26 @@ const renderPage={
     },
 
     fetchGameData(){
-        // console.log('In the fetchGameData method.');
-        // Get the user id for the active user.
-        let fetchedUserID='';
         let htmlGameMoves='';
-        fetch(`/api/users/name/${STORE.activeUser}`,{
+        fetch('/api/games/',{
             method: 'GET',
-            headers:{'Content-Type': 'application/json'}
+            headers:{'Content-Type': 'application/json; charset=utf-8',
+                     'Authorization': `Bearer ${localStorage.getItem('jwt')}`}
         }).then(res=>res.json())
         .catch(error=>console.error('Error:', error))
         .then(response=>{
-            fetchedUserID=response[0]._id;
-            console.log(`${STORE.activeUser}'s user id is ${fetchedUserID}.`);
-            // Get all saved game move data for the active user.
-            fetch(`/api/games/userid/${fetchedUserID}`,{
-                method: 'GET',
-                headers:{'Content-Type': 'application/json'}
-            }).then(res=>res.json())
-            .catch(error=>console.error('Error:', error))
-            .then(response=>{
-                STORE.savedGames=[];
-                for(let i=0; i<response.length; i++){
-                    if(response[i].puzzle===STORE.puzzle){
-                        STORE.savedGames.push(response[i].moves);
-                    }
-                };
-                console.log(STORE.savedGames);
-                for(let i=0; i<STORE.savedGames.length; i++){
-                    htmlGameMoves+=`<p>Game ${i+1}:</p><br><p>${STORE.savedGames[i].toString()}:</p><br>`;
-                };
-                $('.savedGamesContainer').html(htmlGameMoves);
-                this.configureGameButtons();
-            });
+            STORE.savedGames=[];
+            for(let i=0; i<response.length; i++){
+                if(response[i].puzzle===STORE.puzzle){
+                    STORE.savedGames.push(response[i].moves);
+                }
+            };
+            // console.log(STORE.savedGames);
+            for(let i=0; i<STORE.savedGames.length; i++){
+                htmlGameMoves+=`<p>Game ${i+1}:</p><br><p>${STORE.savedGames[i].toString()}:</p><br>`;
+            };
+            $('.savedGamesContainer').html(htmlGameMoves);
+            this.configureGameButtons();
         });
     },
 
@@ -812,8 +801,6 @@ const actions={
         // console.log('In the save method.');
         console.log('Save Game button clicked');
 
-        // let credentialsUser=$('#username').val();
-        // let credentialsPassword=$('#password').val();
         // let data={user:credentialsUser,password:credentialsPassword};
         // fetch('/api/users',{
         //     method: 'POST',

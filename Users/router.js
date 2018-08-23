@@ -1,11 +1,19 @@
 'use strict';
 const express=require('express');
 const bodyParser=require('body-parser');
+const {Game}=require('../Models/game-model');
 const {User}=require('../Models/user-model');
 const router=express.Router();
+const passport=require('passport');
 const jsonParser=bodyParser.json();
+const jwtAuth=passport.authenticate('jwt',{session: false});
 
-// Post to register a new user.
+// I don't think I'll be implementing all of the CRUD endpoints for
+// the users in the front end. The one that is absolutely necessary
+// is Create (post), because we need to authenticate the user before
+// any of the games endpoints will work.
+
+// CREATE a new user, using the login credentials, creating the JWT. Tested; working.
 router.post('/',jsonParser,(req,res)=>{
   const requiredFields=['user','password'];
   const missingField=requiredFields.find(field=>!(field in req.body));
@@ -123,15 +131,15 @@ router.post('/',jsonParser,(req,res)=>{
     });
 });
 
-// GET all users.
-router.get('/',(req,res)=>{
+// READ all users, using the JWT. Tested; working.
+router.get('/',jwtAuth,(req,res)=>{
   return User.find()
     .then(users=>res.json(users.map(userFound=>userFound)))
     .catch(err=>res.status(500).json({message: 'Could not get any users. Internal server error.'}));
 });
 
-// GET one user, given the _id.
-router.get('/:id',(req,res)=>{
+// READ one user, given the _id, using the JWT. Tested; working.
+router.get('/:id',jwtAuth,(req,res)=>{
   return User.findById(req.params.id)
   .then(userFound=>{res.json(userFound)})
   .catch(err=>{
@@ -140,13 +148,53 @@ router.get('/:id',(req,res)=>{
   });
 });
 
-// GET one user, given the user name.
-router.get('/name/:username',(req,res)=>{
+// READ one user, given the user name, using the JWT. Tested; working.
+// Not needed in the front end any more, but useful for testing.
+router.get('/name/:username',jwtAuth,(req,res)=>{
   return User.where({user: req.params.username})
   .then(userFound=>{res.json(userFound)})
   .catch(err=>{
     console.error(err);
     res.status(500).json({error: `Could not get the user with the name of: '${req.params.username}'.`})
+  });
+});
+
+// UPDATE one user, given the user _id, using the JWT. Tested; working.
+//  (No immediate plans to use this.)
+router.put('/:id',jwtAuth,(req,res)=>{
+  // NOTE: In the body, use the key "id", not "_id".
+  if(!(req.params.id && req.body.id && req.params.id === req.body.id)){
+    console.log(req.body.id);
+    return res.status(400).json({
+      error: `The request path id (${req.params.id}) and the request body id (${req.body.id}) values must match.`
+    });
+  }
+
+  const updated={};
+  const updateableFields=['user','password','created'];
+  updateableFields.forEach(field=>{
+    if(field in req.body){
+      updated[field]=req.body[field];
+    }
+  });
+
+  return User.findByIdAndUpdate(req.params.id,{$set: updated},{new: true})
+  .then(updatedUser=>res.status(204).end())
+  .catch(err=>{
+    console.error(err);
+    res.status(500).json({error: `Could not update the user: '${req.params.id}'.`})
+  });
+});
+
+// DELETE one user, given the user _id, using the JWT. Tested; working.
+router.delete('/:id',jwtAuth,(req,res)=>{
+  return User.findByIdAndRemove(req.params.id)
+  .then(()=>{
+    res.status(204).json({message:`Deleted user: '${req.params.id}'.`})
+  })
+  .catch(err=>{
+    console.error(err);
+    res.status(500).json({error:`Could not delete user: '${req.params.id}'.`});
   });
 });
 

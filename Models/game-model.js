@@ -10,6 +10,6 @@ const gameSchema=mongoose.Schema({
     created: {type: Date,default: Date.now}
 });
 
-const Game=mongoose.model('game',gameSchema);
+const Game=mongoose.model('Game',gameSchema);
 
 module.exports={Game};
