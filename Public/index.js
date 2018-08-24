@@ -799,21 +799,24 @@ const actions={
 
     save(){
         // console.log('In the save method.');
-        console.log('Save Game button clicked');
-
-        // let data={user:credentialsUser,password:credentialsPassword};
-        // fetch('/api/users',{
-        //     method: 'POST',
-        //     body: JSON.stringify(data),
-        //     headers:{'Content-Type': 'application/json'}
-        // }).then(res=>res.json())
-        // .catch(error=>console.error('Error:', error))
-        // .then(response=>{
-        //     console.log('Success:', response);
-        //     STORE.activeUser=response.user;
-        //     this.doLogIn(credentialsUser,credentialsPassword);
-        // });
-
+        let htmlGameMoves='';
+        fetch('/api/games/',{
+            method: 'POST',
+            headers: {'Content-Type': 'application/json; charset=utf-8',
+                      'Authorization': `Bearer ${localStorage.getItem('jwt')}`},
+            body: JSON.stringify({'moves': `${STORE.moves}`, 'puzzle': `${STORE.puzzle}`})
+        }).then(res=>res.json())
+        .catch(error=>console.error('Error:', error))
+        .then(response=>{
+            // console.log(response.moves[0]);
+            STORE.savedGames.push(response.moves[0]);
+            for(let i=0; i<STORE.savedGames.length; i++){
+                htmlGameMoves+=`<p>Game ${i+1}:</p><br><p>${STORE.savedGames[i].toString()}:</p><br>`;
+                // Major upgrade to the above HTML coming soon!
+            };
+            $('.savedGamesContainer').html(htmlGameMoves);
+            renderPage.configureGameButtons();
+        });
     },
 
     load(){
