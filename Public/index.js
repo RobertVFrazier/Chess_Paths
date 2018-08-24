@@ -18,6 +18,8 @@ const STORE = {  // All the variables connected with the state of the DOM go her
     newSession: true,
     jwt: '',
     savedGames: [],
+    activeGame: 0,
+    activeGameMoves: [],
     showLegalMoves: false  // Not an MVP feature.
   };
 
@@ -114,7 +116,7 @@ const renderPage={
         this.showCurrentPage('div.js-pageViewSavesHtml');
         if(STORE.newSession===true && localStorage.getItem('jwt')!==''){
             console.log(localStorage.getItem('jwt'));
-            fetch('/api/protected',{
+            fetch('/api/users',{
                 method:'GET',
                 headers:{'Content-Type': 'application/json; charset=utf-8',
                          'Authorization': `Bearer ${localStorage.getItem('jwt')}`}
@@ -143,17 +145,19 @@ const renderPage={
         }).then(res=>res.json())
         .catch(error=>console.error('Error:', error))
         .then(response=>{
+            // console.log(response);
             STORE.savedGames=[];
             for(let i=0; i<response.length; i++){
                 if(response[i].puzzle===STORE.puzzle){
-                    STORE.savedGames.push(response[i].moves);
-                }
+                    STORE.savedGames.push(response[i].moves[0].split(','));
+                }            
             };
             // console.log(STORE.savedGames);
             for(let i=0; i<STORE.savedGames.length; i++){
-                htmlGameMoves+=`<p>Game ${i+1}:</p><br><p>${STORE.savedGames[i].toString()}:</p><br>`;
+                htmlGameMoves+=`<li data-id='${i}' class='savedGame'><p>Game ${i+1}:</p><br><p>${STORE.savedGames[i].toString()}:</p></br></li>`;
+                // Major upgrade to the above HTML coming soon!
             };
-            $('.savedGamesContainer').html(htmlGameMoves);
+            $('.savedGamesList').html(htmlGameMoves);
             this.configureGameButtons();
         });
     },
@@ -164,7 +168,7 @@ const renderPage={
             $('.js-logInNavButton').show();
             $('.js-signUpNavButton').show();
             $('.js-logOutNavButton').hide();
-            $('.savedGamesContainer').html('');
+            $('.savedGamesList').html('');
             $('.js-saveGameButton').prop("disabled",true).css('cursor','not-allowed');
             $('.js-saveGameButton img').attr('src','Images/Buttons/Save_Game_Grey_Button.png');
             $('.js-loadGameButton').prop("disabled",true).css('cursor','not-allowed');
@@ -248,6 +252,7 @@ const listeners={
         this.handleFormLogInButton();
         this.handleSquare();
         this.handleSubmit();
+        this.handleSavedGameListItem();
     },
 
     handleInfoButton(){
@@ -423,6 +428,18 @@ const listeners={
         $('.square').click(function(){
             let location=$(this).data('location');
             actions.do('square',location);
+        });
+    },
+
+    handleSavedGameListItem(){
+        // console.log('In the handleSavedGameListItem method.');
+        $('.savedGamesList').on('click','li',function(event){
+            event.stopPropagation();
+            $('li.savedGame').removeClass('active');
+            $(this).closest('li.savedGame').addClass('active');
+            STORE.activeGame=$(this).data('id');
+            STORE.activeGameMoves=STORE.savedGames[$(this).data('id')];
+            console.log(STORE.activeGame, STORE.activeGameMoves);
         });
     }
 };
@@ -804,17 +821,17 @@ const actions={
             method: 'POST',
             headers: {'Content-Type': 'application/json; charset=utf-8',
                       'Authorization': `Bearer ${localStorage.getItem('jwt')}`},
-            body: JSON.stringify({'moves': `${STORE.moves}`, 'puzzle': `${STORE.puzzle}`})
+            body: JSON.stringify({'moves': `${STORE.moves}`, 'puzzle': `${STORE.puzzle}`})  
         }).then(res=>res.json())
         .catch(error=>console.error('Error:', error))
         .then(response=>{
             // console.log(response.moves[0]);
-            STORE.savedGames.push(response.moves[0]);
+            STORE.savedGames.push(response.moves[0].split(','));
             for(let i=0; i<STORE.savedGames.length; i++){
-                htmlGameMoves+=`<p>Game ${i+1}:</p><br><p>${STORE.savedGames[i].toString()}:</p><br>`;
+                htmlGameMoves+=`<li data-id='${i}' class='savedGame'><p>Game ${i+1}:</p><br><p>${STORE.savedGames[i].toString()}:</p></br></li>`;
                 // Major upgrade to the above HTML coming soon!
             };
-            $('.savedGamesContainer').html(htmlGameMoves);
+            $('.savedGamesList').html(htmlGameMoves);
             renderPage.configureGameButtons();
         });
     },

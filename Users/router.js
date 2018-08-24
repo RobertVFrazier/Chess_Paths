@@ -133,8 +133,8 @@ router.post('/',jsonParser,(req,res)=>{
 
 // READ all users, using the JWT. Tested; working.
 router.get('/',jwtAuth,(req,res)=>{
-  return User.find()
-    .then(users=>res.json(users.map(userFound=>userFound)))
+  return User.findById(req.user.id)
+    .then(user=>res.json(user))
     .catch(err=>res.status(500).json({message: 'Could not get any users. Internal server error.'}));
 });
 
