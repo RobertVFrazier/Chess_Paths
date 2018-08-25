@@ -853,7 +853,6 @@ const actions={
 
     load(){
         // console.log('In the load method.');
-        console.log('Load Game button clicked');
         let loadingGame=STORE.savedGames[STORE.activeGame].moves;
         actions.reset();
         for(let i=0;i<loadingGame.length;i++){
