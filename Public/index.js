@@ -824,7 +824,6 @@ const actions={
 
     save(){
         // console.log('In the save method.');
-        let htmlGameMoves='';
         fetch('/api/games/',{
             method: 'POST',
             headers: {'Content-Type': 'application/json; charset=utf-8',
@@ -833,42 +832,56 @@ const actions={
         }).then(res=>res.json())
         .catch(error=>console.error('Error:', error))
         .then(response=>{
-            // console.log(response.moves[0]);
             STORE.savedGames.push({
                 id: response._id,
                 dateTime: response.created,
                 moves: response.moves[0].split(',')
             });
-            for(let i=0; i<STORE.savedGames.length; i++){
-                htmlGameMoves+=`<li data-id='${i}' class='savedGame'>
-                <p>Game ${i+1}:</p><br>
-                <p>${STORE.savedGames[STORE.savedGames.length-1].moves.toString()}</p></br>
-                <p>${STORE.savedGames[STORE.savedGames.length-1].dateTime}</p></br></li>`;
-                // Major upgrade to the above HTML coming soon!
-            };
-            $('.savedGamesList').html(htmlGameMoves);
-            renderPage.configureGameButtons();
+            this.doGamesListHtml();
         });
     },
 
     load(){
         // console.log('In the load method.');
-        let loadingGame=STORE.savedGames[STORE.activeGame].moves;
+        let selectedGame=STORE.savedGames[STORE.activeGame].moves;
         actions.reset();
-        for(let i=0;i<loadingGame.length;i++){
-            actions.square(loadingGame[i]);
+        for(let i=0;i<selectedGame.length;i++){
+            actions.square(selectedGame[i]);
         };
         actions.do('nav','game','saves');
     },
 
     replace(){
         // console.log('In the replace method.');
-        console.log('Replace Game button clicked');
+        let selectedGame=STORE.savedGames[STORE.activeGame].moves;
     },
 
     delete(){
         // console.log('In the delete method.');
-        console.log('Delete Game button clicked');
+        let selectedGame=STORE.savedGames[STORE.activeGame].id;
+        fetch(`/api/games/${selectedGame}`,{
+            method: 'DELETE',
+            headers: {'Content-Type': 'application/json; charset=utf-8',
+                      'Authorization': `Bearer ${localStorage.getItem('jwt')}`}
+        }).catch(error=>console.error('Error:', error))
+        .then(response=>{
+            STORE.savedGames.splice(STORE.activeGame,1);
+            this.doGamesListHtml();
+        });
+    },
+
+    doGamesListHtml(){
+        // console.log('In the doGamesListHtml method.');
+        let htmlGameMoves='';
+        for(let i=0; i<STORE.savedGames.length; i++){
+            htmlGameMoves+=`<li data-id='${i}' class='savedGame'>
+            <p>Game ${i+1}:</p><br>
+            <p>${STORE.savedGames[i].moves.toString()}</p></br>
+            <p>${STORE.savedGames[i].dateTime}</p></br></li>`;
+            // Major upgrade to the above HTML coming soon!
+        };
+        $('.savedGamesList').html(htmlGameMoves);
+        renderPage.configureGameButtons();
     }
 };
 
