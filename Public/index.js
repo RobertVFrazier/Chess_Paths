@@ -149,12 +149,19 @@ const renderPage={
             STORE.savedGames=[];
             for(let i=0; i<response.length; i++){
                 if(response[i].puzzle===STORE.puzzle){
-                    STORE.savedGames.push(response[i].moves[0].split(','));
+                    STORE.savedGames.push({
+                        id: response[i]._id,
+                        dateTime: response[i].created,
+                        moves: response[i].moves[0].split(',')
+                    });
                 }            
             };
-            // console.log(STORE.savedGames);
+            console.log(STORE.savedGames);
             for(let i=0; i<STORE.savedGames.length; i++){
-                htmlGameMoves+=`<li data-id='${i}' class='savedGame'><p>Game ${i+1}:</p><br><p>${STORE.savedGames[i].toString()}:</p></br></li>`;
+                htmlGameMoves+=`<li data-id='${i}' class='savedGame'>
+                <p>Game ${i+1}:</p><br>
+                <p>${STORE.savedGames[i].moves.toString()}</p></br>
+                <p>${STORE.savedGames[i].dateTime}</p></br></li>`;
                 // Major upgrade to the above HTML coming soon!
             };
             $('.savedGamesList').html(htmlGameMoves);
@@ -195,21 +202,21 @@ const renderPage={
                 $('.js-saveGameButton').prop("disabled",true).css('cursor','not-allowed');
                 $('.js-saveGameButton img').attr('src','Images/Buttons/Save_Game_Grey_Button.png');
             };
-            if(STORE.savedGames.length>0){
+            if(STORE.savedGames.length>0 && STORE.activeGameMoves.length>0){
                 $('.js-loadGameButton').prop("disabled",false).css('cursor','pointer');
                 $('.js-loadGameButton img').attr('src','Images/Buttons/Load_Game_Button.png');
             }else{
                 $('.js-loadGameButton').prop("disabled",true).css('cursor','not-allowed');
                 $('.js-loadGameButton img').attr('src','Images/Buttons/Load_Game_Grey_Button.png');
             };
-            if(STORE.moves.length>0 && STORE.savedGames.length>0){
+            if(STORE.moves.length>0 && STORE.savedGames.length>0 && STORE.activeGameMoves.length>0){
                 $('.js-replaceGameButton').prop("disabled",false).css('cursor','pointer');
                 $('.js-replaceGameButton img').attr('src','Images/Buttons/Replace_Game_Button.png');
             }else{
                 $('.js-replaceGameButton').prop("disabled",true).css('cursor','not-allowed');
                 $('.js-replaceGameButton img').attr('src','Images/Buttons/Replace_Game_Grey_Button.png');
             };
-            if(STORE.savedGames.length>0){
+            if(STORE.savedGames.length>0 && STORE.activeGameMoves.length>0){
                 $('.js-deleteGameButton').prop("disabled",false).css('cursor','pointer');
                 $('.js-deleteGameButton img').attr('src','Images/Buttons/Delete_Game_Button.png');
             }else{
@@ -438,8 +445,9 @@ const listeners={
             $('li.savedGame').removeClass('active');
             $(this).closest('li.savedGame').addClass('active');
             STORE.activeGame=$(this).data('id');
-            STORE.activeGameMoves=STORE.savedGames[$(this).data('id')];
+            STORE.activeGameMoves=STORE.savedGames[$(this).data('id')].moves;
             console.log(STORE.activeGame, STORE.activeGameMoves);
+            renderPage.configureGameButtons();
         });
     }
 };
@@ -821,14 +829,21 @@ const actions={
             method: 'POST',
             headers: {'Content-Type': 'application/json; charset=utf-8',
                       'Authorization': `Bearer ${localStorage.getItem('jwt')}`},
-            body: JSON.stringify({'moves': `${STORE.moves}`, 'puzzle': `${STORE.puzzle}`})  
+            body: JSON.stringify({'moves': `${STORE.moves}`, 'puzzle': `${STORE.puzzle}`})
         }).then(res=>res.json())
         .catch(error=>console.error('Error:', error))
         .then(response=>{
             // console.log(response.moves[0]);
-            STORE.savedGames.push(response.moves[0].split(','));
+            STORE.savedGames.push({
+                id: response._id,
+                dateTime: response.created,
+                moves: response.moves[0].split(',')
+            });
             for(let i=0; i<STORE.savedGames.length; i++){
-                htmlGameMoves+=`<li data-id='${i}' class='savedGame'><p>Game ${i+1}:</p><br><p>${STORE.savedGames[i].toString()}:</p></br></li>`;
+                htmlGameMoves+=`<li data-id='${i}' class='savedGame'>
+                <p>Game ${i+1}:</p><br>
+                <p>${STORE.savedGames[STORE.savedGames.length-1].moves.toString()}</p></br>
+                <p>${STORE.savedGames[STORE.savedGames.length-1].dateTime}</p></br></li>`;
                 // Major upgrade to the above HTML coming soon!
             };
             $('.savedGamesList').html(htmlGameMoves);
@@ -839,6 +854,12 @@ const actions={
     load(){
         // console.log('In the load method.');
         console.log('Load Game button clicked');
+        let loadingGame=STORE.savedGames[STORE.activeGame].moves;
+        actions.reset();
+        for(let i=0;i<loadingGame.length;i++){
+            actions.square(loadingGame[i]);
+        };
+        actions.do('nav','game','saves');
     },
 
     replace(){

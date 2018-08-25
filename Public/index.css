@@ -206,8 +206,9 @@ body, html{
 }
 
 .active{
-    background-color: whitesmoke;
-    border: solid black 3px;
+    background-color: rgba(29,139,255,0.1);
+    border: solid rgb(29,139,255) 3px;
+    border-radius: 10px
 }
 
 /****************/
