@@ -115,7 +115,7 @@ const renderPage={
         // console.log('In the savesPage method.');
         this.showCurrentPage('div.js-pageViewSavesHtml');
         if(STORE.newSession===true && localStorage.getItem('jwt')!==''){
-            console.log(localStorage.getItem('jwt'));
+            // console.log(localStorage.getItem('jwt'));
             fetch('/api/users',{
                 method:'GET',
                 headers:{'Content-Type': 'application/json; charset=utf-8',
@@ -156,7 +156,7 @@ const renderPage={
                     });
                 }            
             };
-            console.log(STORE.savedGames);
+            // console.log(STORE.savedGames);
             for(let i=0; i<STORE.savedGames.length; i++){
                 htmlGameMoves+=`<li data-id='${i}' class='savedGame'>
                 <p>Game ${i+1}:</p><br>
@@ -446,7 +446,7 @@ const listeners={
             $(this).closest('li.savedGame').addClass('active');
             STORE.activeGame=$(this).data('id');
             STORE.activeGameMoves=STORE.savedGames[$(this).data('id')].moves;
-            console.log(STORE.activeGame, STORE.activeGameMoves);
+            // console.log(STORE.activeGame, STORE.activeGameMoves);
             renderPage.configureGameButtons();
         });
     }
@@ -619,7 +619,7 @@ const actions={
         }).then(res=>res.json())
         .catch(error=>console.error('Error:', error))
         .then(response=>{
-            console.log('Success:', response);
+            // console.log('Success:', response);
             STORE.activeUser=response.user;
             this.doLogIn(credentialsUser,credentialsPassword);
         });
@@ -642,7 +642,7 @@ const actions={
         }).then(res=>res.json())
         .catch(error=>console.error('Error:', error))
         .then(response=>{
-            console.log('Success:', response.authToken);
+            // console.log('Success:', response.authToken);
             localStorage.setItem('jwt',response.authToken);
             STORE.activeUser=parmUser;
             STORE.currentView='saves';
@@ -843,23 +843,41 @@ const actions={
 
     load(){
         // console.log('In the load method.');
-        let selectedGame=STORE.savedGames[STORE.activeGame].moves;
+        let selectedGameMoves=STORE.savedGames[STORE.activeGame].moves;
         actions.reset();
-        for(let i=0;i<selectedGame.length;i++){
-            actions.square(selectedGame[i]);
+        for(let i=0;i<selectedGameMoves.length;i++){
+            actions.square(selectedGameMoves[i]);
         };
         actions.do('nav','game','saves');
     },
 
     replace(){
         // console.log('In the replace method.');
-        let selectedGame=STORE.savedGames[STORE.activeGame].moves;
+        let selectedGameId=STORE.savedGames[STORE.activeGame].id;
+        fetch(`/api/games/${selectedGameId}`,{
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json; charset=utf-8',
+                      'Authorization': `Bearer ${localStorage.getItem('jwt')}`},
+            body: JSON.stringify({'moves': `${STORE.moves}`, 'id': `${selectedGameId}`})
+        }).catch(error=>console.error('Error:', error))
+        .then(response=>{
+            STORE.savedGames[STORE.activeGame].moves=STORE.moves;
+            fetch(`/api/games/${selectedGameId}`,{
+                method: 'GET',
+                headers: {'Content-Type': 'application/json; charset=utf-8',
+                          'Authorization': `Bearer ${localStorage.getItem('jwt')}`}
+            }).catch(error=>console.error('Error:', error))
+            .then(response=>{
+                STORE.savedGames[STORE.activeGame].dateTime=response.created;
+            });
+            this.doGamesListHtml();
+        });
     },
 
     delete(){
         // console.log('In the delete method.');
-        let selectedGame=STORE.savedGames[STORE.activeGame].id;
-        fetch(`/api/games/${selectedGame}`,{
+        let selectedGameId=STORE.savedGames[STORE.activeGame].id;
+        fetch(`/api/games/${selectedGameId}`,{
             method: 'DELETE',
             headers: {'Content-Type': 'application/json; charset=utf-8',
                       'Authorization': `Bearer ${localStorage.getItem('jwt')}`}
