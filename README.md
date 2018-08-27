@@ -17,6 +17,9 @@ have been visited.
 Undo, redo, and reset buttons. Full undo back to before placing the queen on the board, full 
 redo to the end of the game (if you made it that far).
 
+Save/load game, with sign up/log in for users to keep their games separate from those others have 
+saved. This is where the back-end database comes in.
+
 <h2>Features partially complete:</h2>
 
 Responsive design. Working at least acceptably well for all phones, needs more work for tablets
@@ -27,9 +30,6 @@ semi-transparent gold overlay, but the paths made by each move are not yet being
 is right there in the name of the app, so that needs to happen.)
 
 <h2>MVP features not done:</h2>
-
-Save/load game, with sign up/log in for users to keep their games separate from those others have 
-saved. This is where the back-end database comes in.
 
 Keyboard controls for those not using the mouse.
 
