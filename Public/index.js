@@ -20,6 +20,8 @@ const STORE = {  // All the variables connected with the state of the DOM go her
     savedGames: [],
     activeGame: 0,
     activeGameMoves: [],
+    redrawMoves: [],
+    activeSavedGameExists: false,
     showLegalMoves: false  // Not an MVP feature.
   };
 
@@ -157,14 +159,25 @@ const renderPage={
                 }            
             };
             // console.log(STORE.savedGames);
+            $('.savedGamesList').html('');
             for(let i=0; i<STORE.savedGames.length; i++){
-                htmlGameMoves+=`<li data-id='${i}' class='savedGame'>
-                <p>Game ${i+1}:</p><br>
-                <p>${STORE.savedGames[i].moves.toString()}</p></br>
-                <p>${STORE.savedGames[i].dateTime}</p></br></li>`;
-                // Major upgrade to the above HTML coming soon!
+                htmlGameMoves=`<li data-id='${i}' class='savedGame'><div class='savedGameBoardContainer'>`
+                for(let j=8; j>0; j--){
+                    for(let k=65; k<73; k++){
+                        htmlGameMoves+=`<div class='square js-saved-${String.fromCharCode(k)}${j}'></div>`;
+                    };
+                };
+                htmlGameMoves+=`</div>`+`<div class='dateTimeStamp'>
+                    ${moment(STORE.savedGames[i].dateTime).format('MMMM DD YYYY HH:mm')}</div></li>`;
+                let newElement = $(htmlGameMoves);
+                STORE.redrawMoves=[];
+                let currentMove='';
+                for(let j=0; j<STORE.savedGames[i].moves.length; j++){
+                    currentMove=STORE.savedGames[i].moves[j];
+                    actions.do('savedGame',currentMove,newElement);
+                };
+                $('.savedGamesList').append(newElement);
             };
-            $('.savedGamesList').html(htmlGameMoves);
             this.configureGameButtons();
         });
     },
@@ -202,21 +215,21 @@ const renderPage={
                 $('.js-saveGameButton').prop("disabled",true).css('cursor','not-allowed');
                 $('.js-saveGameButton img').attr('src','Images/Buttons/Save_Game_Grey_Button.png');
             };
-            if(STORE.savedGames.length>0 && STORE.activeGameMoves.length>0){
+            if(STORE.savedGames.length>0 && STORE.activeGameMoves.length>0 && STORE.activeSavedGameExists===true){
                 $('.js-loadGameButton').prop("disabled",false).css('cursor','pointer');
                 $('.js-loadGameButton img').attr('src','Images/Buttons/Load_Game_Button.png');
             }else{
                 $('.js-loadGameButton').prop("disabled",true).css('cursor','not-allowed');
                 $('.js-loadGameButton img').attr('src','Images/Buttons/Load_Game_Grey_Button.png');
             };
-            if(STORE.moves.length>0 && STORE.savedGames.length>0 && STORE.activeGameMoves.length>0){
+            if(STORE.moves.length>0 && STORE.savedGames.length>0 && STORE.activeGameMoves.length>0 && STORE.activeSavedGameExists===true){
                 $('.js-replaceGameButton').prop("disabled",false).css('cursor','pointer');
                 $('.js-replaceGameButton img').attr('src','Images/Buttons/Replace_Game_Button.png');
             }else{
                 $('.js-replaceGameButton').prop("disabled",true).css('cursor','not-allowed');
                 $('.js-replaceGameButton img').attr('src','Images/Buttons/Replace_Game_Grey_Button.png');
             };
-            if(STORE.savedGames.length>0 && STORE.activeGameMoves.length>0){
+            if(STORE.savedGames.length>0 && STORE.activeGameMoves.length>0 && STORE.activeSavedGameExists===true){
                 $('.js-deleteGameButton').prop("disabled",false).css('cursor','pointer');
                 $('.js-deleteGameButton img').attr('src','Images/Buttons/Delete_Game_Button.png');
             }else{
@@ -444,9 +457,9 @@ const listeners={
             event.stopPropagation();
             $('li.savedGame').removeClass('active');
             $(this).closest('li.savedGame').addClass('active');
+            STORE.activeSavedGameExists=true;
             STORE.activeGame=$(this).data('id');
             STORE.activeGameMoves=STORE.savedGames[$(this).data('id')].moves;
-            // console.log(STORE.activeGame, STORE.activeGameMoves);
             renderPage.configureGameButtons();
         });
     }
@@ -486,6 +499,8 @@ const actions={
             this.delete();
         }else if(parm1==='square'){
             this.square(parm2);
+        }else if(parm1==='savedGame'){
+            this.savedGame(parm2,parm3);
         }
     },
 
@@ -619,7 +634,6 @@ const actions={
         }).then(res=>res.json())
         .catch(error=>console.error('Error:', error))
         .then(response=>{
-            // console.log('Success:', response);
             STORE.activeUser=response.user;
             this.doLogIn(credentialsUser,credentialsPassword);
         });
@@ -642,7 +656,6 @@ const actions={
         }).then(res=>res.json())
         .catch(error=>console.error('Error:', error))
         .then(response=>{
-            // console.log('Success:', response.authToken);
             localStorage.setItem('jwt',response.authToken);
             STORE.activeUser=parmUser;
             STORE.currentView='saves';
@@ -783,6 +796,99 @@ const actions={
         };
     },
 
+    savedGame(selectedSquare,newElement){
+        // console.log('In the savedGame method.');
+        let legalMoveString='';
+        if(STORE.redrawMoves.length>0){
+            let previousSquare=STORE.redrawMoves[STORE.redrawMoves.length-1];
+            legalMoveString=this.testLegal(previousSquare, selectedSquare);
+            if(legalMoveString!==''){
+                this.removePiece(previousSquare,true,newElement);
+            }
+        }
+        if(STORE.redrawMoves.length===0){
+            this.placePiece(selectedSquare,true,newElement);
+            STORE.redrawMoves.push(selectedSquare);
+        }else if(legalMoveString!==''){
+            let previousSquare=STORE.redrawMoves[STORE.redrawMoves.length-1];
+            if(legalMoveString==='H'){   // horizontal move
+                let oldColNum=previousSquare.substring(0,1).charCodeAt(0)-64;
+                let newColNum=selectedSquare.substring(0,1).charCodeAt(0)-64;
+                let RowNum=parseInt(previousSquare.substring(1), 10);
+                if(newColNum>oldColNum){ // right
+                    for(let i=1; i<(newColNum-oldColNum); i++){
+                        let betweenSquare=String.fromCharCode(64+oldColNum+i)+(RowNum);
+                        if(newElement.find(`.js-saved-${betweenSquare}`).hasClass('visited')===false){
+                            this.visitSquare(betweenSquare,true,newElement);
+                        }
+                    }
+                }else if(newColNum<oldColNum){ // left
+                    for(let i=1; i<(oldColNum-newColNum); i++){  
+                        let betweenSquare=String.fromCharCode(64+oldColNum-i)+(RowNum);
+                        if(newElement.find(`.js-saved-${betweenSquare}`).hasClass('visited')===false){
+                            this.visitSquare(betweenSquare,true,newElement);
+                        }
+                    }
+                }
+            }else if(legalMoveString==='V'){   // vertical move
+                let oldRowNum=parseInt(previousSquare.substring(1), 10);
+                let newRowNum=parseInt(selectedSquare.substring(1), 10);
+                let ColNum=previousSquare.substring(0,1).charCodeAt(0)-64;
+                if(newRowNum>oldRowNum){ // up
+                    for(let i=1; i<(newRowNum-oldRowNum); i++){
+                        let betweenSquare=String.fromCharCode(64+ColNum)+(oldRowNum+i);
+                        if(newElement.find(`.js-saved-${betweenSquare}`).hasClass('visited')===false){
+                            this.visitSquare(betweenSquare,true,newElement);
+                        }
+                    }
+                }else if(newRowNum<oldRowNum){ // down
+                    for(let i=1; i<(oldRowNum-newRowNum); i++){  
+                        let betweenSquare=String.fromCharCode(64+ColNum)+(oldRowNum-i);
+                        if(newElement.find(`.js-saved-${betweenSquare}`).hasClass('visited')===false){
+                            this.visitSquare(betweenSquare,true,newElement);
+                        }
+                    }
+                }
+            }else if(legalMoveString==='D'){   // diagonal move
+                let oldColNum=previousSquare.substring(0,1).charCodeAt(0)-64;
+                let oldRowNum=parseInt(previousSquare.substring(1), 10);
+                let newColNum=selectedSquare.substring(0,1).charCodeAt(0)-64;
+                let newRowNum=parseInt(selectedSquare.substring(1), 10);
+                if(newColNum>oldColNum && newRowNum>oldRowNum){ // up and right
+                    for(let i=1; i<(newColNum-oldColNum); i++){
+                        let betweenSquare=String.fromCharCode(64+oldColNum+i)+(oldRowNum+i);
+                        if(newElement.find(`.js-saved-${betweenSquare}`).hasClass('visited')===false){
+                            this.visitSquare(betweenSquare,true,newElement);
+                        }
+                    }
+                }else if(newColNum>oldColNum && newRowNum<oldRowNum){ // down and right
+                    for(let i=1; i<(newColNum-oldColNum); i++){
+                        let betweenSquare=String.fromCharCode(64+oldColNum+i)+(oldRowNum-i);
+                        if(newElement.find(`.js-saved-${betweenSquare}`).hasClass('visited')===false){
+                            this.visitSquare(betweenSquare,true,newElement);
+                        }
+                    }
+                }else if(newColNum<oldColNum && newRowNum<oldRowNum){ // down and left
+                    for(let i=1; i<(oldColNum-newColNum); i++){
+                        let betweenSquare=String.fromCharCode(64+oldColNum-i)+(oldRowNum-i);
+                        if(newElement.find(`.js-saved-${betweenSquare}`).hasClass('visited')===false){
+                            this.visitSquare(betweenSquare,true,newElement);
+                        }
+                    }
+                }else if(newColNum<oldColNum && newRowNum>oldRowNum){ // up and left
+                    for(let i=1; i<(oldColNum-newColNum); i++){
+                        let betweenSquare=String.fromCharCode(64+oldColNum-i)+(oldRowNum+i);
+                        if(newElement.find(`.js-saved-${betweenSquare}`).hasClass('visited')===false){
+                            this.visitSquare(betweenSquare,true,newElement);
+                        }
+                    }
+                }
+            }
+            this.placePiece(selectedSquare,true,newElement);
+            STORE.redrawMoves.push(selectedSquare);
+        };
+    },
+
     testLegal(currentSquare, proposedSquare){  // Determines if a proposed move is legal.
         // console.log('In the testLegal method.');
         let oldColNum=currentSquare.substring(0,1).charCodeAt(0)-64;
@@ -795,21 +901,31 @@ const actions={
         return(legalHorizonal+legalVertical+legalDiagonal);
     },
 
-    visitSquare(visitedSquare){  // Adds a yellow overlay to a square. Maybe more code later.
+    visitSquare(visitedSquare,savedGame,newElement){  // Adds a yellow overlay to a square. Maybe more code later.
         // console.log('In the visitSquare method.');
-        $('.js-'+visitedSquare).addClass('visited');
-        // console.log(`Square ${visitedSquare} was visited.`);
+        if(savedGame){
+            newElement.find('.js-saved-'+visitedSquare).addClass('visited');
+        }else{
+            $('.js-'+visitedSquare).addClass('visited');
+        };
     },
 
-    placePiece(landedSquare){  // Adds a yellow overlay with chess piece on top.
+    placePiece(landedSquare,savedGame,newElement){  // Adds a yellow overlay with chess piece on top.
         // console.log('In the placePiece method.');
-        $('.js-'+landedSquare).addClass('visited');
-        $('.js-'+landedSquare).addClass('occupied');
+        if(savedGame===true){
+            newElement.find('.js-saved-'+landedSquare).addClass('visited occupied');
+        }else{
+            $('.js-'+landedSquare).addClass('visited occupied');
+        };
     },
 
-    removePiece(vacatedSquare){  // Removes chess piece, leaving yellow overlay.
+    removePiece(vacatedSquare,savedGame,newElement){  // Removes chess piece, leaving yellow overlay.
         // console.log('In the removePiece method.');
-        $('.js-'+vacatedSquare).removeClass('occupied');
+        if(savedGame){
+            newElement.find('.js-saved-'+vacatedSquare).removeClass('occupied');
+        }else{
+            $('.js-'+vacatedSquare).removeClass('occupied');
+        };
     },
 
     updateScoreBoard(movesincr, squaresincr){
@@ -848,6 +964,7 @@ const actions={
         for(let i=0;i<selectedGameMoves.length;i++){
             actions.square(selectedGameMoves[i]);
         };
+        STORE.activeSavedGameExists=false;
         actions.do('nav','game','saves');
     },
 
@@ -890,15 +1007,26 @@ const actions={
 
     doGamesListHtml(){
         // console.log('In the doGamesListHtml method.');
+
+        $('.savedGamesList').html('');
         let htmlGameMoves='';
         for(let i=0; i<STORE.savedGames.length; i++){
-            htmlGameMoves+=`<li data-id='${i}' class='savedGame'>
-            <p>Game ${i+1}:</p><br>
-            <p>${STORE.savedGames[i].moves.toString()}</p></br>
-            <p>${STORE.savedGames[i].dateTime}</p></br></li>`;
-            // Major upgrade to the above HTML coming soon!
+            htmlGameMoves=`<li data-id='${i}' class='savedGame'><div class='savedGameBoardContainer'>`
+            for(let j=8; j>0; j--){
+                for(let k=65; k<73; k++){
+                    htmlGameMoves+=`<div class='square js-saved-${String.fromCharCode(k)}${j}'></div>`;
+                };
+            };
+            htmlGameMoves+=`</div>`+`<div class='dateTimeStamp'>
+                ${moment(STORE.savedGames[i].dateTime).format('MMMM DD YYYY HH:mm')}</div></li>`;
+            let newElement = $(htmlGameMoves);
+            let currentMove='';
+            for(let j=0; j<STORE.savedGames[i].moves.length; j++){
+                currentMove=STORE.savedGames[i].moves[j];
+                actions.do('savedGame',currentMove,newElement);
+            };
+            $('.savedGamesList').append(newElement);
         };
-        $('.savedGamesList').html(htmlGameMoves);
         renderPage.configureGameButtons();
     }
 };

@@ -413,15 +413,6 @@ body, html{
         border: 0;
         width: 100%;
     }
-    
-    .js-movesButton{
-        background: Transparent;
-        border: none;
-    }
-    
-    .js-movesButton img{    
-        height: 14vw;
-    }
 
     .square {
       border: solid 1px rgba(0,0,0,0.1);
@@ -430,6 +421,28 @@ body, html{
 
     .square:hover {
       box-shadow: 0 0 1px 2px rgba(0,255,0,0.6);
+    }
+
+    .savedGameBoardContainer{
+        grid-area: chessboard;
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        grid-template-rows: repeat(8, 1fr);
+        background-image: url('../Images/Chess_Board.jpg');
+        background-size: cover;
+        border: 0;
+        height: 58vw;
+        width: 58vw;
+        margin: 0 auto;
+    }
+    
+    .js-movesButton{
+        background: Transparent;
+        border: none;
+    }
+    
+    .js-movesButton img{    
+        height: 14vw;
     }
 
     .handles-tl {
@@ -560,6 +573,11 @@ body, html{
         width: 100vw;
         overflow: auto;
     }
+
+    .dateTimeStamp{
+        text-align: center;
+        height: 5vh;
+    }
 }
 
 /*****************/
@@ -583,6 +601,7 @@ body, html{
         grid-template-areas: 
             '. chessboard header'
             '. chessboard controls';
+            height: 100%;
     }
     
     .upperRightContainer{
@@ -770,12 +789,11 @@ body, html{
         background-image: url('../Images/Chess_Board.jpg');
         background-size: cover;
         border: 0;
-        grid-column: 2/3;
+        height: 100%;
+        /* grid-column: 2/3; */
     }
     
     .square{
-        height: 12.5vh;
-        width: 12.5vh;
         background-size: cover;
         float: left;
     }
@@ -912,6 +930,38 @@ body, html{
         height: 66vh;
         width: 100vw;
         overflow: auto;
+    }
+
+    .savedGamesList{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        height: 66vh;
+        width: 100vw;
+        overflow: auto;
+    }
+
+    .savedGame{
+        flex;
+        width: 50%;
+    }
+
+    .savedGameBoardContainer{
+        grid-area: chessboard;
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        grid-template-rows: repeat(8, 1fr);
+        background-image: url('../Images/Chess_Board.jpg');
+        background-size: cover;
+        border: 0;
+        height: 58vh;
+        width: 58vh;
+        margin: 0 auto;
+    }
+
+    .dateTimeStamp{
+        text-align: center;
+        height: 5vw;
     }
 }
 
