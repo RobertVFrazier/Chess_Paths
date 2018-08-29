@@ -1020,6 +1020,7 @@ const actions={
             htmlGameMoves+=`</div>`+`<div class='dateTimeStamp'>
                 ${moment(STORE.savedGames[i].dateTime).format('MMMM DD YYYY HH:mm')}</div></li>`;
             let newElement = $(htmlGameMoves);
+            STORE.redrawMoves=[];
             let currentMove='';
             for(let j=0; j<STORE.savedGames[i].moves.length; j++){
                 currentMove=STORE.savedGames[i].moves[j];
