@@ -366,6 +366,17 @@ body, html{
         grid-area: loadsave;
         grid-column: 2 / span 1;
     }
+
+    .js-gameControlsButton{
+        padding: 0;
+        height: 11vw
+        width: auto;
+    }
+
+    .js-gameControlsButton img{
+        height: 11vw;
+        width: auto;
+    }
     
     .js-infoButton{
         position: absolute;
@@ -398,10 +409,6 @@ body, html{
     .queenButton:focus{
         background: no-repeat url('../Images/Buttons/Queen_Button_Glow.png');
         background-size: contain;
-    }
-    
-    .gameButton{
-        width: 20vw;
     }
 
     .boardContainer{
@@ -680,51 +687,6 @@ body, html{
         justify-items: center;
     }
     
-    .rulesButton{
-        grid-area: rules;
-    }
-    
-    .rulesButton img{
-        height: 10vh;
-        width: auto;
-    }
-    
-    .undoButton{
-        grid-area: undo;
-    }
-    
-    .undoButton img{
-        height: 10vh;
-        width: auto;
-    }
-    
-    .redoButton{
-        grid-area: redo;
-    }
-    
-    .redoButton img{
-        height: 10vh;
-        width: auto;
-    }
-    
-    .resetButton{
-        grid-area: reset;
-    }
-    
-    .resetButton img{
-        height: 10vh;
-        width: auto;
-    }
-    
-    .loadSaveButton{
-        grid-area: loadsave;
-    }
-    
-    .loadSaveButton img{
-        height: 10vh;
-        width: auto;
-    }
-    
     /*   BUTTONS   */
     
     .navButton{
@@ -743,6 +705,37 @@ body, html{
         background: no-repeat url('../Images/Buttons/Button_Glow.png');
         background-size: cover;
     } */
+    
+    .rulesButton{
+        grid-area: rules;
+    }
+    
+    .undoButton{
+        grid-area: undo;
+    }
+    
+    .redoButton{
+        grid-area: redo;
+    }
+    
+    .resetButton{
+        grid-area: reset;
+    }
+    
+    .loadSaveButton{
+        grid-area: loadsave;
+    }
+
+    .js-gameControlsButton{
+        padding: 0;
+        height: 10vh;
+        width: auto;
+    }
+
+    .js-gameControlsButton img{
+        height: 10vh;
+        width: auto;
+    }
     
     .js-infoButton{
         position: absolute;
@@ -776,10 +769,6 @@ body, html{
     .queenButton:focus{
         background: no-repeat url('../Images/Buttons/Queen_Button_Glow.png');
         background-size: contain;
-    }
-    
-    .gameButton{
-        width: 20vh;
     }
 
     .boardContainer{
@@ -979,5 +968,7 @@ body, html{
 .occupied{
     background: url('../Images/2D_Pieces/Queen.png');
     background-color: rgba(243, 203, 44, 0.6);
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
