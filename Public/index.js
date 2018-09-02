@@ -117,7 +117,7 @@ const renderPage={
         // console.log('In the savesPage method.');
         this.showCurrentPage('div.js-pageViewSavesHtml');
         if(STORE.newSession===true && localStorage.getItem('jwt')!==''){
-            // console.log(localStorage.getItem('jwt'));
+            console.log(localStorage.getItem('jwt'));
             fetch('/api/users',{
                 method:'GET',
                 headers:{'Content-Type': 'application/json; charset=utf-8',
