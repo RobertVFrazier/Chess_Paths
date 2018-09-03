@@ -93,6 +93,13 @@ const renderPage={
             $('.js-resetButton').prop("disabled",true).css('cursor','not-allowed');
             $('.js-resetButton img').attr('src','Images/Buttons/Reset_Grey_Button.png');
         };
+        let htmlGameSquares='';
+        for(let j=8; j>0; j--){
+            for(let k=65; k<73; k++){
+                htmlGameSquares+=`<div class='square js-${String.fromCharCode(k)}${j}' data-location='${String.fromCharCode(k)}${j}'></div>`;
+            };
+        };
+        $('.boardContainer').html(htmlGameSquares);
     },
 
     rulesPage(){
@@ -117,7 +124,7 @@ const renderPage={
         // console.log('In the savesPage method.');
         this.showCurrentPage('div.js-pageViewSavesHtml');
         if(STORE.newSession===true && localStorage.getItem('jwt')!==''){
-            console.log(localStorage.getItem('jwt'));
+            // console.log(localStorage.getItem('jwt'));
             fetch('/api/users',{
                 method:'GET',
                 headers:{'Content-Type': 'application/json; charset=utf-8',
@@ -445,7 +452,8 @@ const listeners={
 
     handleSquare(){
         // console.log('In the handleSquare method.');
-        $('.square').click(function(){
+        $('.boardContainer').on('click','.square',function(event){
+            event.stopPropagation();
             let location=$(this).data('location');
             actions.do('square',location);
         });
