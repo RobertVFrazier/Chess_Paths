@@ -69,6 +69,7 @@ const renderPage={
         }else if(STORE.previousView==='game'){
             $('.js-queenButton').focus();
         }
+        $('.hint').hide().delay(5000).fadeIn(2000);
     },
 
     infoPage(){

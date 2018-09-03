@@ -220,6 +220,16 @@ body, html{
     border: 0;
 }
 
+.hint{
+    font-size: 1.2rem;
+    font-display: bold;
+    text-align: center;
+    background-color: rgb(255,255,120);
+    border: solid rgb(29,139,255) 3px;
+    border-radius: 15px;
+    width: 43vw;
+}
+
 /****************/
 /*   PORTRAIT   */
 /****************/
@@ -587,6 +597,10 @@ body, html{
     .dateTimeStamp{
         text-align: center;
         height: 5vh;
+    }
+
+    .hint{
+        width: 43vh;
     }
 }
 
@@ -972,7 +986,7 @@ body, html{
 
 @media only screen
 and (min-device-width : 768px) 
-and (max-device-width : 1366px) 
+and (max-device-width : 1024px) 
 and (orientation : portrait){
 
     .boardContainer{
@@ -997,11 +1011,15 @@ and (orientation : portrait){
     .scoreTable{
         font-size: 1.5rem;
     }
+
+    .hint{
+        text-size: 2.5rem;
+    }
 }
 
 @media only screen
-and (min-device-width : 768px) 
-and (max-device-width : 1366px) 
+and (min-device-height : 768px) 
+and (max-device-height : 1024px) 
 and (orientation : landscape){
 
     .boardContainer{
@@ -1036,5 +1054,9 @@ and (orientation : landscape){
 
     .scoreTable{
         font-size: 1.5rem;
+    }
+
+    .hint{
+        text-size: 2.5rem;
     }
 }
