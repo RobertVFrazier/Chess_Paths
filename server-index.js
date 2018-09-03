@@ -20,7 +20,7 @@ const {User}=require('./Models/user-model');
 
 app.use(morgan('common'));
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static('Public'));
 
 passport.use(localStrategy);
 passport.use(jwtStrategy);
