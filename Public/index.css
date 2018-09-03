@@ -288,7 +288,7 @@ body, html{
     
     .scoreTable{
         width: 100%;
-        font-size: 1em; 
+        font-size: 1rem; 
         align-self: start;
     }
     
@@ -1015,6 +1015,10 @@ and (orientation : portrait){
     .hint{
         text-size: 2.5rem;
     }
+    
+    .scoreTable{
+        font-size: 1.7rem;
+    }
 }
 
 @media only screen
@@ -1059,4 +1063,17 @@ and (orientation : landscape){
     .hint{
         text-size: 2.5rem;
     }
+    
+    .scoreTable{
+        font-size: 1.7rem;
+    }
+}
+
+@media screen
+and (min-device-width: 1200px){
+    
+    .scoreTable{
+        font-size: 1.8rem;
+    }
+
 }
