@@ -590,6 +590,7 @@ const actions={
     signUpNav(parm2,parm3){
         $('.js-formSignUpButton').show();
         $('.js-formLogInButton').hide();
+        $('.js-demoLogin').text('');
         $('.js-fieldsTitle').text('Sign Up');
         $('#username').val('');
         $('#password').val('');
@@ -599,6 +600,7 @@ const actions={
     logInNav(parm2,parm3){
         $('.js-formSignUpButton').hide();
         $('.js-formLogInButton').show();
+        $('.js-demoLogin').text('Demo login: User Name: "demo", Password: "demopass1234".');
         $('.js-fieldsTitle').text('Log In');
         $('#username').val('');
         $('#password').val('');
