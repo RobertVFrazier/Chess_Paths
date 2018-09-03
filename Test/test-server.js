@@ -12,38 +12,50 @@ const request=require('supertest');
 const {app,runServer,closeServer}=require('../server-index');
 const should=chai.should();
 chai.use(chaiHttp);
-const createAuthToken=(user)=>{
-  return jwt.sign({user},JWT_SECRET,{
-    subject: user.user,
-    expiresIn: JWT_EXPIRY,
-    algorithm: 'HS256'
-  });
-};
-
-const localAuth=passport.authenticate('local',{session: false});
-router.use(bodyParser.json());
-// The user provides a user name and password to login
-router.post('/login',localAuth,(req,res) => {
-  const authToken=createAuthToken(req.user.serialize());
-  res.json({authToken});
-});
-
 const jwtAuth=passport.authenticate('jwt',{session: false});
-console.log(jwtAuth);
 
 describe('Games',()=>{
+    let user='', token='';
     before(()=>{
-        return runServer(process.env.DATABASE_URL || 'mongodb://localhost:27017/chess-paths');
+        return runServer(process.env.TESTDATABASE_URL || 'mongodb://localhost:27017/chess-paths-test',8090)
+        .then(()=>{
+            return chai.request(app)
+            .post('/api/users')
+            .set('Content-Type','application/json')
+            .send({user: 'testuser',password: 'pass12345'})
+            .then((res)=>{
+                user=res.body;
+            })
+            .then(()=>{
+                return chai.request(app)
+                .post('/api/auth/login/')
+                .set('Content-Type','application/json')
+                .send({user: 'testuser',password: 'pass12345'})
+                .then((res)=>{
+                    token=res.body.authToken;
+                    const newGame={moves: '["H8","E5","H2"]',puzzle: 'queen'};
+                    return chai.request(app)
+                    .post('/api/games')
+                    .set('Authorization',`Bearer ${token}`,
+                        'Content-Type','application/json')
+                    .send(newGame)
+                })
+            })
+        });
     });
     after(()=>{
-        return closeServer();
+        return chai.request(app)
+        .delete(`/api/users/${user.id}`)
+        .then(()=>{
+            return closeServer();
+        })
     });
 
     it('should list all games on GET',()=>{
         return chai.request(app)
         .get('/api/games')
-        .set('Authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXIiOiJQZXRlclBhcmtlciIsImlkIjoiNWI3ODllYTE0ZGEyYzY2MTkwYWVjYjM2In0sImlhdCI6MTUzNTM4ODA3NSwiZXhwIjoxNTM3OTgwMDc1LCJzdWIiOiJQZXRlclBhcmtlciJ9.B7ASprBbYFSyuuUfIOwW3sl878HYirZs2GpU8BeL_YQ',
-            'Content-Type','application/json')  // Seems I should be able to get a variable for that jwt above. Can't see how.
+        .set('Authorization',`Bearer ${token}`,
+            'Content-Type','application/json')
         .then((res)=>{
             res.should.have.status(200);
             res.should.be.json;
@@ -61,7 +73,7 @@ describe('Games',()=>{
         const newGame={moves: '["H8","E5","H2"]',puzzle: 'queen'};
         return chai.request(app)
         .post('/api/games')
-        .set('Authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXIiOiJQZXRlclBhcmtlciIsImlkIjoiNWI3ODllYTE0ZGEyYzY2MTkwYWVjYjM2In0sImlhdCI6MTUzNTM4ODA3NSwiZXhwIjoxNTM3OTgwMDc1LCJzdWIiOiJQZXRlclBhcmtlciJ9.B7ASprBbYFSyuuUfIOwW3sl878HYirZs2GpU8BeL_YQ',
+        .set('Authorization',`Bearer ${token}`,
             'Content-Type','application/json')
         .send(newGame)
         .then((res)=>{
@@ -81,13 +93,13 @@ describe('Games',()=>{
 
         return chai.request(app)
         .get('/api/games')
-        .set('Authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXIiOiJQZXRlclBhcmtlciIsImlkIjoiNWI3ODllYTE0ZGEyYzY2MTkwYWVjYjM2In0sImlhdCI6MTUzNTM4ODA3NSwiZXhwIjoxNTM3OTgwMDc1LCJzdWIiOiJQZXRlclBhcmtlciJ9.B7ASprBbYFSyuuUfIOwW3sl878HYirZs2GpU8BeL_YQ',
+        .set('Authorization',`Bearer ${token}`,
             'Content-Type','application/json')
         .then((res)=>{
             updateData.id=res.body[0]._id;
             return chai.request(app)
             .put(`/api/games/${updateData.id}`)
-            .set('Authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXIiOiJQZXRlclBhcmtlciIsImlkIjoiNWI3ODllYTE0ZGEyYzY2MTkwYWVjYjM2In0sImlhdCI6MTUzNTM4ODA3NSwiZXhwIjoxNTM3OTgwMDc1LCJzdWIiOiJQZXRlclBhcmtlciJ9.B7ASprBbYFSyuuUfIOwW3sl878HYirZs2GpU8BeL_YQ',
+            .set('Authorization',`Bearer ${token}`,
                 'Content-Type','application/json')
             .send(updateData);
         })
@@ -99,13 +111,13 @@ describe('Games',()=>{
     it('should delete a game on DELETE.',()=>{
         return chai.request(app)
         .get('/api/games')
-        .set('Authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXIiOiJQZXRlclBhcmtlciIsImlkIjoiNWI3ODllYTE0ZGEyYzY2MTkwYWVjYjM2In0sImlhdCI6MTUzNTM4ODA3NSwiZXhwIjoxNTM3OTgwMDc1LCJzdWIiOiJQZXRlclBhcmtlciJ9.B7ASprBbYFSyuuUfIOwW3sl878HYirZs2GpU8BeL_YQ',
+        .set('Authorization',`Bearer ${token}`,
             'Content-Type','application/json')
         .then((res)=>{
             let deleteId=res.body[0]._id;
             return chai.request(app)
             .delete(`/api/games/${deleteId}`)
-            .set('Authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXIiOiJQZXRlclBhcmtlciIsImlkIjoiNWI3ODllYTE0ZGEyYzY2MTkwYWVjYjM2In0sImlhdCI6MTUzNTM4ODA3NSwiZXhwIjoxNTM3OTgwMDc1LCJzdWIiOiJQZXRlclBhcmtlciJ9.B7ASprBbYFSyuuUfIOwW3sl878HYirZs2GpU8BeL_YQ',
+            .set('Authorization',`Bearer ${token}`,
                 'Content-Type','application/json')
         })
         .then((res)=>{

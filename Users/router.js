@@ -72,12 +72,12 @@ router.post('/',jsonParser,(req,res)=>{
     }
   };
   const tooSmallField=Object.keys(sizedFields).find(
-    field =>
+    field=>
       'min' in sizedFields[field] &&
             req.body[field].trim().length < sizedFields[field].min
   );
   const tooLargeField=Object.keys(sizedFields).find(
-    field =>
+    field=>
       'max' in sizedFields[field] &&
             req.body[field].trim().length > sizedFields[field].max
   );
