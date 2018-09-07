@@ -221,7 +221,7 @@ describe('Users',()=>{
     });
 
     it('should add a user on POST.',()=>{
-        const newUser={user: 'testmyuser002',password: 'pass98765'};
+        const newUser={user: 'testmyuser',password: 'pass98765'};
         return chai.request(app)
         .post('/api/users')
         .set('Authorization',`Bearer ${token}`,
@@ -244,7 +244,7 @@ describe('Users',()=>{
         .set('Authorization',`Bearer ${token}`,
             'Content-Type','application/json')
         .then((res)=>{
-            updateData.id=res.body[0]._id;
+            updateData.id=res.body._id;
             return chai.request(app)
             .put(`/api/users/${updateData.id}`)
             .set('Authorization',`Bearer ${token}`,
@@ -262,7 +262,7 @@ describe('Users',()=>{
         .set('Authorization',`Bearer ${token}`,
             'Content-Type','application/json')
         .then((res)=>{
-            let deleteId=res.body[0]._id;
+            let deleteId=res.body._id;
             return chai.request(app)
             .delete(`/api/users/${deleteId}`)
             .set('Authorization',`Bearer ${token}`,
