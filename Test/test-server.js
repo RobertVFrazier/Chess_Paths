@@ -262,6 +262,7 @@ describe('Users',()=>{
         .set('Authorization',`Bearer ${token}`,
             'Content-Type','application/json')
         .then((res)=>{
+            console.log(res[0].body);
             let deleteId=res.body._id;
             return chai.request(app)
             .delete(`/api/users/${deleteId}`)
