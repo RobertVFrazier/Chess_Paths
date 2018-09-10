@@ -17,18 +17,18 @@ const jwtAuth=passport.authenticate('jwt',{session: false});
 const {Game}=require('../Models/game-model');
 const {User}=require('../Models/user-model');
 
-const seedDataGames=()=>{
+const seedDataGames=(user)=>{
     const seedData=[
-        {"puzzle": "queen", "moves": ["A1", "C1", "C3", "E5"]},
-        {"puzzle": "queen", "moves": ["D5", "G2", "G8", "B8"]},
-        {"puzzle": "queen", "moves": ["C5", "F8", "H6", "E3"]},
-        {"puzzle": "queen", "moves": ["C5", "C8", "A6", "F1"]},
-        {"puzzle": "queen", "moves": ["A3", "H3", "D7", "A4"]},
-        {"puzzle": "queen", "moves": ["G8", "C4", "G4", "D1"]},
-        {"puzzle": "queen", "moves": ["C5", "C1", "G1", "G5", "D5"]},
-        {"puzzle": "queen", "moves": ["H8", "A1", "A8", "H1"]},
-        {"puzzle": "queen", "moves": ["G6", "G4", "B4", "B6", "D8", "F6"]},
-        {"puzzle": "queen", "moves": ["H8", "E5", "H2", "G1", "A1", "D4", "A7", "B8"]}
+        {"user": user,"puzzle": "queen", "moves": ["A1", "C1", "C3", "E5"]},
+        {"user": user,"puzzle": "queen", "moves": ["D5", "G2", "G8", "B8"]},
+        {"user": user,"puzzle": "queen", "moves": ["C5", "F8", "H6", "E3"]},
+        {"user": user,"puzzle": "queen", "moves": ["C5", "C8", "A6", "F1"]},
+        {"user": user,"puzzle": "queen", "moves": ["A3", "H3", "D7", "A4"]},
+        {"user": user,"puzzle": "queen", "moves": ["G8", "C4", "G4", "D1"]},
+        {"user": user,"puzzle": "queen", "moves": ["C5", "C1", "G1", "G5", "D5"]},
+        {"user": user,"puzzle": "queen", "moves": ["H8", "A1", "A8", "H1"]},
+        {"user": user,"puzzle": "queen", "moves": ["G6", "G4", "B4", "B6", "D8", "F6"]},
+        {"user": user,"puzzle": "queen", "moves": ["H8", "E5", "H2", "G1", "A1", "D4", "A7", "B8"]}
     ]
     return Game.insertMany(seedData);
 };
@@ -36,47 +36,41 @@ const seedDataGames=()=>{
 describe('Games',()=>{
     let user='', token='';
     before(()=>{
-        return runServer(process.env.TESTDATABASE_URL || 'mongodb://localhost:27017/chess-paths-test',8090)
-        .then(()=>{
-            return chai.request(app)
-            .post('/api/users')
-            .set('Content-Type','application/json')
-            .send({user: 'testuser',password: 'pass12345'})
-            .then((res)=>{
-                user=res.body;
-            })
-            .then(()=>{
-                return chai.request(app)
-                .post('/api/auth/login/')
-                .set('Content-Type','application/json')
-                .send({user: 'testuser',password: 'pass12345'})
-                .then((res)=>{
-                    token=res.body.authToken;
-                    const newGame={moves: '["H8","E5","H2"]',puzzle: 'queen'};
-                    return chai.request(app)
-                    .post('/api/games')
-                    .set('Authorization',`Bearer ${token}`,
-                        'Content-Type','application/json')
-                    .send(newGame)
-                })
-            })
-        });
+        return runServer(process.env.TESTDATABASE_URL || 'mongodb://localhost:27017/chess-paths-test',8090);
     });
 
     beforeEach(()=>{
-        return seedDataGames();
+        return chai.request(app)
+        .post('/api/users')
+        .set('Content-Type','application/json')
+        .send({user: 'testuser',password: 'pass12345'})
+        .then((res)=>{
+            user=res.body;
+        })
+        .then(()=>{
+            return chai.request(app)
+            .post('/api/auth/login/')
+            .set('Content-Type','application/json')
+            .send({user: 'testuser',password: 'pass12345'})
+            .then((res)=>{
+                token=res.body.authToken;
+                // seedDataGames(user.id);
+                const newGame={moves: '["H8","E5","H2"]',puzzle: 'queen'};
+                return chai.request(app)
+                .post('/api/games')
+                .set('Authorization',`Bearer ${token}`,
+                    'Content-Type','application/json')
+                .send(newGame)
+            })
+        })
     });
-
-    afterEach(()=>{
+    
+    afterEach(function() {
         return tearDownDb();
     });
 
-    after(()=>{
-        return chai.request(app)
-        .delete(`/api/users/${user.id}`)
-        .then(()=>{
-            return closeServer();
-        })
+    after(function() {
+        return closeServer();
     });
 
     it('should list all games on GET',()=>{
@@ -168,8 +162,10 @@ const seedDataUsers=()=>{
 describe('Users',()=>{
     let user='', token='';
     before(()=>{
-        return runServer(process.env.TESTDATABASE_URL || 'mongodb://localhost:27017/chess-paths-test',8090)
-        .then(()=>{
+        return runServer(process.env.TESTDATABASE_URL || 'mongodb://localhost:27017/chess-paths-test',8090);
+    });
+
+    beforeEach(()=>{
             return chai.request(app)
             .post('/api/users')
             .set('Content-Type','application/json')
@@ -184,26 +180,18 @@ describe('Users',()=>{
                 .send({user: 'testuser',password: 'pass12345'})
                 .then((res)=>{
                     token=res.body.authToken;
+                    // console.log('Before: ', user, token);
                     return token;
                 })
             })
-        });
     });
-
-    beforeEach(()=>{
-        return seedDataUsers();
-    });
-
-    afterEach(()=>{
+    
+    afterEach(function() {
         return tearDownDb();
     });
 
-    after(()=>{
-        return chai.request(app)
-        .delete(`/api/users/${user.id}`)
-        .then(()=>{
-            return closeServer();
-        })
+    after(function() {
+        return closeServer();
     });
 
     it('should list all users on GET',()=>{
@@ -262,7 +250,7 @@ describe('Users',()=>{
         .set('Authorization',`Bearer ${token}`,
             'Content-Type','application/json')
         .then((res)=>{
-            console.log(res[0].body);
+            // console.log('Response body: '+res.body);
             let deleteId=res.body._id;
             return chai.request(app)
             .delete(`/api/users/${deleteId}`)
