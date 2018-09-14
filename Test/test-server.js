@@ -17,20 +17,25 @@ const jwtAuth=passport.authenticate('jwt',{session: false});
 const {Game}=require('../Models/game-model');
 const {User}=require('../Models/user-model');
 
-const seedDataGames=(user)=>{
+const seedDataGames=(token)=>{
     const seedData=[
-        {"user": user,"puzzle": "queen", "moves": ["A1", "C1", "C3", "E5"]},
-        {"user": user,"puzzle": "queen", "moves": ["D5", "G2", "G8", "B8"]},
-        {"user": user,"puzzle": "queen", "moves": ["C5", "F8", "H6", "E3"]},
-        {"user": user,"puzzle": "queen", "moves": ["C5", "C8", "A6", "F1"]},
-        {"user": user,"puzzle": "queen", "moves": ["A3", "H3", "D7", "A4"]},
-        {"user": user,"puzzle": "queen", "moves": ["G8", "C4", "G4", "D1"]},
-        {"user": user,"puzzle": "queen", "moves": ["C5", "C1", "G1", "G5", "D5"]},
-        {"user": user,"puzzle": "queen", "moves": ["H8", "A1", "A8", "H1"]},
-        {"user": user,"puzzle": "queen", "moves": ["G6", "G4", "B4", "B6", "D8", "F6"]},
-        {"user": user,"puzzle": "queen", "moves": ["H8", "E5", "H2", "G1", "A1", "D4", "A7", "B8"]}
+        {"puzzle": "queen", "moves": ["A1", "C1", "C3", "E5"]},
+        {"puzzle": "queen", "moves": ["D5", "G2", "G8", "B8"]},
+        {"puzzle": "queen", "moves": ["C5", "F8", "H6", "E3"]},
+        {"puzzle": "queen", "moves": ["C5", "C8", "A6", "F1"]},
+        {"puzzle": "queen", "moves": ["A3", "H3", "D7", "A4"]},
+        {"puzzle": "queen", "moves": ["G8", "C4", "G4", "D1"]},
+        {"puzzle": "queen", "moves": ["C5", "C1", "G1", "G5", "D5"]},
+        {"puzzle": "queen", "moves": ["H8", "A1", "A8", "H1"]},
+        {"puzzle": "queen", "moves": ["G6", "G4", "B4", "B6", "D8", "F6"]},
+        {"puzzle": "queen", "moves": ["H8", "E5", "H2", "G1", "A1", "D4", "A7", "B8"]}
     ]
-    return Game.insertMany(seedData);
+    return Promise.all(seedData.map(game => chai
+        .request(app)
+        .post('/api/games')
+        .set('Authorization',`Bearer ${token}`,
+            'Content-Type','application/json')
+        .send(game)));
 };
 
 describe('Games',()=>{
@@ -41,28 +46,22 @@ describe('Games',()=>{
 
     beforeEach(()=>{
         return chai.request(app)
-        .post('/api/users')
-        .set('Content-Type','application/json')
-        .send({user: 'testuser',password: 'pass12345'})
-        .then((res)=>{
-            user=res.body;
-        })
-        .then(()=>{
-            return chai.request(app)
-            .post('/api/auth/login/')
+            .post('/api/users')
             .set('Content-Type','application/json')
             .send({user: 'testuser',password: 'pass12345'})
             .then((res)=>{
-                token=res.body.authToken;
-                // seedDataGames(user.id);
-                const newGame={moves: '["H8","E5","H2"]',puzzle: 'queen'};
-                return chai.request(app)
-                .post('/api/games')
-                .set('Authorization',`Bearer ${token}`,
-                    'Content-Type','application/json')
-                .send(newGame)
+                user=res.body;
             })
-        })
+            .then(()=>{
+                return chai.request(app)
+                .post('/api/auth/login/')
+                .set('Content-Type','application/json')
+                .send({user: 'testuser',password: 'pass12345'})
+                .then((res)=>{
+                    token=res.body.authToken;
+                    return seedDataGames(token);
+                })
+            })
     });
     
     afterEach(function() {
