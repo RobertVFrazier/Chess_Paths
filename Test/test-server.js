@@ -30,7 +30,7 @@ const seedDataGames=(token)=>{
         {"puzzle": "queen", "moves": ["G6", "G4", "B4", "B6", "D8", "F6"]},
         {"puzzle": "queen", "moves": ["H8", "E5", "H2", "G1", "A1", "D4", "A7", "B8"]}
     ]
-    return Promise.all(seedData.map(game => chai
+    return Promise.all(seedData.map(game=>chai
         .request(app)
         .post('/api/games')
         .set('Authorization',`Bearer ${token}`,
