@@ -67,11 +67,6 @@ html{
   /* END OF CSS RESET. ACTUAL CSS STARTS BELOW. */
   /**********************************************/
 
-html, body{
-    min-height: 100%;
-    min-width: 100%;
-}  
-
 *{
     font-family: Arial, Sans-Serif;
 }
@@ -794,7 +789,7 @@ body, html{
     }
 
     .boardContainer{
-        height: 100%;
+        height: 100vh;
     }
     
     .square{
@@ -804,7 +799,7 @@ body, html{
 
     .textPageContainer{
         display: grid;
-        height: 100%;
+        height: 100vh;
         grid-template-columns: 4fr 1fr;
         grid-template-areas: 
             'title header'
