@@ -101,6 +101,8 @@ const renderPage={
             };
         };
         $('.boardContainer').html(htmlGameSquares);
+        actions.do('undo');
+        actions.do('redo');
     },
 
     rulesPage(){
