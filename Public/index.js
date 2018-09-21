@@ -105,7 +105,8 @@ const renderPage={
 
     rulesPage(){
         // console.log('In the rulesPage method.');
-        this.showCurrentPage('div.js-pageViewRulesHtml');
+        this.showCurrentPage('div.js-pageViewRulesHtml');        
+        $('.fullScreen').fullScreen();
         $('.js-backButtonRulesPage').focus();
     },
 
@@ -122,7 +123,7 @@ const renderPage={
     },
 
     savesPage(){
-        // console.log('In the savesPage method.');
+        console.log('In the savesPage method.');
         this.showCurrentPage('div.js-pageViewSavesHtml');
         if(STORE.newSession===true && localStorage.getItem('jwt')!==''){
             // console.log(localStorage.getItem('jwt'));
@@ -293,6 +294,7 @@ const listeners={
     handleQueenButton(){
         // console.log('In the handleQueenButton method.');
         $('.js-queenButton').on('click',()=>{
+            $('.js-pageViewGameBoardHtml').fullScreen();
             actions.do('nav','game','splash');
         });
     },
@@ -314,6 +316,8 @@ const listeners={
     handleLoadSaveButton(){
         // console.log('In the handleLoadSaveButton method.');
         $('.js-loadSaveButton').on('click',()=>{
+            $('.fullScreen').fullScreen();
+            $('.js-pageViewSavesHtml').fullScreen();
             actions.do('nav','saves','game');
         });
     },
@@ -328,6 +332,7 @@ const listeners={
     handleBackButtonGamePage(){
         // console.log('In the handleBackButtonGamePage method.');
         $('.js-backButtonGamePage').on('click',()=>{
+            $('.fullScreen').fullScreen();
             actions.do('nav','splash','game');
         });
     },
@@ -335,6 +340,7 @@ const listeners={
     handleBackButtonRulesPage(){
         // console.log('In the handleBackButtonRulesPage method.');
         $('.js-backButtonRulesPage').on('click',()=>{
+            $('.js-pageViewGameBoardHtml').fullScreen();
             actions.do('nav','game','rules');
         });
     },
@@ -349,6 +355,7 @@ const listeners={
     handleBackButtonSavesPage(){
         // console.log('In the handleBackButtonSavesPage method.');
         $('.js-backButtonSavesPage').on('click',()=>{
+            $('.fullScreen').fullScreen();
             actions.do('nav','game','saves');
         });
     },
