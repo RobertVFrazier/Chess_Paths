@@ -107,7 +107,7 @@ const renderPage={
 
     rulesPage(){
         // console.log('In the rulesPage method.');
-        this.showCurrentPage('div.js-pageViewRulesHtml');        
+        this.showCurrentPage('div.js-pageViewRulesHtml');
         $('.fullScreen').fullScreen();
         $('.js-backButtonRulesPage').focus();
     },
@@ -125,7 +125,7 @@ const renderPage={
     },
 
     savesPage(){
-        console.log('In the savesPage method.');
+        // console.log('In the savesPage method.');
         this.showCurrentPage('div.js-pageViewSavesHtml');
         if(STORE.newSession===true && localStorage.getItem('jwt')!==''){
             // console.log(localStorage.getItem('jwt'));
@@ -319,7 +319,6 @@ const listeners={
         // console.log('In the handleLoadSaveButton method.');
         $('.js-loadSaveButton').on('click',()=>{
             $('.fullScreen').fullScreen();
-            $('.js-pageViewSavesHtml').fullScreen();
             actions.do('nav','saves','game');
         });
     },
@@ -357,7 +356,7 @@ const listeners={
     handleBackButtonSavesPage(){
         // console.log('In the handleBackButtonSavesPage method.');
         $('.js-backButtonSavesPage').on('click',()=>{
-            $('.fullScreen').fullScreen();
+            $('.js-pageViewGameBoardHtml').fullScreen();
             actions.do('nav','game','saves');
         });
     },

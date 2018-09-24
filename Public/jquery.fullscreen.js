@@ -72,7 +72,7 @@
 			return this;
 		}
 
-		// You can potentially pas two arguments a color
+		// You can potentially pass two arguments: a color
 		// for the background and a callback function
 
 		var options = $.extend({
