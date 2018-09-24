@@ -49,8 +49,8 @@ Second queen puzzle.
 
 <h2>Screen shots:</h2>
 
-![Splash screen]('Documentation/Splash.jpg')
-![Game screen]('Documentation/Game.jpg')
-![Rules screen]('Documentation/Rules.jpg')
-![Saves screen]('Documentation/Saves.jpg')
-![Login screen]('Documentation/Login.jpg')
+![Splash screen](Documentation/Splash.jpg)
+![Game screen](Documentation/Game.jpg)
+![Rules screen](Documentation/Rules.jpg)
+![Saves screen](Documentation/Saves.jpg)
+![Login screen](Documentation/Login.jpg)
