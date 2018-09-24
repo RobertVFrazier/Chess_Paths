@@ -1,5 +1,7 @@
 <h1>Chess Paths is a simple puzzle game I'm writing for my Node capstone project for Thinkful.</h1>
 
+Click here to run the app: https://safe-hamlet-64087.herokuapp.com/
+
 The inital, minimum viable product version has a single puzzle in which you place a chess 
 queen on an empty chess board and try to move over and/or land on every square on the board
 in just 14 moves. 
@@ -22,16 +24,16 @@ saved. This is where the back-end database comes in.
 
 <h2>Features partially complete:</h2>
 
-Responsive design. Working at least acceptably well for all phones, needs more work for tablets
-and computer screens.
+Responsive design. Working at least acceptably well for all phones, tablets, and computer screens.
 
 Display of moves on the chess board. The squares which have been visited are colored with a 
 semi-transparent gold overlay, but the paths made by each move are not yet being drawn. (Paths
 is right there in the name of the app, so that needs to happen.)
 
-<h2>MVP features not done:</h2>
+<h2>Known issues:</h2>
 
-Keyboard controls for those not using the mouse.
+Keyboard controls not available for those not using the mouse. Saved gaves: date & time stamp not always 
+visible on smaller screens.
 
 <h2>Stretch goals:</h2>
 
