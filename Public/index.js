@@ -421,6 +421,7 @@ const listeners={
         // console.log('In the handleLoadButton method.');
         $('.js-loadGameButton').on('click',()=>{
             actions.do('load');
+            $('.js-pageViewGameBoardHtml').fullScreen();
         });
     },
 
