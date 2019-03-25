@@ -5,7 +5,7 @@ const express=require('express');
 const morgan=require('morgan');
 const mongoose=require('mongoose');
 const passport=require('passport');
-// This destructuring looks like a source of confusion.
+
 const {router: usersRouter}=require('./Users');
 const {router: gamesRouter}=require('./Games');
 const {router: authRouter,localStrategy,jwtStrategy}=require('./Auth');

@@ -1,7 +1,6 @@
 'use strict';
 
 const mongoose=require('mongoose');
-mongoose.Promise=global.Promise;
 
 const gameSchema=mongoose.Schema({
     user: {type: mongoose.Schema.Types.ObjectId,ref: 'User'},
