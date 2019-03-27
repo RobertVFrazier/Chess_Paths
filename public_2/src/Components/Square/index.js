@@ -18,7 +18,8 @@ export default class Square extends React.Component {
         value={this.props.position}
         className={classname}
       >
-        {this.props.position}
+        {/* {this.props.position}&nbsp;&nbsp;&nbsp;&nbsp;
+        {parseInt(this.props.position, 10) % 8} */}
       </li>
     );
   }
