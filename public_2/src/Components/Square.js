@@ -4,6 +4,7 @@ import className from "classnames";
 export default class Square extends React.Component {
   handleSquareClicked = event => {
     this.props.handleSquareClicked(event.currentTarget.value);
+    // console.log(event.currentTarget.value);
   };
 
   render() {

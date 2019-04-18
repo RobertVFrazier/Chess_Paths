@@ -1,0 +1,259 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+   Added box-sizing, end-of-reset comment.
+*/
+
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 1rem;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/**********************************************/
+/* END OF CSS RESET. ACTUAL CSS STARTS BELOW. */
+/**********************************************/
+
+* {
+  font-family: Arial, Sans-Serif;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-display: bold;
+  text-align: center;
+}
+
+h3 {
+  font-size: 1.2rem;
+  font-display: bold;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 3px;
+}
+
+em {
+  font-style: italic;
+}
+
+body,
+html {
+  height: 100%;
+}
+
+.js-backGround {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+}
+
+.js-button {
+  cursor: pointer;
+  background: Transparent;
+  border: none;
+}
+
+/*   CHESSBOARD   */
+
+.board {
+  width: 98vw;
+  height: 98vw;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: auto;
+  grid-gap: 0px;
+  margin: auto;
+  background-color: rgb(250, 2, 2);
+}
+
+@media only screen and (min-aspect-ratio: 3/2) and (orientation: portrait) {
+  .board {
+    width: 98vw;
+    height: 98vw;
+    border: 5px solid green;
+  }
+}
+
+.square {
+  height: 1fr;
+  background-color: rgb(245, 245, 238);
+  color: rgb(120, 120, 121);
+  font-weight: 700;
+}
+
+.square--black {
+  background-color: black;
+}
+
+.square--highlighted {
+  background-color: rgb(245, 223, 136);
+  color: rgb(63, 63, 63);
+}
+
+.square--black.square--highlighted {
+  background-color: rgb(150, 128, 41);
+  color: rgb(63, 63, 63);
+}
+
+/*   NOT CHESSBOARD   */
+
+.interface {
+  height: 15vh;
+  border: 2px solid blue;
+  margin: 1vh;
+}
+
+.scoreboard {
+  height: 6vh;
+  border: 2px solid green;
+  margin: 1vh;
+}
+
+.controls {
+  height: 6vh;
+  border: 2px solid red;
+  margin: 1vh;
+}
