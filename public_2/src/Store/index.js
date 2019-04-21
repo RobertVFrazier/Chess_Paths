@@ -4,6 +4,6 @@ import movesReducer from "./Reducers/moves.reducer";
 
 const store = createStore(movesReducer);
 store.subscribe(() => {
-  console.log(store.getState());
+  // console.log("getState", store.getState());
 });
 export default store;

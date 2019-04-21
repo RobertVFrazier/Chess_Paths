@@ -15,12 +15,30 @@ export class ChessBoard extends React.Component {
     this.props.dispatch(initBoard());
   }
 
-  updateMove(moveType, position) {
-    this.props.dispatch(addMove(position));
-    this.props.dispatch(setEnd(position));
-    this.props.dispatch(setStart(this.props.endPosition));
+  async updateMove(moveType, position) {
+    await this.props.dispatch(
+      setStart(moveType === "first" ? position : this.props.endPosition)
+    );
+    await this.props.dispatch(addMove(position));
+    await this.props.dispatch(setEnd(position));
     this.updateBoardSquares(moveType);
   }
+
+  updateBoardSquares = moveType => {
+    // console.log("updateBoardSquares", this.props);
+    const { startPosition, endPosition } = this.props;
+    this.props.dispatch(
+      updateSquares(
+        this.props.board.map((square, i) => {
+          if (this.condition(moveType)(i, startPosition, endPosition)) {
+            square.movedThrough = true;
+          }
+          return square;
+        })
+      )
+    );
+    console.log(startPosition, endPosition);
+  };
 
   handleSquareClicked = position => {
     const { startPosition } = this.props;
@@ -30,7 +48,7 @@ export class ChessBoard extends React.Component {
       this.props.dispatch(addMove(position));
       this.props.dispatch(setStart(position));
       this.props.dispatch(setEnd(position));
-      // Good so far.
+      // this.updateMove("first", position);
     } else if (
       // legal horizontal move right
       position > startPosition &&
@@ -59,30 +77,35 @@ export class ChessBoard extends React.Component {
       startPosition > position &&
       startPosition % 8 === position % 8
     ) {
+      console.log("vert up");
       this.updateMove("vertUp", position);
     } else if (
       // legal diagonal move down and right
       position > startPosition &&
       (position - startPosition) % 9 === 0
     ) {
+      console.log("diag down right");
       this.updateMove("diagDownRight", position);
     } else if (
       // legal diagonal move down and left
       position > startPosition &&
       (position - startPosition) % 7 === 0
     ) {
+      console.log("diag down left");
       this.updateMove("diagDownLeft", position);
     } else if (
       // legal diagonal move up and left
       position < startPosition &&
       (startPosition - position) % 9 === 0
     ) {
+      console.log("diag up left");
       this.updateMove("diagUpLeft", position);
     } else if (
       // legal diagonal move up and right
       position < startPosition &&
       (startPosition - position) % 7 === 0
     ) {
+      console.log("diag up right");
       this.updateMove("diagUpRight", position);
     }
   };
@@ -108,23 +131,7 @@ export class ChessBoard extends React.Component {
     );
   };
 
-  updateBoardSquares = moveType => {
-    const { startPosition, endPosition } = this.props;
-    this.props.dispatch(
-      updateSquares(
-        this.props.board.map((square, i) => {
-          if (this.condition(moveType)(i, startPosition, endPosition)) {
-            square.movedThrough = true;
-          }
-          return square;
-        })
-      )
-    );
-    console.log(startPosition, endPosition);
-  };
-
   render() {
-    // console.log(this.state);
     return (
       <ul className="board">
         {this.props.board.map(square => (
