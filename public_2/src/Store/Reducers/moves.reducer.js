@@ -5,15 +5,16 @@ import {
   INIT_BOARD,
   SET_START,
   SET_END,
-  UPDATE_SQUARES
-} from "../../Actions/types";
+  UPDATE_SQUARES,
+} from '../../Actions/types';
 
 const initialState = {
   moves: [],
   redo: [],
   board: [],
+  current: null,
   startPosition: null,
-  endPosition: null
+  endPosition: null,
 };
 
 export default function movesReducer(state = initialState, action) {
@@ -22,7 +23,7 @@ export default function movesReducer(state = initialState, action) {
       return {
         ...state,
         moves: [...state.moves, action.move],
-        redo: [...state.moves, action.move]
+        redo: [...state.moves, action.move],
       };
     case UNDO_MOVE:
       if (!state.moves.length) {
@@ -30,7 +31,7 @@ export default function movesReducer(state = initialState, action) {
       } else {
         return {
           ...state,
-          moves: state.moves.slice(0, state.moves.length - 1)
+          moves: state.moves.slice(0, state.moves.length - 1),
         };
       }
     case REDO_MOVE:
@@ -39,7 +40,7 @@ export default function movesReducer(state = initialState, action) {
       } else {
         return {
           ...state,
-          moves: state.redo.slice(0, state.moves.length + 1)
+          moves: state.redo.slice(0, state.moves.length + 1),
         };
       }
     case INIT_BOARD:
@@ -47,10 +48,7 @@ export default function movesReducer(state = initialState, action) {
       let evensBlack = false;
       let squareIsBlack = false;
       for (let i = 0; i < 64; i += 1) {
-        if (
-          (evensBlack === true && i % 2 === 0) ||
-          (evensBlack === false && i % 2 !== 0)
-        ) {
+        if ((evensBlack === true && i % 2 === 0) || (evensBlack === false && i % 2 !== 0)) {
           squareIsBlack = true;
         } else {
           squareIsBlack = false;
@@ -58,7 +56,7 @@ export default function movesReducer(state = initialState, action) {
         board.push({
           position: i,
           black: squareIsBlack,
-          movedThrough: false
+          movedThrough: false,
         });
         if ((i + 1) % 8 === 0) {
           evensBlack = !evensBlack;
@@ -66,23 +64,46 @@ export default function movesReducer(state = initialState, action) {
       }
       return {
         ...state,
-        board: [...board]
+        board: [...board],
       };
     case SET_START:
       return {
         ...state,
-        startPosition: action.startPosition
+        startPosition: action.startPosition,
       };
     case SET_END:
       return {
         ...state,
-        endPosition: action.endPosition
+        endPosition: action.endPosition,
       };
     case UPDATE_SQUARES:
       return {
         ...state,
-        board: [...action.board]
+        board: [...action.board],
       };
+
+    case 'SET_ALL':
+      const moves = [...state.moves];
+
+      if (state.moves.indexOf(action.move) === -1) {
+        moves.push(action.move);
+      }
+
+      return {
+        ...state,
+        endPosition: action.endPosition,
+        startPosition: action.startPosition,
+        moves: [...moves],
+        redo: [...moves],
+        board: [...action.board],
+      };
+
+    case 'SET_CURRENT_POSITION':
+      return {
+        ...state,
+        current: action.current,
+      };
+
     default:
       return state;
   }
