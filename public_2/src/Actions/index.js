@@ -37,9 +37,9 @@ export const initBoard = () => ({
   type: INIT_BOARD,
 });
 
-export const setStart = startPosition => {
+export const setPositions = startPosition => {
   return {
-    type: SET_START,
+    type: 'SET_POSITIONS',
     startPosition,
   };
 };
@@ -58,19 +58,9 @@ export const updateSquares = board => {
   };
 };
 
-export const setAll = (startPosition, endPosition, move, board) => {
+export const highlightSquares = position => {
   return {
-    type: 'SET_ALL',
-    startPosition,
-    endPosition,
-    move,
-    board,
-  };
-};
-
-export const setCurrentPosition = current => {
-  return {
-    type: 'SET_CURRENT_POSITION',
-    current,
+    type: 'HIGHLIGHT',
+    position,
   };
 };

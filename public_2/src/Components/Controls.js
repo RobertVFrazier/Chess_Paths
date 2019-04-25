@@ -1,21 +1,16 @@
-import React from "react";
-import { connect } from "react-redux";
-import className from "classnames";
+import React from 'react';
+import { connect } from 'react-redux';
+import className from 'classnames';
 
-import { undoMove, redoMove } from "../Actions";
+import { undoMove, redoMove } from '../Actions';
 
 function mapStateToProps(state) {
-  console.log(state.moves, state.redo);
   return {
-    moves: state.moves
+    moves: state.moves,
   };
 }
 
 class Controls extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   undoMove = () => {
     this.props.dispatch(undoMove());
   };
@@ -26,7 +21,7 @@ class Controls extends React.Component {
 
   render() {
     return (
-      <div className={className("controls")}>
+      <div className={className('controls')}>
         <div>
           <button onClick={this.undoMove}>Undo</button>
           <button onClick={this.redoMove}>Redo</button>
