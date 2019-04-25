@@ -5,6 +5,7 @@ import className from "classnames";
 import { undoMove, redoMove } from "../Actions";
 
 function mapStateToProps(state) {
+  console.log(state.moves, state.redo);
   return {
     moves: state.moves
   };
