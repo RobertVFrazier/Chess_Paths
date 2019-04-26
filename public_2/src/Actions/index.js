@@ -1,26 +1,49 @@
 import {
+  INIT_BOARD, // chessboard
   ADD_MOVE,
-  UNDO_MOVE,
+  SET_POSITIONS,
+  HIGHLIGHT_SQUARES,
+  UNDO_MOVE, // controls
   REDO_MOVE,
-  INIT_BOARD,
-  SET_START,
-  SET_END,
-  UPDATE_SQUARES,
-} from './types';
+  CLEAR_SQUARES,
+  REPAINT_SQUARES
+} from "./types";
+
+// actions for chessboard
+
+export const initBoard = () => ({
+  type: INIT_BOARD
+});
 
 export const addMove = move => {
   return {
     type: ADD_MOVE,
-    move,
+    move
   };
 };
+
+export const setPositions = startPosition => {
+  return {
+    type: SET_POSITIONS,
+    startPosition
+  };
+};
+
+export const highlightSquares = position => {
+  return {
+    type: HIGHLIGHT_SQUARES,
+    position
+  };
+};
+
+// actions for controls
 
 export const undoMove = moves => {
   return {
     type: UNDO_MOVE,
     payload: {
-      moves,
-    },
+      moves
+    }
   };
 };
 
@@ -28,39 +51,21 @@ export const redoMove = redo => {
   return {
     type: REDO_MOVE,
     payload: {
-      redo,
-    },
+      redo
+    }
   };
 };
 
-export const initBoard = () => ({
-  type: INIT_BOARD,
-});
-
-export const setPositions = startPosition => {
+export const clearSquares = board => {
   return {
-    type: 'SET_POSITIONS',
-    startPosition,
+    type: CLEAR_SQUARES,
+    board
   };
 };
 
-export const setEnd = endPosition => {
+export const repaintSquares = board => {
   return {
-    type: SET_END,
-    endPosition,
-  };
-};
-
-export const updateSquares = board => {
-  return {
-    type: UPDATE_SQUARES,
-    board,
-  };
-};
-
-export const highlightSquares = position => {
-  return {
-    type: 'HIGHLIGHT',
-    position,
+    type: REPAINT_SQUARES,
+    board
   };
 };
