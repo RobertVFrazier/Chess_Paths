@@ -6,33 +6,34 @@ import {
   UNDO_MOVE, // controls
   REDO_MOVE,
   CLEAR_SQUARES,
-  REPAINT_SQUARES
-} from "./types";
+  REPAINT_SQUARES,
+  COUNT_HIGHLIGHTED,
+} from './types';
 
 // actions for chessboard
 
 export const initBoard = () => ({
-  type: INIT_BOARD
+  type: INIT_BOARD,
 });
 
 export const addMove = move => {
   return {
     type: ADD_MOVE,
-    move
+    move,
   };
 };
 
 export const setPositions = startPosition => {
   return {
     type: SET_POSITIONS,
-    startPosition
+    startPosition,
   };
 };
 
 export const highlightSquares = position => {
   return {
     type: HIGHLIGHT_SQUARES,
-    position
+    position,
   };
 };
 
@@ -42,8 +43,8 @@ export const undoMove = moves => {
   return {
     type: UNDO_MOVE,
     payload: {
-      moves
-    }
+      moves,
+    },
   };
 };
 
@@ -51,21 +52,27 @@ export const redoMove = redo => {
   return {
     type: REDO_MOVE,
     payload: {
-      redo
-    }
+      redo,
+    },
   };
 };
 
 export const clearSquares = board => {
   return {
     type: CLEAR_SQUARES,
-    board
+    board,
   };
 };
 
 export const repaintSquares = board => {
   return {
     type: REPAINT_SQUARES,
-    board
+    board,
+  };
+};
+
+export const countHighlighted = () => {
+  return {
+    type: COUNT_HIGHLIGHTED,
   };
 };

@@ -1,41 +1,47 @@
-import React from "react";
-import { connect } from "react-redux";
-import className from "classnames";
+import React from 'react';
+import { connect } from 'react-redux';
+import className from 'classnames';
 
 import {
   undoMove,
   redoMove,
   clearSquares,
   setPositions,
-  highlightSquares
-} from "../Actions";
+  highlightSquares,
+  countHighlighted,
+} from '../Actions';
 
 function mapStateToProps(state) {
   return {
     moves: state.moves,
-    redo: state.redo
+    redo: state.redo,
+    score: state.score,
   };
 }
 
 class Controls extends React.Component {
   undoMove = () => {
-    this.props.dispatch(undoMove());
     this.props.dispatch(clearSquares());
-    console.log(this.props);
-    this.props.moves.map(position => {
-      console.log(position);
+    this.props.dispatch(undoMove());
+
+    for (let i = 0; i < this.props.moves.length - 1; i += 1) {
+      const position = this.props.moves[i];
       this.props.dispatch(setPositions(position));
       this.props.dispatch(highlightSquares(position));
-    });
-    // this.props.dispatch(repaintSquares());
-    this.logs();
+      this.props.dispatch(countHighlighted());
+    }
   };
 
   redoMove = () => {
     this.props.dispatch(redoMove());
     this.props.dispatch(clearSquares());
-    // this.props.dispatch(repaintSquares());
-    this.logs();
+
+    for (let i = 0; i < this.props.moves.length + 1; i += 1) {
+      const position = this.props.redo[i];
+      this.props.dispatch(setPositions(position));
+      this.props.dispatch(highlightSquares(position));
+      this.props.dispatch(countHighlighted());
+    }
   };
 
   logs() {
@@ -43,11 +49,20 @@ class Controls extends React.Component {
   }
 
   render() {
+    const cannotUndo = !this.props.moves.length;
+    const cannotRedo = this.props.moves.length === this.props.redo.length;
+
     return (
-      <div className={className("controls")}>
+      <div className={className('controls')}>
         <div>
-          <button onClick={this.undoMove}>Undo</button>
-          <button onClick={this.redoMove}>Redo</button>
+          <button disabled={cannotUndo} onClick={this.undoMove}>
+            Undo
+          </button>
+          <button disabled={cannotRedo} onClick={this.redoMove}>
+            Redo
+          </button>
+
+          <h1>{this.props.score}</h1>
         </div>
       </div>
     );
