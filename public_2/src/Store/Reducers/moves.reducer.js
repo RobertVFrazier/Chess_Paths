@@ -154,6 +154,16 @@ export default function movesReducer(state = initialState, action) {
         };
       }
 
+    case REPAINT_SQUARES:
+      if (state.board.length === 0) {
+        return state;
+      } else {
+        return {
+          ...state,
+          board: clearAll(state.board)
+        };
+      }
+
     default:
       return state;
   }

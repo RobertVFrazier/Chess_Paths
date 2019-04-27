@@ -2,7 +2,13 @@ import React from "react";
 import { connect } from "react-redux";
 import className from "classnames";
 
-import { undoMove, redoMove, clearSquares, repaintSquares } from "../Actions";
+import {
+  undoMove,
+  redoMove,
+  clearSquares,
+  setPositions,
+  highlightSquares
+} from "../Actions";
 
 function mapStateToProps(state) {
   return {
@@ -15,14 +21,20 @@ class Controls extends React.Component {
   undoMove = () => {
     this.props.dispatch(undoMove());
     this.props.dispatch(clearSquares());
-    this.props.dispatch(repaintSquares());
+    console.log(this.props);
+    this.props.moves.map(position => {
+      console.log(position);
+      this.props.dispatch(setPositions(position));
+      this.props.dispatch(highlightSquares(position));
+    });
+    // this.props.dispatch(repaintSquares());
     this.logs();
   };
 
   redoMove = () => {
     this.props.dispatch(redoMove());
     this.props.dispatch(clearSquares());
-    this.props.dispatch(repaintSquares());
+    // this.props.dispatch(repaintSquares());
     this.logs();
   };
 
