@@ -6,9 +6,12 @@ import {
   UNDO_MOVE, // controls
   REDO_MOVE,
   CLEAR_SQUARES,
-  REPAINT_SQUARES,
-  COUNT_HIGHLIGHTED,
-} from '../../Actions/types';
+  UPDATE_SCOREBOARD,
+  RESET_GAME
+} from "../../Actions/types";
+
+const initialMovesTodo = 14;
+const initialSquaresTodo = 64;
 
 const initialState = {
   moves: [],
@@ -16,8 +19,10 @@ const initialState = {
   board: [],
   startPosition: null,
   endPosition: null,
-  score: 0,
-  squaresHighlighted: 0,
+  movesDone: 0,
+  squaresDone: 0,
+  movesTodo: initialMovesTodo,
+  squaresTodo: initialSquaresTodo
 };
 
 export default function movesReducer(state = initialState, action) {
@@ -27,7 +32,10 @@ export default function movesReducer(state = initialState, action) {
       let evensBlack = false;
       let squareIsBlack = false;
       for (let i = 0; i < 64; i += 1) {
-        if ((evensBlack === true && i % 2 === 0) || (evensBlack === false && i % 2 !== 0)) {
+        if (
+          (evensBlack === true && i % 2 === 0) ||
+          (evensBlack === false && i % 2 !== 0)
+        ) {
           squareIsBlack = true;
         } else {
           squareIsBlack = false;
@@ -35,7 +43,7 @@ export default function movesReducer(state = initialState, action) {
         board.push({
           position: i,
           black: squareIsBlack,
-          movedThrough: false,
+          movedThrough: false
         });
         if ((i + 1) % 8 === 0) {
           evensBlack = !evensBlack;
@@ -43,7 +51,7 @@ export default function movesReducer(state = initialState, action) {
       }
       return {
         ...state,
-        board: [...board],
+        board: [...board]
       };
 
     case ADD_MOVE:
@@ -51,14 +59,15 @@ export default function movesReducer(state = initialState, action) {
         ...state,
         moves: [...state.moves, action.move],
         redo: [...state.moves, action.move],
-        score: [...state.moves, action.move].length - 1,
+        movesDone: [...state.moves, action.move].length - 1
       };
 
     case SET_POSITIONS:
       return {
         ...state,
-        startPosition: state.endPosition === null ? action.startPosition : state.endPosition,
-        endPosition: action.startPosition,
+        startPosition:
+          state.endPosition === null ? action.startPosition : state.endPosition,
+        endPosition: action.startPosition
       };
 
     case HIGHLIGHT_SQUARES:
@@ -68,67 +77,68 @@ export default function movesReducer(state = initialState, action) {
       if (state.moves.length === 1) {
         return {
           ...state,
-          board: highlight('placePiece', start, position, state.board),
+          board: highlight("placePiece", start, position, state.board)
         };
-      } else if (position > start && position - start < 8 && position % 8 > start % 8) {
+      } else if (
+        position > start &&
+        position - start < 8 &&
+        position % 8 > start % 8
+      ) {
         return {
           ...state,
-          board: highlight('horizRight', start, position, state.board),
+          board: highlight("horizRight", start, position, state.board)
         };
-      } else if (start > position && start - position < 8 && start % 8 > position % 8) {
+      } else if (
+        start > position &&
+        start - position < 8 &&
+        start % 8 > position % 8
+      ) {
         return {
           ...state,
-          board: highlight('horizLeft', start, position, state.board),
+          board: highlight("horizLeft", start, position, state.board)
         };
       } else if (start < position && start % 8 === position % 8) {
         return {
           ...state,
-          board: highlight('vertDown', start, position, state.board),
+          board: highlight("vertDown", start, position, state.board)
         };
       } else if (start > position && start % 8 === position % 8) {
         return {
           ...state,
-          board: highlight('vertUp', start, position, state.board),
+          board: highlight("vertUp", start, position, state.board)
         };
       } else if (position > start && (position - start) % 9 === 0) {
         return {
           ...state,
-          board: highlight('diagDownRight', start, position, state.board),
+          board: highlight("diagDownRight", start, position, state.board)
         };
       } else if (position > start && (position - start) % 7 === 0) {
         return {
           ...state,
-          board: highlight('diagDownLeft', start, position, state.board),
+          board: highlight("diagDownLeft", start, position, state.board)
         };
       } else if (position < start && (start - position) % 9 === 0) {
         return {
           ...state,
-          board: highlight('diagUpLeft', start, position, state.board),
+          board: highlight("diagUpLeft", start, position, state.board)
         };
       } else if (position < start && (start - position) % 7 === 0) {
         return {
           ...state,
-          board: highlight('diagUpRight', start, position, state.board),
+          board: highlight("diagUpRight", start, position, state.board)
         };
       } else {
         return state;
       }
-
-    case COUNT_HIGHLIGHTED:
-      return {
-        ...state,
-        squaresHighlighted: state.board.filter(tile => tile.movedThrough).length,
-      };
 
     case UNDO_MOVE:
       if (!state.moves.length) {
         return state;
       } else {
         const moves = state.moves.slice(0, state.moves.length - 1);
-
         return {
           ...state,
-          moves,
+          moves
         };
       }
 
@@ -136,9 +146,10 @@ export default function movesReducer(state = initialState, action) {
       if (state.moves.length === state.redo.length) {
         return state;
       } else {
+        const moves = state.redo.slice(0, state.moves.length + 1);
         return {
           ...state,
-          moves: state.redo.slice(0, state.moves.length + 1),
+          moves
         };
       }
 
@@ -150,17 +161,38 @@ export default function movesReducer(state = initialState, action) {
           ...state,
           startPosition: null,
           endPosition: null,
-          board: clearAll(state.board),
+          board: clearAll(state.board)
         };
       }
 
-    case REPAINT_SQUARES:
-      if (state.board.length === 0) {
+    case UPDATE_SCOREBOARD:
+      const movesDone = state.moves.length - 1 < 0 ? 0 : state.moves.length - 1;
+      const squaresDone = state.board.filter(tile => tile.movedThrough).length;
+      const movesTodo = initialMovesTodo - movesDone;
+      const squaresTodo = initialSquaresTodo - squaresDone;
+      return {
+        ...state,
+        movesDone,
+        squaresDone,
+        movesTodo,
+        squaresTodo
+      };
+
+    case RESET_GAME:
+      if (state.squaresDone === 0) {
         return state;
       } else {
         return {
           ...state,
+          moves: [],
+          redo: [],
           board: clearAll(state.board),
+          startPosition: null,
+          endPosition: null,
+          movesDone: 0,
+          squaresDone: 0,
+          movesTodo: initialMovesTodo,
+          squaresTodo: initialSquaresTodo
         };
       }
 
@@ -175,12 +207,18 @@ const paintSquares = moveType => {
       placePiece: (i, start, position) => i === start && i === position,
       horizRight: (i, start, position) => i >= start && i <= position,
       horizLeft: (i, start, position) => i >= position && i <= start,
-      vertDown: (i, start, position) => i >= start && i <= position && i % 8 === start % 8,
-      vertUp: (i, start, position) => i <= start && i >= position && i % 8 === start % 8,
-      diagDownRight: (i, start, position) => i >= start && i <= position && (i - start) % 9 === 0,
-      diagDownLeft: (i, start, position) => i >= start && i <= position && (i - start) % 7 === 0,
-      diagUpLeft: (i, start, position) => i <= start && i >= position && (start - i) % 9 === 0,
-      diagUpRight: (i, start, position) => i <= start && i >= position && (start - i) % 7 === 0,
+      vertDown: (i, start, position) =>
+        i >= start && i <= position && i % 8 === start % 8,
+      vertUp: (i, start, position) =>
+        i <= start && i >= position && i % 8 === start % 8,
+      diagDownRight: (i, start, position) =>
+        i >= start && i <= position && (i - start) % 9 === 0,
+      diagDownLeft: (i, start, position) =>
+        i >= start && i <= position && (i - start) % 7 === 0,
+      diagUpLeft: (i, start, position) =>
+        i <= start && i >= position && (start - i) % 9 === 0,
+      diagUpRight: (i, start, position) =>
+        i <= start && i >= position && (start - i) % 7 === 0
     }[moveType] || {}
   );
 };

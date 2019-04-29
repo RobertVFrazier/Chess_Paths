@@ -1,6 +1,6 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import className from 'classnames';
+import React from "react";
+import { connect } from "react-redux";
+import className from "classnames";
 
 import {
   undoMove,
@@ -8,14 +8,15 @@ import {
   clearSquares,
   setPositions,
   highlightSquares,
-  countHighlighted,
-} from '../Actions';
+  updateScoreboard,
+  resetGame
+} from "../Actions";
 
 function mapStateToProps(state) {
   return {
     moves: state.moves,
     redo: state.redo,
-    score: state.score,
+    score: state.score
   };
 }
 
@@ -28,20 +29,25 @@ class Controls extends React.Component {
       const position = this.props.moves[i];
       this.props.dispatch(setPositions(position));
       this.props.dispatch(highlightSquares(position));
-      this.props.dispatch(countHighlighted());
     }
+    this.props.dispatch(updateScoreboard());
+  };
+
+  resetGame = () => {
+    this.props.dispatch(resetGame());
+    this.props.dispatch(updateScoreboard());
   };
 
   redoMove = () => {
-    this.props.dispatch(redoMove());
     this.props.dispatch(clearSquares());
+    this.props.dispatch(redoMove());
 
     for (let i = 0; i < this.props.moves.length + 1; i += 1) {
       const position = this.props.redo[i];
       this.props.dispatch(setPositions(position));
       this.props.dispatch(highlightSquares(position));
-      this.props.dispatch(countHighlighted());
     }
+    this.props.dispatch(updateScoreboard());
   };
 
   logs() {
@@ -50,19 +56,21 @@ class Controls extends React.Component {
 
   render() {
     const cannotUndo = !this.props.moves.length;
+    const cannotReset = !this.props.moves.length;
     const cannotRedo = this.props.moves.length === this.props.redo.length;
 
     return (
-      <div className={className('controls')}>
+      <div className={className("controls")}>
         <div>
           <button disabled={cannotUndo} onClick={this.undoMove}>
             Undo
           </button>
+          <button disabled={cannotReset} onClick={this.resetGame}>
+            Reset
+          </button>
           <button disabled={cannotRedo} onClick={this.redoMove}>
             Redo
           </button>
-
-          <h1>{this.props.score}</h1>
         </div>
       </div>
     );
