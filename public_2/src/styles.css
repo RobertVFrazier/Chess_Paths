@@ -241,8 +241,8 @@ html {
 /*   NOT CHESSBOARD   */
 
 .interface {
-  height: 56px;
-  border: 2px solid blue;
+  height: 46px;
+  /* border: 2px solid blue; */
   margin: 1vh;
 }
 
