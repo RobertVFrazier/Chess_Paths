@@ -11,7 +11,8 @@ export default class Square extends React.Component {
     const classname = className(
       "square",
       { "square--black": this.props.black },
-      { "square--highlighted": this.props.movedThrough }
+      { "square--highlighted": this.props.movedThrough },
+      { "square--occupied": this.props.occupied }
     );
     return (
       <li
