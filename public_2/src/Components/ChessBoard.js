@@ -1,5 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
+import queenStanding from "../Images/Queen_Standing.svg";
+import { TimelineLite } from "gsap/all";
 
 import {
   initBoard,
@@ -11,6 +13,11 @@ import {
 import Square from "./Square";
 
 export class ChessBoard extends React.Component {
+  constructor() {
+    super();
+    this.queenContainer = null;
+    this.queenTween = new TimelineLite({ paused: true });
+  }
   componentDidMount() {
     this.props.dispatch(initBoard());
   }
@@ -25,6 +32,12 @@ export class ChessBoard extends React.Component {
   render() {
     return (
       <ul className="board">
+        <img
+          src={queenStanding}
+          alt=""
+          className="queen"
+          ref={img => (this.queenContainer = img)}
+        />
         {this.props.board.map(square => (
           <Square
             handleSquareClicked={this.handleSquareClicked}

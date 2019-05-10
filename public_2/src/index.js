@@ -7,6 +7,7 @@ import store from "./Store";
 
 import Interface from "./Components/Interface";
 import ChessBoard from "./Components/ChessBoard";
+import QueenTween from "./Components/Queen";
 
 import "./styles.css";
 
@@ -19,6 +20,7 @@ class App extends React.Component {
         <div className="App">
           <Interface />
           <ChessBoard />
+          <QueenTween />
         </div>
       </Provider>
     );

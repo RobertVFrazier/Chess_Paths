@@ -238,17 +238,10 @@ html {
   color: rgb(63, 63, 63);
 }
 
-/* .square--occupied {
-  background: url("../Images/2D_Pieces/Queen.png");
-  background-color: rgba(243, 203, 44, 0.6);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-} */
-
 /*   NOT CHESSBOARD   */
 
 .interface {
+  position: relative;
   height: 46px;
   /* border: 2px solid blue; */
   margin: 1vh;
@@ -270,3 +263,29 @@ button {
   margin-left: 4px;
   margin-right: 4px;
 }
+
+.gsap-btn {
+  background-color: #73b102;
+  color: #fff;
+}
+
+.queen {
+  background: url("../src/Images/Queen_Standing.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 1;
+  height: 12.25vw;
+  width: 12.25vw;
+}
+
+/* .oldqueen {
+  background: url("../src/Images/Queen_Standing.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.9;
+  position: absolute;
+  height: 12.25vw;
+  width: 12.25vw;
+} */
