@@ -270,10 +270,6 @@ button {
 }
 
 .queen {
-  background: url("../src/Images/Queen_Standing.svg");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
   opacity: 1;
   height: 12.25vw;
   width: 12.25vw;
