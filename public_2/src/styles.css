@@ -274,6 +274,7 @@ button {
   height: 12.25vw;
   width: 12.25vw;
   display: none;
+  opacity: 0;
 }
 
 /* .oldqueen {

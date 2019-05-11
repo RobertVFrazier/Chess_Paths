@@ -5,18 +5,29 @@ import { TimelineLite } from "gsap/all";
 export default class Square extends React.Component {
   constructor() {
     super();
-    this.queenTween = new TimelineLite({ paused: true });
+    this.initialSquareTween = new TimelineLite();
+    this.x = 0;
+    this.y = 0;
+    this.tweenX = "";
+    this.tweenY = "";
   }
 
   handleSquareClicked = event => {
     this.props.handleSquareClicked(event.currentTarget.value);
-    console.log(this.props);
-    this.queenTween.from(this.props.queenContainer, 1, {
-      x: "24.5vw",
-      y: "-61.25vw",
-      display: "block"
-    });
-    // .to(this.props.queenContainer, 2, { x: "14.5vw", display: "block" });
+    // console.log(this.props);
+    this.x = (parseInt(this.props.position, 10) % 8) * 12.25;
+    this.y =
+      0 - (8 - Math.floor(parseInt(this.props.position, 10) / 8)) * 12.25;
+    this.tweenX = this.x + "vw";
+    this.tweenY = this.y + "vw";
+    console.log(this.tweenX, this.tweenY);
+    this.initialSquareTween
+      .to(this.props.queenContainer, 0.5, {
+        x: this.tweenX,
+        y: this.tweenY,
+        display: "block"
+      })
+      .to(this.props.queenContainer, 1.5, { opacity: 1 });
   };
 
   render() {
