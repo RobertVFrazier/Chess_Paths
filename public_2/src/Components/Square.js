@@ -6,25 +6,20 @@ export default class Square extends React.Component {
   constructor() {
     super();
     this.initialSquareTween = new TimelineLite();
-    this.x = 0;
-    this.y = 0;
-    this.tweenX = "";
-    this.tweenY = "";
   }
 
   handleSquareClicked = event => {
     this.props.handleSquareClicked(event.currentTarget.value);
     // console.log(this.props);
-    this.x = (parseInt(this.props.position, 10) % 8) * 12.25;
-    this.y =
-      0 - (8 - Math.floor(parseInt(this.props.position, 10) / 8)) * 12.25;
-    this.tweenX = this.x + "vw";
-    this.tweenY = this.y + "vw";
-    console.log(this.tweenX, this.tweenY);
+    let squareNumber = parseInt(this.props.position, 10);
+    let tweenX = (squareNumber % 8) * 12.25 + "vw";
+    let tweenY = 0 - (8 - Math.floor(squareNumber / 8)) * 12.25 + "vw";
+    console.log(tweenX, tweenY);
+    console.log(this.props.movesDone);
     this.initialSquareTween
       .to(this.props.queenContainer, 0.5, {
-        x: this.tweenX,
-        y: this.tweenY,
+        x: tweenX,
+        y: tweenY,
         display: "block"
       })
       .to(this.props.queenContainer, 1.5, { opacity: 1 });
