@@ -13,7 +13,7 @@ function mapStateToProps(state) {
 }
 
 function testForLegalMove(start, end, startColor, endColor) {
-  let moveType = null;
+  let moveType = "null";
   let moveSquares = 0;
   if (start === null) {
     moveType = "placePiece";
@@ -80,13 +80,13 @@ class Square extends React.Component {
       start === null ? null : this.props.board[start].black,
       this.props.board[end].black
     );
-    // console.log(
-    //   start,
-    //   end,
-    //   this.props.board[end].black ? "Black" : "White",
-    //   `${moveType}` === null ? "ILLEGAL!" : `${moveType}`
-    // );
-    if (`${moveType}` === null) {
+    console.log(
+      start,
+      end,
+      this.props.board[end].black ? "Black" : "White",
+      `${moveType}` === "null" ? "ILLEGAL!" : `${moveType}`
+    );
+    if (`${moveType}` === "null") {
       TweenMax.to(queen, 0.15, { rotation: 6 })
         .repeat(3)
         .yoyo(true);
