@@ -2,6 +2,9 @@ import React from "react";
 import className from "classnames";
 import { connect } from "react-redux";
 import { TweenMax } from "gsap/all";
+import soundTileClick from "../Files/tile-click.wav";
+import soundBadMove from "../Files/bad-move.wav";
+import soundBeamUp from "../Files/beam-up.wav";
 
 let start = null;
 
@@ -66,10 +69,13 @@ function testForLegalMove(start, end, startColor, endColor) {
 }
 
 class Square extends React.Component {
-  // constructor() {
-  //   super();
-  //   this.queenTween = new TimelineLite();
-  // }
+  constructor() {
+    super();
+    // this.queenTween = new TimelineLite();
+    this.audioTileClick = new Audio(soundTileClick);
+    this.audioBadMove = new Audio(soundBadMove);
+    this.audioBeamUp = new Audio(soundBeamUp);
+  }
 
   handleSquareClicked = event => {
     const queen = this.props.queenContainer;
@@ -80,13 +86,14 @@ class Square extends React.Component {
       start === null ? null : this.props.board[start].black,
       this.props.board[end].black
     );
-    console.log(
-      start,
-      end,
-      this.props.board[end].black ? "Black" : "White",
-      `${moveType}` === "null" ? "ILLEGAL!" : `${moveType}`
-    );
+    // console.log(
+    //   start,
+    //   end,
+    //   this.props.board[end].black ? "Black" : "White",
+    //   moveType === null ? "ILLEGAL!" : moveType
+    // );
     if (`${moveType}` === "null") {
+      this.audioBadMove.play();
       TweenMax.to(queen, 0.15, { rotation: 6 })
         .repeat(3)
         .yoyo(true);
@@ -99,11 +106,17 @@ class Square extends React.Component {
       let squareNumber = parseInt(this.props.position, 10);
       let tweenX = (squareNumber % 8) * 12.25 + "vw";
       let tweenY = 0 - (8 - Math.floor(squareNumber / 8)) * 12.25 + "vw";
-      let delayTime = squaresDone === 1 ? 0.001 : `${time}`;
+      let delayTime = squaresDone === 1 ? 0.001 : time;
+      if (squaresDone === 1) {
+        this.audioBeamUp.play();
+      } else {
+        this.audioTileClick.play();
+      }
+
       TweenMax.to(queen, delayTime, {
         x: tweenX,
         y: tweenY,
-        display: "block" // Where is it documented that this is needed? Why won't the queen appear without it?
+        display: "block"
       });
       if (squaresDone === 1) {
         TweenMax.to(queen, 1.25, { opacity: 1 });
