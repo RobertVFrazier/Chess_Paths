@@ -119,7 +119,7 @@ class Square extends React.Component {
         display: "block"
       });
       if (squaresDone === 1) {
-        TweenMax.to(queen, 1.25, { opacity: 1 });
+        TweenMax.to(queen, 2, { opacity: 1 });
       }
     }
   };
