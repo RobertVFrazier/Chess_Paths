@@ -229,13 +229,11 @@ html {
 }
 
 .square--highlighted {
-  background-color: rgb(245, 223, 136);
-  color: rgb(63, 63, 63);
+  background-color: rgb(245, 245, 238);
 }
 
 .square--black.square--highlighted {
-  background-color: rgb(150, 128, 41);
-  color: rgb(63, 63, 63);
+  background-color: rgb(0, 0, 0);
 }
 
 /*   NOT CHESSBOARD   */

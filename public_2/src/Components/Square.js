@@ -1,7 +1,7 @@
 import React from "react";
 import className from "classnames";
 import { connect } from "react-redux";
-import { TweenMax } from "gsap/all";
+import { TweenMax, TimelineLite } from "gsap/all";
 import soundTileClick from "../Files/tile-click.wav";
 import soundBadMove from "../Files/bad-move.wav";
 import soundBeamUp from "../Files/beam-up.wav";
@@ -78,6 +78,7 @@ class Square extends React.Component {
   }
 
   handleSquareClicked = event => {
+    var tl = new TimelineLite();
     const queen = this.props.queenContainer;
     let end = event.currentTarget.value;
     let { moveType, time } = testForLegalMove(
@@ -92,35 +93,69 @@ class Square extends React.Component {
     //   this.props.board[end].black ? "Black" : "White",
     //   moveType === null ? "ILLEGAL!" : moveType
     // );
-    if (`${moveType}` === "null") {
+    if (moveType === "null") {
       this.audioBadMove.play();
       TweenMax.to(queen, 0.15, { rotation: 6 })
         .repeat(3)
         .yoyo(true);
     } else {
-      start = end;
       this.props.handleSquareClicked(event.currentTarget.value);
       // console.log(this.props);
-      const squaresDone = this.props.board.filter(tile => tile.movedThrough)
-        .length;
       let squareNumber = parseInt(this.props.position, 10);
       let tweenX = (squareNumber % 8) * 12.25 + "vw";
       let tweenY = 0 - (8 - Math.floor(squareNumber / 8)) * 12.25 + "vw";
-      let delayTime = squaresDone === 1 ? 0.001 : time;
-      if (squaresDone === 1) {
-        this.audioBeamUp.play();
-      } else {
-        this.audioTileClick.play();
-      }
+      let duration = moveType === "placePiece" ? 0.001 : time;
+      tl.add(
+        TweenMax.to(queen, duration, { x: tweenX, y: tweenY, display: "block" })
+      );
 
-      TweenMax.to(queen, delayTime, {
-        x: tweenX,
-        y: tweenY,
-        display: "block"
-      });
-      if (squaresDone === 1) {
-        TweenMax.to(queen, 2, { opacity: 1 });
+      let square = event.currentTarget;
+      let selSquare = null;
+      switch (moveType) {
+        case "placePiece":
+          this.audioBeamUp.play();
+          TweenMax.to(queen, 2, { opacity: 1 });
+          if (this.props.board[this.props.position].black) {
+            TweenMax.to(square, 2, {
+              backgroundColor: "rgb(150, 128, 41)"
+            });
+          } else {
+            TweenMax.to(square, 2, {
+              backgroundColor: "rgb(245, 223, 136)"
+            });
+          }
+          break;
+
+        case "horizRight":
+          this.audioTileClick.play();
+          for (let i = start + 1; i <= end; i += 1) {
+            square = this.props.board[i];
+            selSquare = this.refs.square;
+            console.log(square);
+            console.log(selSquare);
+            // square = document.getElementById(i);  // this does not work
+            if (square.black) {
+              tl.add(
+                TweenMax.to(square, 2, {
+                  backgroundColor: "#00FF00"
+                })
+              );
+            } else {
+              tl.add(
+                TweenMax.to(square, 2, {
+                  backgroundColor: "#0000FF"
+                })
+              );
+            }
+            console.log(square);
+          }
+          break;
+
+        default:
+          break;
       }
+      tl.play();
+      start = end;
     }
   };
 
@@ -136,9 +171,9 @@ class Square extends React.Component {
         value={this.props.position}
         className={classname}
       >
-        {/* {this.props.position}&nbsp;&nbsp;&nbsp;&nbsp;
+        {this.props.position}&nbsp;&nbsp;&nbsp;&nbsp;
         {parseInt(this.props.position, 10) % 8}&nbsp;&nbsp;&nbsp;&nbsp;
-        {Math.floor(parseInt(this.props.position, 10) / 8)} */}
+        {Math.floor(parseInt(this.props.position, 10) / 8)}
       </li>
     );
   }

@@ -42,6 +42,7 @@ export default function movesReducer(state = initialState, action) {
         }
         board.push({
           position: i,
+          ref: i,
           black: squareIsBlack,
           movedThrough: false
         });
