@@ -71,6 +71,7 @@ function testForLegalMove(start, end, startColor, endColor) {
 class Square extends React.Component {
   constructor() {
     super();
+    this.squareRef = React.createRef();
     // this.queenTween = new TimelineLite();
     this.audioTileClick = new Audio(soundTileClick);
     this.audioBadMove = new Audio(soundBadMove);
@@ -110,7 +111,6 @@ class Square extends React.Component {
       );
 
       let square = event.currentTarget;
-      let selSquare = null;
       switch (moveType) {
         case "placePiece":
           this.audioBeamUp.play();
@@ -129,20 +129,17 @@ class Square extends React.Component {
         case "horizRight":
           this.audioTileClick.play();
           for (let i = start + 1; i <= end; i += 1) {
+            let ref = `refSquare${i}`;
             square = this.props.board[i];
-            selSquare = this.refs.square;
-            console.log(square);
-            console.log(selSquare);
-            // square = document.getElementById(i);  // this does not work
             if (square.black) {
               tl.add(
-                TweenMax.to(square, 2, {
+                TweenMax.to(ref, 2, {
                   backgroundColor: "#00FF00"
                 })
               );
             } else {
               tl.add(
-                TweenMax.to(square, 2, {
+                TweenMax.to(ref, 2, {
                   backgroundColor: "#0000FF"
                 })
               );
