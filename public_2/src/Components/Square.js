@@ -1,7 +1,7 @@
 import React from "react";
 import className from "classnames";
 import { connect } from "react-redux";
-import { TweenMax, TimelineLite } from "gsap/all";
+import { TweenMax, TimelineMax } from "gsap/all";
 import soundTileClick from "../Files/tile-click.wav";
 import soundBadMove from "../Files/bad-move.wav";
 import soundBeamUp from "../Files/beam-up.wav";
@@ -71,15 +71,13 @@ function testForLegalMove(start, end, startColor, endColor) {
 class Square extends React.Component {
   constructor() {
     super();
-    this.squareRef = React.createRef();
-    // this.queenTween = new TimelineLite();
     this.audioTileClick = new Audio(soundTileClick);
     this.audioBadMove = new Audio(soundBadMove);
     this.audioBeamUp = new Audio(soundBeamUp);
   }
 
   handleSquareClicked = event => {
-    var tl = new TimelineLite();
+    var tl = new TimelineMax().pause();
     const queen = this.props.queenContainer;
     let end = event.currentTarget.value;
     let { moveType, time } = testForLegalMove(
@@ -95,13 +93,14 @@ class Square extends React.Component {
     //   moveType === null ? "ILLEGAL!" : moveType
     // );
     if (moveType === "null") {
+      // illegal move
       this.audioBadMove.play();
       TweenMax.to(queen, 0.15, { rotation: 6 })
         .repeat(3)
         .yoyo(true);
     } else {
+      // legal move
       this.props.handleSquareClicked(event.currentTarget.value);
-      // console.log(this.props);
       let squareNumber = parseInt(this.props.position, 10);
       let tweenX = (squareNumber % 8) * 12.25 + "vw";
       let tweenY = 0 - (8 - Math.floor(squareNumber / 8)) * 12.25 + "vw";
@@ -112,7 +111,7 @@ class Square extends React.Component {
 
       let square = event.currentTarget;
       switch (moveType) {
-        case "placePiece":
+        case "placePiece": // fade in queen, fade in yellow square
           this.audioBeamUp.play();
           TweenMax.to(queen, 2, { opacity: 1 });
           if (this.props.board[this.props.position].black) {
@@ -129,19 +128,29 @@ class Square extends React.Component {
         case "horizRight":
           this.audioTileClick.play();
           for (let i = start + 1; i <= end; i += 1) {
-            let ref = `refSquare${i}`;
+            let squareBeingColored = document.querySelector(`li[value='${i}']`);
             square = this.props.board[i];
             if (square.black) {
               tl.add(
-                TweenMax.to(ref, 2, {
-                  backgroundColor: "#00FF00"
-                })
+                TweenMax.to(
+                  squareBeingColored,
+                  0.15,
+                  {
+                    backgroundColor: "purple"
+                  },
+                  "-=0.2"
+                )
               );
             } else {
               tl.add(
-                TweenMax.to(ref, 2, {
-                  backgroundColor: "#0000FF"
-                })
+                TweenMax.to(
+                  squareBeingColored,
+                  0.15,
+                  {
+                    backgroundColor: "aqua"
+                  },
+                  "-=0.2"
+                )
               );
             }
             console.log(square);
