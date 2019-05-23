@@ -7,6 +7,7 @@ import soundBadMove from "../Files/bad-move.wav";
 import soundBeamUp from "../Files/beam-up.wav";
 
 let start = null;
+let timer = 0.18;
 
 function mapStateToProps(state) {
   return {
@@ -61,9 +62,9 @@ function testForLegalMove(start, end, startColor, endColor) {
     startColor === endColor
   ) {
     moveType = "diagUpRight";
-    moveSquares = (parseInt(end, 10) % 8) - (parseInt(start, 10) % 8);
+    moveSquares = (parseInt(end, 12) % 8) - (parseInt(start, 10) % 8);
   }
-  let squareTime = 0.15;
+  let squareTime = timer;
   let time = moveSquares * squareTime;
   return { moveType, time };
 }
@@ -77,7 +78,7 @@ class Square extends React.Component {
   }
 
   handleSquareClicked = event => {
-    var tl = new TimelineMax().pause();
+    var tl = new TimelineMax();
     const queen = this.props.queenContainer;
     let end = event.currentTarget.value;
     let { moveType, time } = testForLegalMove(
@@ -105,24 +106,19 @@ class Square extends React.Component {
       let tweenX = (squareNumber % 8) * 12.25 + "vw";
       let tweenY = 0 - (8 - Math.floor(squareNumber / 8)) * 12.25 + "vw";
       let duration = moveType === "placePiece" ? 0.001 : time;
-      tl.add(
-        TweenMax.to(queen, duration, { x: tweenX, y: tweenY, display: "block" })
-      );
-
+      let colorNew = "";
       let square = event.currentTarget;
+      TweenMax.to(queen, duration, { x: tweenX, y: tweenY, display: "block" });
       switch (moveType) {
         case "placePiece": // fade in queen, fade in yellow square
           this.audioBeamUp.play();
           TweenMax.to(queen, 2, { opacity: 1 });
-          if (this.props.board[this.props.position].black) {
-            TweenMax.to(square, 2, {
-              backgroundColor: "rgb(150, 128, 41)"
-            });
-          } else {
-            TweenMax.to(square, 2, {
-              backgroundColor: "rgb(245, 223, 136)"
-            });
-          }
+          colorNew = this.props.board[this.props.position].black
+            ? "rgb(150, 128, 41)"
+            : "rgb(245, 223, 136)";
+          TweenMax.to(square, 2, {
+            backgroundColor: colorNew
+          });
           break;
 
         case "horizRight":
@@ -130,30 +126,126 @@ class Square extends React.Component {
           for (let i = start + 1; i <= end; i += 1) {
             let squareBeingColored = document.querySelector(`li[value='${i}']`);
             square = this.props.board[i];
-            if (square.black) {
-              tl.add(
-                TweenMax.to(
-                  squareBeingColored,
-                  0.15,
-                  {
-                    backgroundColor: "purple"
-                  },
-                  "-=0.2"
-                )
-              );
-            } else {
-              tl.add(
-                TweenMax.to(
-                  squareBeingColored,
-                  0.15,
-                  {
-                    backgroundColor: "aqua"
-                  },
-                  "-=0.2"
-                )
-              );
-            }
-            console.log(square);
+            colorNew = square.black
+              ? "rgb(150, 128, 41)"
+              : "rgb(245, 223, 136)";
+            tl.add(
+              TweenMax.to(squareBeingColored, timer, {
+                backgroundColor: colorNew
+              })
+            );
+          }
+          break;
+
+        case "horizLeft":
+          this.audioTileClick.play();
+          for (let i = start - 1; i >= end; i -= 1) {
+            let squareBeingColored = document.querySelector(`li[value='${i}']`);
+            square = this.props.board[i];
+            colorNew = square.black
+              ? "rgb(150, 128, 41)"
+              : "rgb(245, 223, 136)";
+            tl.add(
+              TweenMax.to(squareBeingColored, timer, {
+                backgroundColor: colorNew
+              })
+            );
+          }
+          break;
+
+        case "vertDown":
+          this.audioTileClick.play();
+          for (let i = start + 8; i <= end; i += 8) {
+            let squareBeingColored = document.querySelector(`li[value='${i}']`);
+            square = this.props.board[i];
+            colorNew = square.black
+              ? "rgb(150, 128, 41)"
+              : "rgb(245, 223, 136)";
+            tl.add(
+              TweenMax.to(squareBeingColored, timer, {
+                backgroundColor: colorNew
+              })
+            );
+          }
+          break;
+
+        case "vertUp":
+          this.audioTileClick.play();
+          for (let i = start - 8; i >= end; i -= 8) {
+            let squareBeingColored = document.querySelector(`li[value='${i}']`);
+            square = this.props.board[i];
+            colorNew = square.black
+              ? "rgb(150, 128, 41)"
+              : "rgb(245, 223, 136)";
+            tl.add(
+              TweenMax.to(squareBeingColored, timer, {
+                backgroundColor: colorNew
+              })
+            );
+          }
+          break;
+
+        case "diagDownRight":
+          this.audioTileClick.play();
+          for (let i = start + 9; i <= end; i += 9) {
+            let squareBeingColored = document.querySelector(`li[value='${i}']`);
+            square = this.props.board[i];
+            colorNew = square.black
+              ? "rgb(150, 128, 41)"
+              : "rgb(245, 223, 136)";
+            tl.add(
+              TweenMax.to(squareBeingColored, timer, {
+                backgroundColor: colorNew
+              })
+            );
+          }
+          break;
+
+        case "diagDownLeft":
+          this.audioTileClick.play();
+          for (let i = start + 7; i <= end; i += 7) {
+            let squareBeingColored = document.querySelector(`li[value='${i}']`);
+            square = this.props.board[i];
+            colorNew = square.black
+              ? "rgb(150, 128, 41)"
+              : "rgb(245, 223, 136)";
+            tl.add(
+              TweenMax.to(squareBeingColored, timer, {
+                backgroundColor: colorNew
+              })
+            );
+          }
+          break;
+
+        case "diagUpLeft":
+          this.audioTileClick.play();
+          for (let i = start - 9; i >= end; i -= 9) {
+            let squareBeingColored = document.querySelector(`li[value='${i}']`);
+            square = this.props.board[i];
+            colorNew = square.black
+              ? "rgb(150, 128, 41)"
+              : "rgb(245, 223, 136)";
+            tl.add(
+              TweenMax.to(squareBeingColored, timer, {
+                backgroundColor: colorNew
+              })
+            );
+          }
+          break;
+
+        case "diagUpRight":
+          this.audioTileClick.play();
+          for (let i = start - 7; i >= end; i -= 7) {
+            let squareBeingColored = document.querySelector(`li[value='${i}']`);
+            square = this.props.board[i];
+            colorNew = square.black
+              ? "rgb(150, 128, 41)"
+              : "rgb(245, 223, 136)";
+            tl.add(
+              TweenMax.to(squareBeingColored, timer, {
+                backgroundColor: colorNew
+              })
+            );
           }
           break;
 
