@@ -1,9 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import className from "classnames";
-import { TweenMax, TimelineMax } from "gsap/all";
-import soundTileClick from "../Files/tile-click.wav";
-import soundBeamUp from "../Files/beam-up.wav";
 
 import {
   undoMove,
@@ -24,17 +21,9 @@ function mapStateToProps(state) {
 }
 
 class Controls extends React.Component {
-  constructor() {
-    super();
-    this.audioTileClick = new Audio(soundTileClick);
-    this.audioBeamUp = new Audio(soundBeamUp);
-  }
-
   undoMove = () => {
     this.props.dispatch(clearSquares());
     this.props.dispatch(undoMove());
-    let colorNew = "";
-    const queen = this.props.queenContainer;
 
     for (let i = 0; i < this.props.moves.length - 1; i += 1) {
       const position = this.props.moves[i];
@@ -42,17 +31,7 @@ class Controls extends React.Component {
       this.props.dispatch(highlightSquares(position));
     }
     this.props.dispatch(updateScoreboard());
-    this.logs();
-    if (this.props.moves.length === 1) {
-      this.audioBeamUp.play();
-      TweenMax.to(queen, 2, { opacity: 0 });
-      // colorNew = this.props.board[this.props.position].black
-      //   ? "rgb(0, 0, 0)"
-      //   : "rgb(245, 245, 238)";
-      // TweenMax.to(square, 2, {
-      //   backgroundColor: colorNew
-      // });
-    }
+    // this.logs();
   };
 
   resetGame = () => {
