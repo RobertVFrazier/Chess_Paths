@@ -36,13 +36,59 @@ export class ChessBoard extends React.Component {
      * that we clicked undo.
      * 2. Next, we have take the new start and end positions and use them to find the nodes we
      * need and then initiate the animation
+     *
+     * Undo now works for all move types, and after an undo, the game can continue with new moves.
      */
 
     let timeline = new TimelineMax();
     let queen = this.queenContainer;
-    if (prevProps.moves.length > this.props.moves.length) {
+    let colorNew = "";
+    let startSquare = document.querySelector(
+      `li[value='${prevProps.endPosition}']`
+    );
+    let endSquare = document.querySelector(
+      `li[value='${prevProps.startPosition}']`
+    );
+    let undoMoveType = "";
+    // console.log(prevProps.moves.length, this.props.moves.length);
+
+    if (prevProps.moves.length > 0 && this.props.moves.length === 0) {
+      // Reset was clicked.
+      if (prevProps.moves.length === 1) {
+        this.audioBeamUp.play();
+        TweenMax.to(queen, 2, { opacity: 0 });
+        colorNew = this.props.board[startSquare.value].black
+          ? "rgb(0, 0, 0)"
+          : "rgb(245, 245, 238)";
+        TweenMax.to(startSquare, 2, {
+          backgroundColor: colorNew
+        });
+      } else {
+        let fadeTime = 0.00001;
+        TweenMax.to(queen, fadeTime, { opacity: 0 });
+        for (let i = 0; i <= 63; i += 1) {
+          let squareBeingColored = document.querySelector(`li[value='${i}']`);
+          const square = this.props.board[i];
+          colorNew = square.black ? "rgb(0, 0, 0)" : "rgb(245, 245, 238)";
+          timeline.add(
+            TweenMax.to(squareBeingColored, fadeTime, {
+              backgroundColor: colorNew
+            })
+          );
+        }
+      }
+      let squareNumber = 64;
+      let tweenX = (squareNumber % 8) * 12.25 + "vw";
+      let tweenY = 0 - (8 - Math.floor(squareNumber / 8)) * 12.25 + "vw";
+      let duration = 0.001;
+      TweenMax.to(queen, duration, {
+        x: tweenX,
+        y: tweenY,
+        display: "block"
+      }).delay(2);
+      this.squarePosition = null;
+    } else if (prevProps.moves.length > this.props.moves.length) {
       // Undo was clicked.
-      let undoMoveType = "";
       let { moveType, time } = this.testForLegalMove(
         prevProps.startPosition,
         prevProps.endPosition,
@@ -82,18 +128,10 @@ export class ChessBoard extends React.Component {
           break;
       }
 
-      let startSquare = document.querySelector(
-        `li[value='${prevProps.endPosition}']`
-      );
-      let endSquare = document.querySelector(
-        `li[value='${prevProps.startPosition}']`
-      );
-
       let squareNumber = parseInt(prevProps.startPosition, 10);
       let tweenX = (squareNumber % 8) * 12.25 + "vw";
       let tweenY = 0 - (8 - Math.floor(squareNumber / 8)) * 12.25 + "vw";
       let duration = moveType === "placePiece" ? 0.001 : time;
-      let colorNew = "";
       TweenMax.to(queen, duration, { x: tweenX, y: tweenY, display: "block" });
 
       switch (undoMoveType) {

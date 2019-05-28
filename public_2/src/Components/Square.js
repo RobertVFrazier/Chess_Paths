@@ -24,9 +24,9 @@ class Square extends React.Component {
         value={this.props.position}
         className={classname}
       >
-        {this.props.position}&nbsp;
+        {/* {this.props.position}&nbsp;
         {parseInt(this.props.position, 10) % 8}&nbsp;
-        {Math.floor(parseInt(this.props.position, 10) / 8)}&nbsp;
+        {Math.floor(parseInt(this.props.position, 10) / 8)}&nbsp; */}
       </li>
     );
   }
