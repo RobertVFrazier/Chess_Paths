@@ -49,17 +49,22 @@ class Controls extends React.Component {
       this.props.dispatch(highlightSquares(position));
     }
     this.props.dispatch(updateScoreboard());
+    // this.logs();
   };
 
   logs() {
-    console.log(this.props.moves, this.props.redo);
+    console.log(
+      `From Controls.js — Moves array: ${this.props.moves} Redo array: ${
+        this.props.redo
+      }`
+    );
   }
 
   render() {
     const cannotUndo = !this.props.moves.length;
     const cannotReset = !this.props.moves.length;
     const cannotRedo = this.props.moves.length === this.props.redo.length;
-
+    // this.logs();
     return (
       <div className={className("controls")}>
         <div>

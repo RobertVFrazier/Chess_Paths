@@ -22,7 +22,8 @@ const initialState = {
   movesDone: 0,
   squaresDone: 0,
   movesTodo: initialMovesTodo,
-  squaresTodo: initialSquaresTodo
+  squaresTodo: initialSquaresTodo,
+  lastAction: null
 };
 
 export default function movesReducer(state = initialState, action) {
@@ -59,7 +60,8 @@ export default function movesReducer(state = initialState, action) {
         ...state,
         moves: [...state.moves, action.move],
         redo: [...state.moves, action.move],
-        movesDone: [...state.moves, action.move].length - 1
+        movesDone: [...state.moves, action.move].length - 1,
+        lastAction: "ADD_MOVE"
       };
 
     case SET_POSITIONS:
@@ -138,7 +140,8 @@ export default function movesReducer(state = initialState, action) {
         const moves = state.moves.slice(0, state.moves.length - 1);
         return {
           ...state,
-          moves
+          moves,
+          lastAction: "UNDO_MOVE"
         };
       }
 
@@ -147,9 +150,12 @@ export default function movesReducer(state = initialState, action) {
         return state;
       } else {
         const moves = state.redo.slice(0, state.moves.length + 1);
+        const redo = state.redo;
         return {
           ...state,
-          moves
+          moves,
+          redo,
+          lastAction: "REDO_MOVE"
         };
       }
 
@@ -192,7 +198,8 @@ export default function movesReducer(state = initialState, action) {
           movesDone: 0,
           squaresDone: 0,
           movesTodo: initialMovesTodo,
-          squaresTodo: initialSquaresTodo
+          squaresTodo: initialSquaresTodo,
+          lastAction: "RESET_GAME"
         };
       }
 

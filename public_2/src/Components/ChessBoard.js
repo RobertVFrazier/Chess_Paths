@@ -30,15 +30,16 @@ export class ChessBoard extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    /**
-     * 1. In here, we compare previous and current props aka,
-     * we want to know if current moves length is less then previous one. If so, this means
-     * that we clicked undo.
-     * 2. Next, we have take the new start and end positions and use them to find the nodes we
-     * need and then initiate the animation
-     *
-     * Undo now works for all move types, and after an undo, the game can continue with new moves.
-     */
+    // console.log(prevProps.moves.length, this.props.moves.length);
+    // Only want to handle clicking on Undo, Redo, and Reset in this block of code.
+    if (
+      this.props.lastAction !== "UNDO_MOVE" &&
+      this.props.lastAction !== "REDO_MOVE" &&
+      this.props.lastAction !== "RESET_GAME"
+    ) {
+      return;
+    }
+    // console.log(`Component just updated: ${this.props.lastAction}`);
 
     let timeline = new TimelineMax();
     let queen = this.queenContainer;
@@ -50,44 +51,23 @@ export class ChessBoard extends React.Component {
       `li[value='${prevProps.startPosition}']`
     );
     let undoMoveType = "";
-    // console.log(prevProps.moves.length, this.props.moves.length);
 
-    if (prevProps.moves.length > 0 && this.props.moves.length === 0) {
+    if (this.props.lastAction === "RESET_GAME") {
       // Reset was clicked.
-      if (prevProps.moves.length === 1) {
-        this.audioBeamUp.play();
-        TweenMax.to(queen, 2, { opacity: 0 });
-        colorNew = this.props.board[startSquare.value].black
-          ? "rgb(0, 0, 0)"
-          : "rgb(245, 245, 238)";
-        TweenMax.to(startSquare, 2, {
+      let duration = 0.001;
+      timeline.to(queen, duration, { opacity: 0 });
+      for (let i = 0; i <= 63; i += 1) {
+        let squareBeingColored = document.querySelector(`li[value='${i}']`);
+        const square = this.props.board[i];
+        colorNew = square.black ? "rgb(0, 0, 0)" : "rgb(245, 245, 238)";
+        timeline.to(squareBeingColored, duration, {
           backgroundColor: colorNew
         });
-      } else {
-        let fadeTime = 0.00001;
-        TweenMax.to(queen, fadeTime, { opacity: 0 });
-        for (let i = 0; i <= 63; i += 1) {
-          let squareBeingColored = document.querySelector(`li[value='${i}']`);
-          const square = this.props.board[i];
-          colorNew = square.black ? "rgb(0, 0, 0)" : "rgb(245, 245, 238)";
-          timeline.add(
-            TweenMax.to(squareBeingColored, fadeTime, {
-              backgroundColor: colorNew
-            })
-          );
-        }
       }
-      let squareNumber = 64;
-      let tweenX = (squareNumber % 8) * 12.25 + "vw";
-      let tweenY = 0 - (8 - Math.floor(squareNumber / 8)) * 12.25 + "vw";
-      let duration = 0.001;
-      TweenMax.to(queen, duration, {
-        x: tweenX,
-        y: tweenY,
-        display: "block"
-      }).delay(2);
+      timeline.to(queen, duration, { x: "0vw", y: "0vw" });
+
       this.squarePosition = null;
-    } else if (prevProps.moves.length > this.props.moves.length) {
+    } else if (this.props.lastAction === "UNDO_MOVE") {
       // Undo was clicked.
       let { moveType, time } = this.testForLegalMove(
         prevProps.startPosition,
@@ -137,13 +117,20 @@ export class ChessBoard extends React.Component {
       switch (undoMoveType) {
         case "placePiece": // fade out queen, fade out yellow square
           this.audioBeamUp.play();
-          TweenMax.to(queen, 2, { opacity: 0 });
           colorNew = this.props.board[startSquare.value].black
             ? "rgb(0, 0, 0)"
             : "rgb(245, 245, 238)";
-          TweenMax.to(startSquare, 2, {
-            backgroundColor: colorNew
-          });
+          timeline
+            .to(queen, 2, { opacity: 0 })
+            .to(
+              startSquare,
+              1,
+              {
+                backgroundColor: colorNew
+              },
+              "-=1"
+            )
+            .to(queen, duration, { x: "0vw", y: "0vw" });
           this.squarePosition = null;
           break;
 
@@ -286,6 +273,185 @@ export class ChessBoard extends React.Component {
         default:
           break;
       }
+    } else if (this.props.lastAction === "REDO_MOVE") {
+      // console.log(
+      //   `Moves array: ${this.props.moves} Redo array: ${this.props.redo}`
+      // );
+      // startSquare needs to be the second-to-last element in moves array,
+      // endSquare needs to be the last element in moves array.
+      // If only one element in moves array, startSquare needs to be null.
+      startSquare = document.querySelector(
+        `li[value='${this.props.moves[this.props.moves.length - 2]}']`
+      );
+      endSquare = document.querySelector(
+        `li[value='${this.props.moves[this.props.moves.length - 1]}']`
+      );
+      if (this.props.moves.length === 1) {
+        startSquare = null;
+      }
+      let start = startSquare ? startSquare.value : null;
+      let end = endSquare.value;
+      // console.log(`Redoing move: ${start} - ${end}`);
+      // When redoing, all moves are legal moves.
+      // But we still need to know what kind of move,
+      // and how many squares covered, to time the animation.
+      let { moveType, time } = this.testForLegalMove(start, end, true, true);
+      let squareNumber = parseInt(endSquare.value, 10);
+      let tweenX = (squareNumber % 8) * 12.25 + "vw";
+      let tweenY = 0 - (8 - Math.floor(squareNumber / 8)) * 12.25 + "vw";
+      let duration = moveType === "placePiece" ? 0.001 : time;
+      let colorNew = "";
+      let square = endSquare;
+      TweenMax.to(queen, duration, {
+        x: tweenX,
+        y: tweenY,
+        display: "block"
+      });
+
+      switch (moveType) {
+        case "placePiece": // fade in queen, fade in yellow square
+          this.audioBeamUp.play();
+          TweenMax.to(queen, 2, { opacity: 1 });
+          colorNew = this.props.board[endSquare.value].black
+            ? "rgb(150, 128, 41)"
+            : "rgb(245, 223, 136)";
+          TweenMax.to(square, 2, {
+            backgroundColor: colorNew
+          });
+          break;
+
+        case "horizRight":
+          this.audioTileClick.play();
+          for (let i = start + 1; i <= end; i += 1) {
+            let squareBeingColored = document.querySelector(`li[value='${i}']`);
+            square = this.props.board[i];
+            colorNew = square.black
+              ? "rgb(150, 128, 41)"
+              : "rgb(245, 223, 136)";
+            timeline.add(
+              TweenMax.to(squareBeingColored, this.animationTime, {
+                backgroundColor: colorNew
+              })
+            );
+          }
+          break;
+
+        case "horizLeft":
+          this.audioTileClick.play();
+          for (let i = start - 1; i >= end; i -= 1) {
+            let squareBeingColored = document.querySelector(`li[value='${i}']`);
+            square = this.props.board[i];
+            colorNew = square.black
+              ? "rgb(150, 128, 41)"
+              : "rgb(245, 223, 136)";
+            timeline.add(
+              TweenMax.to(squareBeingColored, this.animationTime, {
+                backgroundColor: colorNew
+              })
+            );
+          }
+          break;
+
+        case "vertDown":
+          this.audioTileClick.play();
+          for (let i = start + 8; i <= end; i += 8) {
+            let squareBeingColored = document.querySelector(`li[value='${i}']`);
+            square = this.props.board[i];
+            colorNew = square.black
+              ? "rgb(150, 128, 41)"
+              : "rgb(245, 223, 136)";
+            timeline.add(
+              TweenMax.to(squareBeingColored, this.animationTime, {
+                backgroundColor: colorNew
+              })
+            );
+          }
+          break;
+
+        case "vertUp":
+          this.audioTileClick.play();
+          for (let i = start - 8; i >= end; i -= 8) {
+            let squareBeingColored = document.querySelector(`li[value='${i}']`);
+            square = this.props.board[i];
+            colorNew = square.black
+              ? "rgb(150, 128, 41)"
+              : "rgb(245, 223, 136)";
+            timeline.add(
+              TweenMax.to(squareBeingColored, this.animationTime, {
+                backgroundColor: colorNew
+              })
+            );
+          }
+          break;
+
+        case "diagDownRight":
+          this.audioTileClick.play();
+          for (let i = start + 9; i <= end; i += 9) {
+            let squareBeingColored = document.querySelector(`li[value='${i}']`);
+            square = this.props.board[i];
+            colorNew = square.black
+              ? "rgb(150, 128, 41)"
+              : "rgb(245, 223, 136)";
+            timeline.add(
+              TweenMax.to(squareBeingColored, this.animationTime, {
+                backgroundColor: colorNew
+              })
+            );
+          }
+          break;
+
+        case "diagDownLeft":
+          this.audioTileClick.play();
+          for (let i = start + 7; i <= end; i += 7) {
+            let squareBeingColored = document.querySelector(`li[value='${i}']`);
+            square = this.props.board[i];
+            colorNew = square.black
+              ? "rgb(150, 128, 41)"
+              : "rgb(245, 223, 136)";
+            timeline.add(
+              TweenMax.to(squareBeingColored, this.animationTime, {
+                backgroundColor: colorNew
+              })
+            );
+          }
+          break;
+
+        case "diagUpLeft":
+          this.audioTileClick.play();
+          for (let i = start - 9; i >= end; i -= 9) {
+            let squareBeingColored = document.querySelector(`li[value='${i}']`);
+            square = this.props.board[i];
+            colorNew = square.black
+              ? "rgb(150, 128, 41)"
+              : "rgb(245, 223, 136)";
+            timeline.add(
+              TweenMax.to(squareBeingColored, this.animationTime, {
+                backgroundColor: colorNew
+              })
+            );
+          }
+          break;
+
+        case "diagUpRight":
+          this.audioTileClick.play();
+          for (let i = start - 7; i >= end; i -= 7) {
+            let squareBeingColored = document.querySelector(`li[value='${i}']`);
+            square = this.props.board[i];
+            colorNew = square.black
+              ? "rgb(150, 128, 41)"
+              : "rgb(245, 223, 136)";
+            timeline.add(
+              TweenMax.to(squareBeingColored, this.animationTime, {
+                backgroundColor: colorNew
+              })
+            );
+          }
+          break;
+
+        default:
+          break;
+      }
+      // this.squarePosition = end;
     }
   }
 
@@ -354,6 +520,7 @@ export class ChessBoard extends React.Component {
         : this.props.board[this.squarePosition].black,
       this.props.board[end].black
     );
+    // console.log(this.props.lastAction, moveType);
 
     if (moveType === "null") {
       // illegal moves
@@ -379,13 +546,17 @@ export class ChessBoard extends React.Component {
       switch (moveType) {
         case "placePiece": // fade in queen, fade in yellow square
           this.audioBeamUp.play();
-          TweenMax.to(queen, 2, { opacity: 1 });
           colorNew = this.props.board[squareNode.value].black
             ? "rgb(150, 128, 41)"
             : "rgb(245, 223, 136)";
-          TweenMax.to(square, 2, {
-            backgroundColor: colorNew
-          });
+          timeline.to(queen, 2, { opacity: 1 }).to(
+            square,
+            1,
+            {
+              backgroundColor: colorNew
+            },
+            "-=1"
+          );
           break;
 
         case "horizRight":
@@ -553,7 +724,9 @@ const mapState = state => {
     board: state.board,
     startPosition: state.startPosition,
     endPosition: state.endPosition,
-    moves: state.moves
+    moves: state.moves,
+    redo: state.redo,
+    lastAction: state.lastAction
   };
 };
 
