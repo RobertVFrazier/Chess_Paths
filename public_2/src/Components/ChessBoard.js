@@ -1,6 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 import queenStanding from "../Images/Queen_Standing.svg";
+import queenMovingRight from "../Images/Queen_Moving_Right.svg";
+import queenMovingLeft from "../Images/Queen_Moving_Left.svg";
+import queenMovingUp from "../Images/Queen_Moving_Up.svg";
+import queenMovingDown from "../Images/Queen_Moving_Down.svg";
+import queenMovingDiagonalUpLeft from "../Images/Queen_Moving_Diagonal_Up_Left.svg";
+import queenMovingDiagonalUpRight from "../Images/Queen_Moving_Diagonal_Up_Right.svg";
+import queenMovingDiagonalDownLeft from "../Images/Queen_Moving_Diagonal_Down_Left.svg";
+import queenMovingDiagonalDownRight from "../Images/Queen_Moving_Diagonal_Down_Right.svg";
 import {
   initBoard,
   addMove,
@@ -24,6 +32,7 @@ export class ChessBoard extends React.Component {
     this.audioBeamUp = new Audio(soundBeamUp);
     this.squarePosition = null;
     this.animationTime = 0.18;
+    this.queenImage = queenStanding;
   }
   componentDidMount() {
     this.props.dispatch(initBoard());
@@ -135,6 +144,7 @@ export class ChessBoard extends React.Component {
           break;
 
         case "horizRight":
+          this.queenImage = queenMovingRight;
           this.audioTileClick.play();
           for (let i = startSquare.value; i <= endSquare.value; i += 1) {
             let squareBeingColored = document.querySelector(`li[value='${i}']`);
@@ -152,6 +162,7 @@ export class ChessBoard extends React.Component {
           break;
 
         case "horizLeft":
+          this.queenImage = queenMovingLeft;
           this.audioTileClick.play();
           for (let i = startSquare.value; i >= endSquare.value; i -= 1) {
             let squareBeingColored = document.querySelector(`li[value='${i}']`);
@@ -169,6 +180,7 @@ export class ChessBoard extends React.Component {
           break;
 
         case "vertDown":
+          this.queenImage = queenMovingDown;
           this.audioTileClick.play();
           for (let i = startSquare.value; i <= endSquare.value; i += 8) {
             let squareBeingColored = document.querySelector(`li[value='${i}']`);
@@ -186,6 +198,7 @@ export class ChessBoard extends React.Component {
           break;
 
         case "vertUp":
+          this.queenImage = queenMovingUp;
           this.audioTileClick.play();
           for (let i = startSquare.value; i >= endSquare.value; i -= 8) {
             let squareBeingColored = document.querySelector(`li[value='${i}']`);
@@ -203,6 +216,7 @@ export class ChessBoard extends React.Component {
           break;
 
         case "diagDownRight":
+          this.queenImage = queenMovingDiagonalDownRight;
           this.audioTileClick.play();
           for (let i = startSquare.value; i <= endSquare.value; i += 9) {
             let squareBeingColored = document.querySelector(`li[value='${i}']`);
@@ -220,6 +234,7 @@ export class ChessBoard extends React.Component {
           break;
 
         case "diagDownLeft":
+          this.queenImage = queenMovingDiagonalDownLeft;
           this.audioTileClick.play();
           for (let i = startSquare.value; i <= endSquare.value; i += 7) {
             let squareBeingColored = document.querySelector(`li[value='${i}']`);
@@ -237,6 +252,7 @@ export class ChessBoard extends React.Component {
           break;
 
         case "diagUpLeft":
+          this.queenImage = queenMovingDiagonalUpLeft;
           this.audioTileClick.play();
           for (let i = startSquare.value; i >= endSquare.value; i -= 9) {
             let squareBeingColored = document.querySelector(`li[value='${i}']`);
@@ -254,6 +270,7 @@ export class ChessBoard extends React.Component {
           break;
 
         case "diagUpRight":
+          this.queenImage = queenMovingDiagonalUpRight;
           this.audioTileClick.play();
           for (let i = startSquare.value; i >= endSquare.value; i -= 7) {
             let squareBeingColored = document.querySelector(`li[value='${i}']`);
@@ -321,6 +338,7 @@ export class ChessBoard extends React.Component {
           break;
 
         case "horizRight":
+          this.queenImage = queenMovingRight;
           this.audioTileClick.play();
           for (let i = start + 1; i <= end; i += 1) {
             let squareBeingColored = document.querySelector(`li[value='${i}']`);
@@ -337,6 +355,7 @@ export class ChessBoard extends React.Component {
           break;
 
         case "horizLeft":
+          this.queenImage = queenMovingLeft;
           this.audioTileClick.play();
           for (let i = start - 1; i >= end; i -= 1) {
             let squareBeingColored = document.querySelector(`li[value='${i}']`);
@@ -353,6 +372,7 @@ export class ChessBoard extends React.Component {
           break;
 
         case "vertDown":
+          this.queenImage = queenMovingDown;
           this.audioTileClick.play();
           for (let i = start + 8; i <= end; i += 8) {
             let squareBeingColored = document.querySelector(`li[value='${i}']`);
@@ -369,6 +389,7 @@ export class ChessBoard extends React.Component {
           break;
 
         case "vertUp":
+          this.queenImage = queenMovingUp;
           this.audioTileClick.play();
           for (let i = start - 8; i >= end; i -= 8) {
             let squareBeingColored = document.querySelector(`li[value='${i}']`);
@@ -385,6 +406,7 @@ export class ChessBoard extends React.Component {
           break;
 
         case "diagDownRight":
+          this.queenImage = queenMovingDiagonalDownRight;
           this.audioTileClick.play();
           for (let i = start + 9; i <= end; i += 9) {
             let squareBeingColored = document.querySelector(`li[value='${i}']`);
@@ -401,6 +423,7 @@ export class ChessBoard extends React.Component {
           break;
 
         case "diagDownLeft":
+          this.queenImage = queenMovingDiagonalDownLeft;
           this.audioTileClick.play();
           for (let i = start + 7; i <= end; i += 7) {
             let squareBeingColored = document.querySelector(`li[value='${i}']`);
@@ -417,6 +440,7 @@ export class ChessBoard extends React.Component {
           break;
 
         case "diagUpLeft":
+          this.queenImage = queenMovingDiagonalUpLeft;
           this.audioTileClick.play();
           for (let i = start - 9; i >= end; i -= 9) {
             let squareBeingColored = document.querySelector(`li[value='${i}']`);
@@ -433,6 +457,7 @@ export class ChessBoard extends React.Component {
           break;
 
         case "diagUpRight":
+          this.queenImage = queenMovingDiagonalUpRight;
           this.audioTileClick.play();
           for (let i = start - 7; i >= end; i -= 7) {
             let squareBeingColored = document.querySelector(`li[value='${i}']`);
@@ -451,7 +476,6 @@ export class ChessBoard extends React.Component {
         default:
           break;
       }
-      // this.squarePosition = end;
     }
   }
 
@@ -508,6 +532,10 @@ export class ChessBoard extends React.Component {
     return { moveType, time };
   }
 
+  standQueenUp() {
+    this.queenImage = queenStanding;
+  }
+
   handleSquareClicked = squareNode => {
     var timeline = new TimelineMax();
     const queen = this.queenContainer;
@@ -560,6 +588,7 @@ export class ChessBoard extends React.Component {
           break;
 
         case "horizRight":
+          this.queenImage = queenMovingRight;
           this.audioTileClick.play();
           for (let i = this.squarePosition + 1; i <= end; i += 1) {
             let squareBeingColored = document.querySelector(`li[value='${i}']`);
@@ -576,6 +605,7 @@ export class ChessBoard extends React.Component {
           break;
 
         case "horizLeft":
+          this.queenImage = queenMovingLeft;
           this.audioTileClick.play();
           for (let i = this.squarePosition - 1; i >= end; i -= 1) {
             let squareBeingColored = document.querySelector(`li[value='${i}']`);
@@ -592,6 +622,7 @@ export class ChessBoard extends React.Component {
           break;
 
         case "vertDown":
+          this.queenImage = queenMovingDown;
           this.audioTileClick.play();
           for (let i = this.squarePosition + 8; i <= end; i += 8) {
             let squareBeingColored = document.querySelector(`li[value='${i}']`);
@@ -608,6 +639,7 @@ export class ChessBoard extends React.Component {
           break;
 
         case "vertUp":
+          this.queenImage = queenMovingUp;
           this.audioTileClick.play();
           for (let i = this.squarePosition - 8; i >= end; i -= 8) {
             let squareBeingColored = document.querySelector(`li[value='${i}']`);
@@ -624,6 +656,7 @@ export class ChessBoard extends React.Component {
           break;
 
         case "diagDownRight":
+          this.queenImage = queenMovingDiagonalDownRight;
           this.audioTileClick.play();
           for (let i = this.squarePosition + 9; i <= end; i += 9) {
             let squareBeingColored = document.querySelector(`li[value='${i}']`);
@@ -640,6 +673,7 @@ export class ChessBoard extends React.Component {
           break;
 
         case "diagDownLeft":
+          this.queenImage = queenMovingDiagonalDownLeft;
           this.audioTileClick.play();
           for (let i = this.squarePosition + 7; i <= end; i += 7) {
             let squareBeingColored = document.querySelector(`li[value='${i}']`);
@@ -656,6 +690,7 @@ export class ChessBoard extends React.Component {
           break;
 
         case "diagUpLeft":
+          this.queenImage = queenMovingDiagonalUpLeft;
           this.audioTileClick.play();
           for (let i = this.squarePosition - 9; i >= end; i -= 9) {
             let squareBeingColored = document.querySelector(`li[value='${i}']`);
@@ -672,6 +707,7 @@ export class ChessBoard extends React.Component {
           break;
 
         case "diagUpRight":
+          this.queenImage = queenMovingDiagonalUpRight;
           this.audioTileClick.play();
           for (let i = this.squarePosition - 7; i >= end; i -= 7) {
             let squareBeingColored = document.querySelector(`li[value='${i}']`);
@@ -709,7 +745,7 @@ export class ChessBoard extends React.Component {
           ))}
         </ul>
         <img
-          src={queenStanding}
+          src={this.queenImage}
           alt=""
           className="queen"
           ref={img => (this.queenContainer = img)}
