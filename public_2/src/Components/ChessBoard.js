@@ -581,7 +581,17 @@ export class ChessBoard extends React.Component {
       let duration = moveType === "placePiece" ? 0.001 : time;
       let colorNew = "";
       let square = squareNode;
+      let i = 0;
+      let squareBeingColored = null;
       TweenMax.to(queen, duration, { x: tweenX, y: tweenY, display: "block" });
+      const animateSquareColor = i => {
+        squareBeingColored = document.querySelector(`li[value='${i}']`);
+        square = this.props.board[i];
+        colorNew = square.black ? "rgb(150, 128, 41)" : "rgb(245, 223, 136)";
+        timeline.to(squareBeingColored, this.animationTime, {
+          backgroundColor: colorNew
+        });
+      };
 
       switch (moveType) {
         case "placePiece": // fade in queen, fade in yellow square
@@ -601,19 +611,9 @@ export class ChessBoard extends React.Component {
 
         case "horizRight":
           this.setState({ queenImage: queenMovingRight });
-
           this.audioTileClick.play();
-          for (let i = this.squarePosition + 1; i <= end; i += 1) {
-            let squareBeingColored = document.querySelector(`li[value='${i}']`);
-            square = this.props.board[i];
-            colorNew = square.black
-              ? "rgb(150, 128, 41)"
-              : "rgb(245, 223, 136)";
-            timeline.add(
-              TweenMax.to(squareBeingColored, this.animationTime, {
-                backgroundColor: colorNew
-              })
-            );
+          for (i = this.squarePosition + 1; i <= end; i += 1) {
+            animateSquareColor(i);
           }
 
           break;
@@ -621,125 +621,56 @@ export class ChessBoard extends React.Component {
         case "horizLeft":
           this.setState({ queenImage: queenMovingLeft });
           this.audioTileClick.play();
-          for (let i = this.squarePosition - 1; i >= end; i -= 1) {
-            let squareBeingColored = document.querySelector(`li[value='${i}']`);
-            square = this.props.board[i];
-            colorNew = square.black
-              ? "rgb(150, 128, 41)"
-              : "rgb(245, 223, 136)";
-            timeline.add(
-              TweenMax.to(squareBeingColored, this.animationTime, {
-                backgroundColor: colorNew
-              })
-            );
+          for (i = this.squarePosition - 1; i >= end; i -= 1) {
+            animateSquareColor(i);
           }
           break;
 
         case "vertDown":
           this.setState({ queenImage: queenMovingDown });
-
           this.audioTileClick.play();
-          for (let i = this.squarePosition + 8; i <= end; i += 8) {
-            let squareBeingColored = document.querySelector(`li[value='${i}']`);
-            square = this.props.board[i];
-            colorNew = square.black
-              ? "rgb(150, 128, 41)"
-              : "rgb(245, 223, 136)";
-            timeline.add(
-              TweenMax.to(squareBeingColored, this.animationTime, {
-                backgroundColor: colorNew
-              })
-            );
+          for (i = this.squarePosition + 8; i <= end; i += 8) {
+            animateSquareColor(i);
           }
           break;
 
         case "vertUp":
           this.setState({ queenImage: queenMovingUp });
-
           this.audioTileClick.play();
-          for (let i = this.squarePosition - 8; i >= end; i -= 8) {
-            let squareBeingColored = document.querySelector(`li[value='${i}']`);
-            square = this.props.board[i];
-            colorNew = square.black
-              ? "rgb(150, 128, 41)"
-              : "rgb(245, 223, 136)";
-            timeline.add(
-              TweenMax.to(squareBeingColored, this.animationTime, {
-                backgroundColor: colorNew
-              })
-            );
+          for (i = this.squarePosition - 8; i >= end; i -= 8) {
+            animateSquareColor(i);
           }
           break;
 
         case "diagDownRight":
           this.setState({ queenImage: queenMovingDiagonalDownRight });
-
           this.audioTileClick.play();
-          for (let i = this.squarePosition + 9; i <= end; i += 9) {
-            let squareBeingColored = document.querySelector(`li[value='${i}']`);
-            square = this.props.board[i];
-            colorNew = square.black
-              ? "rgb(150, 128, 41)"
-              : "rgb(245, 223, 136)";
-            timeline.add(
-              TweenMax.to(squareBeingColored, this.animationTime, {
-                backgroundColor: colorNew
-              })
-            );
+          for (i = this.squarePosition + 9; i <= end; i += 9) {
+            animateSquareColor(i);
           }
           break;
 
         case "diagDownLeft":
           this.setState({ queenImage: queenMovingDiagonalDownLeft });
-
           this.audioTileClick.play();
-          for (let i = this.squarePosition + 7; i <= end; i += 7) {
-            let squareBeingColored = document.querySelector(`li[value='${i}']`);
-            square = this.props.board[i];
-            colorNew = square.black
-              ? "rgb(150, 128, 41)"
-              : "rgb(245, 223, 136)";
-            timeline.add(
-              TweenMax.to(squareBeingColored, this.animationTime, {
-                backgroundColor: colorNew
-              })
-            );
+          for (i = this.squarePosition + 7; i <= end; i += 7) {
+            animateSquareColor(i);
           }
           break;
 
         case "diagUpLeft":
           this.setState({ queenImage: queenMovingDiagonalUpLeft });
-
           this.audioTileClick.play();
-          for (let i = this.squarePosition - 9; i >= end; i -= 9) {
-            let squareBeingColored = document.querySelector(`li[value='${i}']`);
-            square = this.props.board[i];
-            colorNew = square.black
-              ? "rgb(150, 128, 41)"
-              : "rgb(245, 223, 136)";
-            timeline.add(
-              TweenMax.to(squareBeingColored, this.animationTime, {
-                backgroundColor: colorNew
-              })
-            );
+          for (i = this.squarePosition - 9; i >= end; i -= 9) {
+            animateSquareColor(i);
           }
           break;
 
         case "diagUpRight":
           this.setState({ queenImage: queenMovingDiagonalUpRight });
-
           this.audioTileClick.play();
-          for (let i = this.squarePosition - 7; i >= end; i -= 7) {
-            let squareBeingColored = document.querySelector(`li[value='${i}']`);
-            square = this.props.board[i];
-            colorNew = square.black
-              ? "rgb(150, 128, 41)"
-              : "rgb(245, 223, 136)";
-            timeline.add(
-              TweenMax.to(squareBeingColored, this.animationTime, {
-                backgroundColor: colorNew
-              })
-            );
+          for (i = this.squarePosition - 7; i >= end; i -= 7) {
+            animateSquareColor(i);
           }
           break;
 
